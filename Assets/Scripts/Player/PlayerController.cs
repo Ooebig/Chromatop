@@ -3,61 +3,89 @@ using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("General")]
+    [Header("Movement Settings")]
     private CharacterController controller;
-    [SerializeField] private float speed;
-    [SerializeField] private Transform cam;
+    [SerializeField] private float moveSpeed;
     [SerializeField] private float gravity = 9.81f;
-    [SerializeField] private float rotationspeed;
-    Vector3 velocity;
 
-    [Header("Aiming")]
-    public LayerMask whatIsAimMask;
-    public Transform aimTransform;
+    private CharacterController characterController;
     private Camera mainCamera;
+    private Vector3 moveDirection;
+    private Vector3 velocity;
+    private Vector3 targetPoint;
 
-    private void Awake()
+    void Start()
     {
-        controller = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
+
+        mainCamera = Camera.main;
     }
-    private void Update()
+
+    void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        PlayerMovementInput();
+        PlayerAiming();
+        ApplyGravity();
+    }
 
-        Vector3 move = new Vector3(x, 0f, y).normalized;
+    private void PlayerMovementInput()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        controller.Move(move * speed * Time.deltaTime);
+        Vector3 cameraForward = mainCamera.transform.forward;
+        Vector3 cameraRight = mainCamera.transform.right;
 
-        if (move.magnitude > 0)
+        // Keep movement on the X/Z ground plane
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        moveDirection =
+            cameraRight * horizontalInput +
+            cameraForward * verticalInput;
+
+        moveDirection.Normalize();
+
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+    }
+
+    private void PlayerAiming()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+
+        float rayDistance;
+
+        if (groundPlane.Raycast(ray, out rayDistance))
         {
-            Quaternion toRotate = Quaternion.LookRotation(move, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotate, rotationspeed * Time.deltaTime);
+            targetPoint = ray.GetPoint(rayDistance);
+
+            Vector3 lookDirection = targetPoint - transform.position;
+            lookDirection.y = 0f; // Prevent rotation in the y-axis
+
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = targetRotation;
+            }
         }
+    }
 
-        if (controller.isGrounded && velocity.y < 0)
+    private void ApplyGravity()
+    {
+        if (characterController.isGrounded && velocity.y <0)
         {
-            velocity.y = -2f;
+            velocity.y = -2f; // Small negative value to keep the player grounded
         }
 
         velocity.y -= gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-
-    }
-
-    private void UpdateAim()
-    {
-        Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        float rayLength;
-        if (groundPlane.Raycast(cameraRay, out rayLength))
-        {
-            Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-            Debug.DrawLine(cameraRay.origin, pointToLook, Color.yellow);
-
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        }
+        characterController.Move(velocity * Time.deltaTime);
     }
 }
 
 //www.youtube.com/watch?v=Ax94kLWkugg
+//medium.com/@cwagoner78/3d-top-down-shooter-that-follows-mouse-for-aiming-project-log-d1956ddaba3
