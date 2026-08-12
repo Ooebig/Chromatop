@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotationspeed;
     Vector3 velocity;
 
+    [Header("Aiming")]
+    public LayerMask whatIsAimMask;
+    public Transform aimTransform;
+    private Camera mainCamera;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -39,6 +44,20 @@ public class PlayerController : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
     }
+
+    private void UpdateAim()
+    {
+        Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayLength;
+        if (groundPlane.Raycast(cameraRay, out rayLength))
+        {
+            Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+            Debug.DrawLine(cameraRay.origin, pointToLook, Color.yellow);
+
+            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+        }
+    }
 }
 
-
+//www.youtube.com/watch?v=Ax94kLWkugg
