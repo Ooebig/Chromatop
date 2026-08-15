@@ -10,6 +10,13 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuInBetween;
+    [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject menuStats;
+    [SerializeField] GameObject menuInventory;
+    [SerializeField] GameObject menuMain;
+    [SerializeField] GameObject menuPrevious;
+
     //public GameObject checkPointPopup;
     public Image playerHPBar;
     //public GameObject playerDamageScreen;
@@ -216,8 +223,13 @@ public class gameManager : MonoBehaviour
         }
     }
 
-
-
-
-
+    public void ShowMenu(GameObject menu)
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menu;
+        menuActive.SetActive(true);
+    }
 }

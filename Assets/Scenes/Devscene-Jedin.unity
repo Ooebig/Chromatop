@@ -152,6 +152,11 @@ MonoBehaviour:
   menuPause: {fileID: 1561824831}
   menuWin: {fileID: 1232907385}
   menuLose: {fileID: 880831800}
+  menuInBetween: {fileID: 1471251276927343215}
+  menuSettings: {fileID: 1471251276927343214}
+  menuStats: {fileID: 1471251276927343213}
+  menuInventory: {fileID: 1471251276927343212}
+  menuMain: {fileID: 1471251276927343211}
   playerHPBar: {fileID: 0}
   roundTimerText: {fileID: 0}
   isPaused: 0
@@ -621,6 +626,31 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+--- !u!1 &1471251276927343211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7851203332817671790, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+  m_PrefabInstance: {fileID: 1471251276927343210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1471251276927343212 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 735384443738366156, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+  m_PrefabInstance: {fileID: 1471251276927343210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1471251276927343213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4014849394707656413, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+  m_PrefabInstance: {fileID: 1471251276927343210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1471251276927343214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5032517069179517251, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+  m_PrefabInstance: {fileID: 1471251276927343210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1471251276927343215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2780769710985533872, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+  m_PrefabInstance: {fileID: 1471251276927343210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6134090448740108079
 PrefabInstance:
   m_ObjectHideFlags: 0
