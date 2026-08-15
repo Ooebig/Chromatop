@@ -15,22 +15,23 @@ public class buttonFunctions : MonoBehaviour
     }
     public void quit()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
     }
-    public void loadLevel(int lvl)
-    {
-        //SceneManager.LoadScene(lvl);
-        //gameManager.instance.stateUnpause();
-    }
+    
+    //public void loadLevel(int lvl)
+    //{
+    //    //SceneManager.LoadScene(lvl);
+    //    //gameManager.instance.stateUnpause();
+    //}
 
-    public void playerRespawn()
-    {
-        //gameManager.instance.playerScript.changePlayerPos();
-        //gameManager.instance.stateUnpause();
-    }
+    //public void playerRespawn()
+    //{
+    //    //gameManager.instance.playerScript.changePlayerPos();
+    //    //gameManager.instance.stateUnpause();
+    //}
 
 }

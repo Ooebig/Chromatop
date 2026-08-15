@@ -16,9 +16,9 @@ public class gameManager : MonoBehaviour
     public TMP_Text roundTimerText;
 
     public bool isPaused;
-    public GameObject player;
+    // public GameObject player;
     //public playerController playerScript;
-    public GameObject playerStartPos;
+   //  public GameObject playerStartPos;
 
 
 
@@ -36,9 +36,9 @@ public class gameManager : MonoBehaviour
         }
         instance = this;
         timeScaleOrig = Time.timeScale;
-        player = GameObject.FindWithTag("Player");
+        //player = GameObject.FindWithTag("Player");
         //playerScript = player.GetComponent<playerController>();
-        playerStartPos = GameObject.FindWithTag("Player Start Pos");
+        //playerStartPos = GameObject.FindWithTag("Player Start Pos");
         DontDestroyOnLoad(gameObject);
     }
 
