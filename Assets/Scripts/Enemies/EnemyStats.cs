@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.Rendering;
+
 
 public class EnemyStats : MonoBehaviour
 {
     public EnemyBehavior.EnemyType type;
+    public gameManager.ColorType Color;
     // Update is called once per frame
+    
     public float maxHp = 100f;
     public float currentHp;
     public float speed;
@@ -13,14 +17,5 @@ public class EnemyStats : MonoBehaviour
         currentHp = maxHp;
     }
 
-    public void TakeDamage(float damage)
-
-    {
-        currentHp -= damage;
-
-        if (currentHp < 0)
-        {
-            Destroy(gameObject);
-        }
-    }
+    
 }

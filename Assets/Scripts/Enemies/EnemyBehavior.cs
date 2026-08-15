@@ -2,14 +2,17 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyBehavior : MonoBehaviour, iDamage
 {
     public enum EnemyType { Simple, Charger, Shooter }
-    
 
+    
     public EnemyStats stats;
     public Transform player;
     public float speed = 3.0f;
+
+    public int Team => throw new System.NotImplementedException();
+
     void Start()
     {
         if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -57,6 +60,17 @@ public class EnemyBehavior : MonoBehaviour
 
             yield return null;
 
+        }
+    }
+
+    public void takeDamage(float amount, gameManager.ColorType dmgColor)
+    {
+        float damage = gameManager.damageCalc(amount, stats.Color, dmgColor);
+        stats.currentHp -= damage;
+
+        if (stats.currentHp < 0) 
+        {
+            Destroy(gameObject);
         }
     }
 }
