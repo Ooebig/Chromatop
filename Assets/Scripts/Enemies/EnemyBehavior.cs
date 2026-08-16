@@ -10,6 +10,7 @@ public class EnemyBehavior : MonoBehaviour, iDamage
     public EnemyStats stats;
     public Transform player;
     public float speed = 3.0f;
+    public float contactDamage = 5f;
 
     public int Team => throw new System.NotImplementedException();
 
@@ -71,6 +72,19 @@ public class EnemyBehavior : MonoBehaviour, iDamage
         if (stats.currentHp < 0) 
         {
             Destroy(gameObject);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Enemy hit something: " + other.gameObject.name);
+        if (other.CompareTag("Player"))
+        {
+            iDamage playerDamage = other.GetComponent<iDamage>();
+
+            if (playerDamage != null)
+            {
+                playerDamage.takeDamage(contactDamage, stats.Color);
+            }
         }
     }
 }
