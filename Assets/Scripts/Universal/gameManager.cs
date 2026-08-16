@@ -15,7 +15,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuStats;
     [SerializeField] GameObject menuInventory;
     [SerializeField] GameObject menuMain;
-    [SerializeField] GameObject menuPrevious;
+    GameObject menuPrevious;
 
     //public GameObject checkPointPopup;
     public Image playerHPBar;
@@ -56,13 +56,15 @@ public class gameManager : MonoBehaviour
         {
             if (menuActive == null)
             {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(true);
+                ShowMenu(menuPause);
             }
             else if(menuActive == menuPause)
             {
-                stateUnpause();
+                CloseCurrentMenu();
+            }
+            else
+            {
+                ReturnToPrevious();
             }
         }
     }
@@ -81,8 +83,11 @@ public class gameManager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = null;
+        }
     }
     //public void updateGameGoal(int amount)
     //{
@@ -97,9 +102,7 @@ public class gameManager : MonoBehaviour
     //}
     public void youLose()
     {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
+        ShowMenu(menuLose);
     }
 
 
@@ -223,13 +226,44 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void ShowMenu(GameObject menu)
+    public void ShowMenu(GameObject newMenu) {
+
+        if (menuActive != null)
+        {
+            menuPrevious = menuActive;
+            menuActive.SetActive(false);
+        }
+
+        menuActive = newMenu;
+
+        newMenu.SetActive(true);
+
+        statePause();
+    }
+
+    public void ReturnToPrevious() 
+    {
+        if (menuPrevious != null)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuPrevious;
+            menuPrevious = null;
+            menuActive.SetActive(true);
+        }
+        else
+        {
+            stateUnpause();
+        }
+    }
+
+    public void CloseCurrentMenu()
     {
         if (menuActive != null)
         {
             menuActive.SetActive(false);
+            menuActive = null;
+            stateUnpause();
         }
-        menuActive = menu;
-        menuActive.SetActive(true);
     }
+
 }
