@@ -6,12 +6,23 @@ public class buttonFunctions : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void resume()
     {
-        gameManager.instance.stateUnpause();
+        gameManager.instance.CloseCurrentMenu();
     }
+
+    public void continuing()
+    {
+        gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
+    }
+
+    public void returning()
+    {
+        gameManager.instance.ReturnToPrevious();
+    }
+
     public void restart()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //gameManager.instance.stateUnpause();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameManager.instance.stateUnpause();
     }
     public void quit()
     {
@@ -20,67 +31,58 @@ public class buttonFunctions : MonoBehaviour
 #else
         Application.Quit();
 #endif
-    }
-
-    public void continuing(){
-        gameManager.instance.stateUnpause();
-    }   
+    } 
 
     public void difficulty()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Difficulty");
+        gameManager.instance.CloseCurrentMenu();
+
+        //Will decide later on what to do with this button
+        
     }
 
     public void mystery(){
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Mystery");
+        gameManager.instance.CloseCurrentMenu();
+
     }
 
     public void shop()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Shop");
+        gameManager.instance.CloseCurrentMenu();
+
     }
 
     public void inventory()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Inventory");
+        gameManager.instance.ShowMenu(gameManager.instance.menuInventory);
     }
 
     public void stats()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Stats");
+        gameManager.instance.ShowMenu(gameManager.instance.menuStats);
     }
+
 
     public void settings()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Settings");
+        gameManager.instance.ShowMenu(gameManager.instance.menuSettings);
     }
-
-    public void returning(){
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("MainMenu");
-    }
+    
 
     public void previous()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Previous");
+       //visits previous inventory page
     }
 
     public void next()
     {
-        gameManager.instance.stateUnpause();
-        SceneManager.LoadScene("Next");
+        //visits next inventory page
+
     }
 
     public void playgame()
     {
-        gameManager.instance.stateUnpause();
+        gameManager.instance.CloseCurrentMenu();
         SceneManager.LoadScene("Level1");
     }
 

@@ -10,11 +10,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuInBetween;
-    [SerializeField] GameObject menuSettings;
-    [SerializeField] GameObject menuStats;
-    [SerializeField] GameObject menuInventory;
-    [SerializeField] GameObject menuMain;
+    [SerializeField] public GameObject menuInBetween;
+    [SerializeField] public GameObject menuSettings;
+    [SerializeField] public GameObject menuStats;
+    [SerializeField] public GameObject menuInventory;
+    [SerializeField] public GameObject menuMain;
     GameObject menuPrevious;
 
     //public GameObject checkPointPopup;
