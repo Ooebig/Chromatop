@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class SpinWeapon : Weapon
 {
-    [SerializeField] private Transform player;
-    [SerializeField] private EnemyDamager damager;
+    [Header("Orb References")]
+    [SerializeField] private Transform holder;
+    [SerializeField] private Transform orbToSpawn;
+    [SerializeField] private Transform orbSpawnPoint;
 
+    [Header("Runtime Settings")]
     [SerializeField] private float rotateSpeed = 100f;
-    [SerializeField] private float orbitDistance = 2f;
 
-    private float currentAngle;
+    private WeaponStats currentStats;
+    private float spawnCooldown;
+    private float spawnCounter;
 
     private void Start()
     {
@@ -17,40 +21,113 @@ public class SpinWeapon : Weapon
 
     private void Update()
     {
-        if (player == null)
-            return;
-
-        currentAngle += rotateSpeed * Time.deltaTime;
-        float angle = currentAngle * Mathf.Deg2Rad;
-
-        Vector3 offset = new Vector3(
-            Mathf.Cos(angle) * orbitDistance,
-            0f,
-            Mathf.Sin(angle) * orbitDistance
-        );
-
-        transform.position = player.position + offset;
+        UpdateStatsIfNeeded();
+        RotateHolder();
+        UpdateOrbSpawning();
     }
 
-    public void SetStats()
+    private void UpdateStatsIfNeeded()
     {
-        if (stats == null || stats.Count == 0)
+        if (!statsUpdated)
             return;
 
-        weaponLevel = Mathf.Clamp(
-            weaponLevel,
-            0,
-            stats.Count - 1
+        statsUpdated = false;
+        SetStats();
+    }
+
+    private void RotateHolder()
+    {
+        if (holder == null)
+            return;
+
+        holder.Rotate(
+            Vector3.up,
+            rotateSpeed * Time.deltaTime,
+            Space.Self
+        );
+    }
+
+    private void UpdateOrbSpawning()
+    {
+        if (!CanSpawnOrb())
+            return;
+
+        spawnCounter -= Time.deltaTime;
+
+        if (spawnCounter > 0f)
+            return;
+
+        SpawnOrb();
+
+        spawnCounter = spawnCooldown;
+    }
+
+    private bool CanSpawnOrb()
+    {
+        return holder != null &&
+               orbToSpawn != null &&
+               orbSpawnPoint != null &&
+               currentStats != null;
+    }
+
+    private void SpawnOrb()
+    {
+        Transform newOrb = Instantiate(
+            orbToSpawn,
+            orbSpawnPoint.position,
+            orbSpawnPoint.rotation,
+            holder
         );
 
-        WeaponStats currentStats = stats[weaponLevel];
+        ConfigureOrb(newOrb);
 
-        if (damager != null)
+        newOrb.gameObject.SetActive(true);
+    }
+
+    private void ConfigureOrb(Transform newOrb)
+    {
+        newOrb.localScale =
+            Vector3.one * currentStats.area;
+
+        EnemyDamager orbDamager =
+            newOrb.GetComponentInChildren<EnemyDamager>(true);
+
+        if (orbDamager == null)
         {
-            damager.SetDamage(currentStats.damage);
+            Debug.LogError(
+                "The spawned orb needs an EnemyDamager component.",
+                newOrb
+            );
+
+            return;
         }
 
-        transform.localScale =
-            Vector3.one * currentStats.range;
+        orbDamager.SetDamage(currentStats.baseDamage);
+        orbDamager.SetLifeTime(currentStats.duration);
+    }
+
+    private void SetStats()
+    {
+        currentStats = CurrentStats;
+
+        if (currentStats == null)
+        {
+            Debug.LogWarning(
+                "SpinWeapon does not have any weapon stats.",
+                this
+            );
+
+            return;
+        }
+
+        rotateSpeed = currentStats.speed;
+
+        spawnCooldown = Mathf.Max(
+            0.01f,
+            currentStats.cooldown
+        );
+
+        // Spawn immediately after starting or upgrading.
+        spawnCounter = 0f;
     }
 }

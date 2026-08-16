@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.ProBuilder;
-using UnityEngine.UIElements;
 
 public class ProjectileWeapon : Weapon
 {
-    [SerializeField] private EnemyDamager damager;
+    [Header("Projectile References")]
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Transform firePoint;
 
@@ -12,6 +10,7 @@ public class ProjectileWeapon : Weapon
     [SerializeField] private float weaponRange = 10f;
     [SerializeField] private LayerMask whatIsEnemy;
 
+    private WeaponStats currentStats;
     private float shotCounter;
 
     private void Start()
@@ -21,91 +20,164 @@ public class ProjectileWeapon : Weapon
 
     private void Update()
     {
-        if (statsUpdated)
-        {
-            statsUpdated = false;
-            SetStats();
-        }
+        UpdateStatsIfNeeded();
+        UpdateFiring();
+    }
+
+    private void UpdateStatsIfNeeded()
+    {
+        if (!statsUpdated)
+            return;
+
+        statsUpdated = false;
+        SetStats();
+    }
+
+    private void UpdateFiring()
+    {
+        if (currentStats == null || projectilePrefab == null)
+            return;
 
         shotCounter -= Time.deltaTime;
 
-        if (shotCounter <= 0f)
-        {
-            FireAtEnemies();
+        if (shotCounter > 0f)
+            return;
 
-            shotCounter =
-                stats[weaponLevel].timeBetweenAttacks;
-        }
+        FireAtEnemies();
+
+        shotCounter = Mathf.Max(
+            0.01f,
+            currentStats.cooldown
+        );
     }
 
     private void FireAtEnemies()
     {
+        Vector3 origin = firePoint != null
+            ? firePoint.position
+            : transform.position;
+
+        float detectionRange =
+            weaponRange * currentStats.area;
+
         Collider[] enemies = Physics.OverlapSphere(
-            transform.position,
-            weaponRange * stats[weaponLevel].range,
+            origin,
+            detectionRange,
             whatIsEnemy
         );
 
         if (enemies.Length == 0)
             return;
 
-        for (int i = 0; i < stats[weaponLevel].amount; i++)
+        for (int i = 0; i < currentStats.amount; i++)
         {
             Collider target =
                 enemies[Random.Range(0, enemies.Length)];
 
-            Vector3 spawnPosition = firePoint != null
-                ? firePoint.position
-                : transform.position;
+            FireProjectileAt(target, origin);
+        }
+    }
 
-            Vector3 direction =
-                target.transform.position - spawnPosition;
+    private void FireProjectileAt(
+        Collider target,
+        Vector3 spawnPosition
+    )
+    {
+        Vector3 direction =
+            target.bounds.center - spawnPosition;
 
-            // Keep the projectile aimed across the X/Z ground plane.
-            direction.y = 0f;
+        // Keep aiming flat across the X/Z ground plane.
+        direction.y = 0f;
 
-            if (direction.sqrMagnitude == 0f)
-                continue;
+        if (direction.sqrMagnitude <= 0.001f)
+            return;
 
-            Quaternion projectileRotation =
-                Quaternion.LookRotation(direction.normalized, Vector3.up);
-
-            Projectile newProjectile = Instantiate(
-                projectilePrefab,
-                spawnPosition,
-                projectileRotation
+        Quaternion spawnRotation =
+            Quaternion.LookRotation(
+                direction.normalized,
+                Vector3.up
             );
 
-            newProjectile.gameObject.SetActive(true);
+        Projectile newProjectile = Instantiate(
+            projectilePrefab,
+            spawnPosition,
+            spawnRotation
+        );
+
+        ConfigureProjectile(newProjectile);
+
+        newProjectile.gameObject.SetActive(true);
+    }
+
+    private void ConfigureProjectile(
+        Projectile newProjectile
+    )
+    {
+        newProjectile.moveSpeed =
+            currentStats.speed;
+
+        newProjectile.transform.localScale =
+            Vector3.one * currentStats.area;
+
+        newProjectile.SetLifeTime(
+            currentStats.duration
+        );
+
+        EnemyDamager projectileDamager =
+            newProjectile.GetComponentInChildren<EnemyDamager>(true);
+
+        if (projectileDamager != null)
+        {
+            projectileDamager.SetDamage(
+                currentStats.baseDamage
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "The projectile needs an EnemyDamager component.",
+                newProjectile
+            );
         }
     }
 
     private void SetStats()
     {
-        if (stats == null || stats.Count == 0)
-            return;
+        currentStats = CurrentStats;
 
-        weaponLevel = Mathf.Clamp(
-            weaponLevel,
-            0,
-            stats.Count - 1
-        );
-
-        WeaponStats currentStats = stats[weaponLevel];
-
-        if (damager != null)
+        if (currentStats == null)
         {
-            damager.SetDamage(currentStats.damage);
+            Debug.LogWarning(
+                "ProjectileWeapon does not have any weapon stats.",
+                this
+            );
+
+            return;
         }
 
+        // Configure the template so active clones inherit valid
+        // values before their Start methods run.
         if (projectilePrefab != null)
         {
-            projectilePrefab.moveSpeed = currentStats.speed;
+            projectilePrefab.moveSpeed =
+                currentStats.speed;
 
             projectilePrefab.transform.localScale =
-                Vector3.one * currentStats.range;
+                Vector3.one * currentStats.area;
 
-            projectilePrefab.SetLifeTime(currentStats.duration);
+            projectilePrefab.SetLifeTime(
+                currentStats.duration
+            );
+
+            EnemyDamager prefabDamager =
+                projectilePrefab.GetComponentInChildren<EnemyDamager>(true);
+
+            if (prefabDamager != null)
+            {
+                prefabDamager.SetDamage(
+                    currentStats.baseDamage
+                );
+            }
         }
 
         shotCounter = 0f;
@@ -113,7 +185,17 @@ public class ProjectileWeapon : Weapon
 
     private void OnDrawGizmosSelected()
     {
+        float range = weaponRange;
+
+        if (currentStats != null)
+        {
+            range *= currentStats.area;
+        }
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, weaponRange);
+        Gizmos.DrawWireSphere(
+            transform.position,
+            range
+        );
     }
 }
