@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,8 +23,10 @@ public class buttonFunctions : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        gameManager.instance.stateUnpause();
+
+        gameManager.instance.StartCoroutine(gameManager.instance.RefreshAfterLoad());
     }
+
     public void quit()
     {
 #if UNITY_EDITOR

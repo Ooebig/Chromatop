@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class gameManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class gameManager : MonoBehaviour
         //playerScript = player.GetComponent<playerController>();
         //playerStartPos = GameObject.FindWithTag("Player Start Pos");
         DontDestroyOnLoad(gameObject);
+        RefreshMenuRef();
     }
 
     // Update is called once per frame
@@ -264,6 +266,40 @@ public class gameManager : MonoBehaviour
             menuActive = null;
             stateUnpause();
         }
+    }
+
+    public void RefreshMenuRef()
+    {
+
+        GameObject menuRt = GameObject.Find("Menus");
+        if (menuRt == null)
+        {
+            Debug.LogWarning("Menus root not found.");
+            return;
+        }
+
+        menuPause = menuRt.transform.Find("Pause Menu")?.gameObject;
+        menuWin = menuRt.transform.Find("Level Complete Menu")?.gameObject;
+        menuLose = menuRt.transform.Find("Death Menu")?.gameObject;
+        menuInBetween = menuRt.transform.Find("In-Between Menu")?.gameObject;
+        menuSettings = menuRt.transform.Find("Settings Menu")?.gameObject;
+        menuStats = menuRt.transform.Find("Stats Menu")?.gameObject;
+        menuInventory = menuRt.transform.Find("Inventory Menu")?.gameObject;
+        menuMain = menuRt.transform.Find("Main Menu")?.gameObject;
+
+        if (menuPause == null)
+        {
+            Debug.LogWarning("Pause Menu not found."); 
+        }
+    }
+
+    public IEnumerator RefreshAfterLoad()
+    {
+
+        yield return null;
+        RefreshMenuRef();
+        stateUnpause();
+
     }
 
 }
