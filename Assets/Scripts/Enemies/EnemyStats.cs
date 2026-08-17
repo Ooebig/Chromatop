@@ -12,7 +12,9 @@ public class EnemyStats : MonoBehaviour
     public float currentHp;
     public float speed;
     public float damage;
-
+    public float firerate;
+    public float stopDistance;
+    public float contactDamage;
 
     public GameObject simpleModel;
     public GameObject chargerModel;
