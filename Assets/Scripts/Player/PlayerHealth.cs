@@ -7,7 +7,8 @@ public class PlayerHealth : MonoBehaviour, iDamage
 {
     public float currentHealth, maxHealth;
 
-    public int Team => throw new System.NotImplementedException();
+
+    int iDamage.Team => 1;
 
     // Start is called before the first frame update
     void Start()

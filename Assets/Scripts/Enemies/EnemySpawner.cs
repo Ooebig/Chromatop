@@ -114,7 +114,7 @@ public class EnemySpawner : MonoBehaviour
         while (!valid)
         {
             Vector2 randomCirclePoint = Random.insideUnitCircle * spawnRadius;
-            spawnPos = new Vector3(randomCirclePoint.x, 0f, randomCirclePoint.y) + mapCenter;
+            spawnPos = new Vector3(randomCirclePoint.x, 0.5f, randomCirclePoint.y) + mapCenter;
             if (playerPos != null)
             {
                 float distanceToPlayer = Vector3.Distance(spawnPos, playerPos.position);
@@ -158,6 +158,8 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Shooter)
         {
+            enemyStats.firerate = 1.5f;
+            enemyStats.stopDistance = 7f;
             enemyStats.speed = 2f;
             enemyStats.maxHp = 70f;
         }
