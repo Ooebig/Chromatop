@@ -83,6 +83,15 @@ using UnityEngine;
 
             if (stats.currentHp < 0) 
             {
+                // Drop the enemy's assigned currency before destroying it.
+                EnemyCurrencyDrop currencyDrop =
+                    GetComponent<EnemyCurrencyDrop>();
+
+                if (currencyDrop != null)
+                {
+                    currencyDrop.DropCurrency();
+                }
+
                 Destroy(gameObject);
             }
         }

@@ -34,11 +34,8 @@ public class PickupRangeController : MonoBehaviour
 
     private void Update()
     {
-        // Allows Inspector testing outside Play mode.
-        if (!Application.isPlaying)
-        {
-            UpdateRange();
-        }
+        // Supports Inspector testing in and outside Play mode.
+        UpdateRange();
     }
 
     private void FindReferences()
@@ -79,8 +76,13 @@ public class PickupRangeController : MonoBehaviour
 
         float newRange = playerStats.PickupRange;
 
-        if (Mathf.Approximately(newRange, previousRange))
+        if (Mathf.Approximately(
+                newRange,
+                previousRange
+            ))
+        {
             return;
+        }
 
         previousRange = newRange;
         rangeCollider.radius = newRange;

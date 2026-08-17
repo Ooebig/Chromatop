@@ -1,23 +1,23 @@
 public enum StatType
 {
-    MaxHealth,
-    HealthRegeneration,
-    MovementSpeed,
+    MaxHealth = 0,
+    HealthRegeneration = 1,
+    MovementSpeed = 2,
 
-    Damage,
-    DamageReduction,
-    Knockback,
-    CriticalChance,
-    CriticalDamage,
+    Damage = 3,
+    DamageReduction = 4,
+    Knockback = 5,
+    CriticalChance = 6,
+    CriticalDamage = 7,
 
-    Cooldown,
-    AttackInterval,
-    WeaponArea,
-    ProjectileSpeed,
-    ProjectileDuration,
-    ProjectileAmount,
+    Cooldown = 8,
+    AttackInterval = 9,
+    WeaponArea = 10,
+    ProjectileSpeed = 11,
+    ProjectileDuration = 12,
+    ProjectileAmount = 13,
 
-    ExperienceGain,
-    PickupRange,
-    Luck
+    ExperienceGain = 14,
+    PickupRange = 15,
+    Luck = 16
 }

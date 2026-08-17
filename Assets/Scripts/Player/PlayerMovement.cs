@@ -1,20 +1,36 @@
 using UnityEngine;
 
 /// Handles top-down player movement.
-/// Uses a CharacterController for movement on the X/Z plane.
+/// Uses a CharacterController on the X/Z plane.
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-
-    [Tooltip("How fast the player moves around the arena.")]
-    [SerializeField] private float moveSpeed = 6f;
+    [Header("Fallback Movement")]
+    [Tooltip("Used only when PlayerStats cannot be found.")]
+    [SerializeField] private float fallbackMoveSpeed = 6f;
 
     private CharacterController characterController;
+    private PlayerStats playerStats;
+
     private Vector3 moveDirection;
+
+    public float CurrentMoveSpeed =>
+        playerStats != null
+            ? playerStats.MovementSpeed
+            : fallbackMoveSpeed;
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        characterController =
+            GetComponent<CharacterController>();
+
+        playerStats = GetComponent<PlayerStats>();
+
+        if (playerStats == null)
+        {
+            playerStats =
+                GetComponentInParent<PlayerStats>();
+        }
     }
 
     private void Update()
@@ -24,47 +40,68 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerMovementInput()
     {
-        // Read A/D or Left/Right arrows.
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float horizontalInput =
+            Input.GetAxisRaw("Horizontal");
 
-        // Read W/S or Up/Down arrows.
-        float verticalInput = Input.GetAxisRaw("Vertical");
+        float verticalInput =
+            Input.GetAxisRaw("Vertical");
 
-        // 3D top-down movement uses the X/Z plane.
         moveDirection = new Vector3(
             horizontalInput,
             0f,
             verticalInput
         );
 
-        // Prevent diagonal movement from being faster.
         if (moveDirection.sqrMagnitude > 1f)
         {
             moveDirection.Normalize();
         }
 
         characterController.Move(
-            moveDirection * moveSpeed * Time.deltaTime
+            moveDirection *
+            CurrentMoveSpeed *
+            Time.deltaTime
         );
     }
 
-    /// Increases the player's movement speed.
+    /// Adds a permanent runtime movement-speed modifier.
     public void IncreaseMoveSpeed(float amount)
     {
-        moveSpeed += amount;
+        if (amount <= 0f)
+            return;
 
-        Debug.Log("Move speed increased to: " + moveSpeed);
+        if (playerStats == null)
+        {
+            fallbackMoveSpeed += amount;
+            return;
+        }
+
+        StatModifier speedModifier =
+            new StatModifier
+            {
+                statType = StatType.MovementSpeed,
+                modifierType = StatModifierType.Flat,
+                value = amount
+            };
+
+        playerStats.AddModifiers(
+            this,
+            new[] { speedModifier }
+        );
+
+        Debug.Log(
+            $"Move speed increased to: {CurrentMoveSpeed}",
+            this
+        );
     }
 
-    /// Returns the player's current movement direction.
     public Vector3 GetMoveInput()
     {
         return moveDirection;
     }
 
-    /// Returns the player's current movement speed.
     public float GetMoveSpeed()
     {
-        return moveSpeed;
+        return CurrentMoveSpeed;
     }
 }

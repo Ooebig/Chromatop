@@ -10,21 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83c0c433adc95074c9ba58366be40e26, type: 3}
-  m_Name: Memory Fractal
+  m_Name: Spin Weapon
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Memory Fractal
-  itemID: 1002
-  description: Adds 15% extra EXP
+  itemName: Spin Weapon
+  itemID: 1201
+  description: Simple Spin Weapon
   icon: {fileID: 0}
   worldPrefab: {fileID: 0}
-  pocketType: 1
-  isStackable: 1
-  maxStackSize: 10
-  weaponPrefab: {fileID: 0}
-  statModifiers:
-  - statType: 14
-    modifierType: 1
-    value: 0.15
+  pocketType: 0
+  isStackable: 0
+  maxStackSize: 1
+  weaponPrefab: {fileID: 5926135577726204308, guid: e9c7b3062246b6446857cd7d0253c5c6, type: 3}
+  statModifiers: []
   consumableEffect: 0
   consumableValue: 0
   consumableDuration: 0

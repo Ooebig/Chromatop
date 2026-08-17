@@ -1,38 +1,129 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, iDamage
 {
-    public float currentHealth, maxHealth;
+    [Header("Fallback Health")]
+    [Tooltip("Used only when PlayerStats cannot be found.")]
+    [SerializeField] private float fallbackMaxHealth = 100f;
 
+    [Header("Runtime Health")]
+    [SerializeField] private float currentHealth;
+
+    private PlayerStats playerStats;
+    private float previousMaxHealth;
 
     int iDamage.Team => 1;
 
-    // Start is called before the first frame update
-    void Start()
+    public float CurrentHealth => currentHealth;
+
+    public float MaxHealth =>
+        playerStats != null
+            ? playerStats.MaxHealth
+            : fallbackMaxHealth;
+
+    private void Awake()
     {
-        currentHealth = maxHealth;
+        playerStats = GetComponent<PlayerStats>();
+
+        if (playerStats == null)
+        {
+            playerStats =
+                GetComponentInParent<PlayerStats>();
+        }
+
+        previousMaxHealth = MaxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        if(Input.GetKeyDown(KeyCode.T))
+        if (playerStats != null)
         {
-            takeDamage(10f, gameManager.ColorType.GREY);
+            playerStats.StatsChanged += HandleStatsChanged;
         }
     }
 
-
-    public void takeDamage(float amount, gameManager.ColorType dmgColor)
+    private void Start()
     {
-        float damage = gameManager.damageCalc(amount, gameManager.ColorType.GREY, dmgColor);
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        currentHealth = MaxHealth;
+        previousMaxHealth = MaxHealth;
+    }
+
+    private void OnDisable()
+    {
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged -= HandleStatsChanged;
+        }
+    }
+
+    private void Update()
+    {
+        // Temporary testing input.
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            takeDamage(
+                10f,
+                gameManager.ColorType.GREY
+            );
+        }
+    }
+
+    public void takeDamage(
+        float amount,
+        gameManager.ColorType dmgColor
+    )
+    {
+        float damage = gameManager.damageCalc(
+            amount,
+            gameManager.ColorType.GREY,
+            dmgColor
+        );
+
+        if (playerStats != null)
+        {
+            damage *=
+                1f - playerStats.DamageReduction;
+        }
+
+        currentHealth = Mathf.Max(
+            0f,
+            currentHealth - damage
+        );
+
+        if (currentHealth <= 0f)
         {
             gameObject.SetActive(false);
         }
+    }
+
+    public void Heal(float amount)
+    {
+        if (amount <= 0f)
+            return;
+
+        currentHealth = Mathf.Min(
+            currentHealth + amount,
+            MaxHealth
+        );
+    }
+
+    private void HandleStatsChanged()
+    {
+        float newMaxHealth = MaxHealth;
+        float difference = newMaxHealth - previousMaxHealth;
+
+        // Increasing maximum health also grants the added health.
+        if (difference > 0f)
+        {
+            currentHealth += difference;
+        }
+
+        currentHealth = Mathf.Clamp(
+            currentHealth,
+            0f,
+            newMaxHealth
+        );
+
+        previousMaxHealth = newMaxHealth;
     }
 }

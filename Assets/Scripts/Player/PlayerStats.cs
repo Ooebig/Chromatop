@@ -6,28 +6,42 @@ public class PlayerStats : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] private float baseMaxHealth = 100f;
-    [SerializeField] private float currentHealth;
 
     [Header("Movement")]
-    [SerializeField] private float baseMovementSpeed = 5f;
+    [SerializeField] private float baseMovementSpeed = 6f;
 
     [Header("Progression")]
     [SerializeField] private float baseExperienceGain = 1f;
     [SerializeField] private float basePickupRange = 2f;
 
+    [Header("Calculated Stats - Runtime")]
+    [SerializeField] private float displayedMaxHealth;
+    [SerializeField] private float displayedMovementSpeed;
+    [SerializeField] private float displayedExperienceGain;
+    [SerializeField] private float displayedPickupRange;
+    [SerializeField] private float displayedDamageReduction;
+
     private readonly List<ActiveStatModifier> activeModifiers =
         new List<ActiveStatModifier>();
 
-    public event Action<float, float> HealthChanged;
     public event Action StatsChanged;
 
-    public float CurrentHealth => currentHealth;
+    private void Awake()
+    {
+        RefreshDisplayedStats();
+    }
 
     public float MaxHealth =>
-        Calculate(StatType.MaxHealth, baseMaxHealth);
+        Calculate(
+            StatType.MaxHealth,
+            baseMaxHealth
+        );
 
     public float MovementSpeed =>
-        Calculate(StatType.MovementSpeed, baseMovementSpeed);
+        Calculate(
+            StatType.MovementSpeed,
+            baseMovementSpeed
+        );
 
     public float ExperienceGainMultiplier =>
         Calculate(
@@ -36,19 +50,20 @@ public class PlayerStats : MonoBehaviour
         );
 
     public float PickupRange =>
-        Calculate(StatType.PickupRange, basePickupRange);
+        Calculate(
+            StatType.PickupRange,
+            basePickupRange
+        );
 
     public float DamageReduction =>
         Mathf.Clamp(
-            Calculate(StatType.DamageReduction, 0f),
+            Calculate(
+                StatType.DamageReduction,
+                0f
+            ),
             0f,
             0.75f
         );
-
-    private void Awake()
-    {
-        currentHealth = MaxHealth;
-    }
 
     public float Calculate(
         StatType statType,
@@ -63,8 +78,11 @@ public class PlayerStats : MonoBehaviour
             StatModifier modifier =
                 activeModifier.modifier;
 
-            if (modifier.statType != statType)
+            if (modifier == null ||
+                modifier.statType != statType)
+            {
                 continue;
+            }
 
             switch (modifier.modifierType)
             {
@@ -78,20 +96,22 @@ public class PlayerStats : MonoBehaviour
             }
         }
 
-        return Mathf.Max(
-            0f,
+        float finalValue =
             (baseValue + flatBonus) *
-            (1f + percentageBonus)
-        );
+            (1f + percentageBonus);
+
+        return Mathf.Max(0f, finalValue);
     }
 
     public void AddModifiers(
-        UnityEngine.Object source,
-        IEnumerable<StatModifier> modifiers
-    )
+    UnityEngine.Object source,
+    IEnumerable<StatModifier> modifiers
+)
     {
         if (source == null || modifiers == null)
             return;
+
+        RemoveModifiersFromList(source);
 
         foreach (StatModifier modifier in modifiers)
         {
@@ -106,92 +126,65 @@ public class PlayerStats : MonoBehaviour
             );
         }
 
-        ClampCurrentHealth();
+        RefreshDisplayedStats();
         StatsChanged?.Invoke();
     }
 
     public void RemoveModifiers(
-        UnityEngine.Object source
-    )
+    UnityEngine.Object source
+)
     {
         if (source == null)
             return;
 
-        activeModifiers.RemoveAll(
-            modifier => modifier.source == source
-        );
+        bool removed =
+            RemoveModifiersFromList(source);
 
-        ClampCurrentHealth();
-        StatsChanged?.Invoke();
-    }
-
-    public void TakeDamage(float incomingDamage)
-    {
-        if (incomingDamage <= 0f)
-            return;
-
-        float finalDamage =
-            incomingDamage * (1f - DamageReduction);
-
-        currentHealth = Mathf.Max(
-            0f,
-            currentHealth - finalDamage
-        );
-
-        HealthChanged?.Invoke(
-            currentHealth,
-            MaxHealth
-        );
-
-        if (currentHealth <= 0f)
+        if (removed)
         {
-            Die();
+            RefreshDisplayedStats();
+            StatsChanged?.Invoke();
         }
     }
 
-    public void Heal(float amount)
+    private bool RemoveModifiersFromList(
+        UnityEngine.Object source
+    )
     {
-        if (amount <= 0f)
-            return;
+        int removedAmount =
+            activeModifiers.RemoveAll(
+                modifier =>
+                    modifier.source == source
+            );
 
-        currentHealth = Mathf.Min(
-            currentHealth + amount,
-            MaxHealth
-        );
-
-        HealthChanged?.Invoke(
-            currentHealth,
-            MaxHealth
-        );
+        return removedAmount > 0;
     }
 
-    public void RestoreFullHealth()
+    private void OnValidate()
     {
-        currentHealth = MaxHealth;
+        baseMaxHealth =
+            Mathf.Max(1f, baseMaxHealth);
 
-        HealthChanged?.Invoke(
-            currentHealth,
-            MaxHealth
-        );
+        baseMovementSpeed =
+            Mathf.Max(0f, baseMovementSpeed);
+
+        baseExperienceGain =
+            Mathf.Max(0f, baseExperienceGain);
+
+        basePickupRange =
+            Mathf.Max(0f, basePickupRange);
+
+        StatsChanged?.Invoke();
+
+        RefreshDisplayedStats();
     }
 
-    private void ClampCurrentHealth()
+    private void RefreshDisplayedStats()
     {
-        currentHealth = Mathf.Clamp(
-            currentHealth,
-            0f,
-            MaxHealth
-        );
-
-        HealthChanged?.Invoke(
-            currentHealth,
-            MaxHealth
-        );
-    }
-
-    private void Die()
-    {
-        Debug.Log("Player died.", this);
-        gameObject.SetActive(false);
+        displayedMaxHealth = MaxHealth;
+        displayedMovementSpeed = MovementSpeed;
+        displayedExperienceGain = ExperienceGainMultiplier;
+        displayedPickupRange = PickupRange;
+        displayedDamageReduction = DamageReduction;
     }
 }

@@ -1,7 +1,7 @@
 public enum PocketType
 {
     Weapon,
-    Passive,
+    Relic,
     Consumable,
     Currency
 }
