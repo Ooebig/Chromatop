@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
     [System.Serializable]
@@ -27,8 +28,11 @@ public class EnemySpawner : MonoBehaviour
     private int waveIndex = 0;
     private bool isSpawning = false;
     private List<GameObject> activeEnemies = new List<GameObject>();
-    
 
+    public TextMeshProUGUI waveCount;
+    public TextMeshProUGUI timeToWave;
+
+    private float currTimer;
     private void Start()
     {
         if (playerPos == null)
@@ -40,7 +44,10 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(WaveLoop());
         }
     }
-
+    private void Update()
+    {
+        UpdateUI();
+    }
     IEnumerator WaveLoop()
     {
         while (waveIndex < waves.Count)
@@ -54,8 +61,13 @@ public class EnemySpawner : MonoBehaviour
                 activeEnemies.RemoveAll(item => item == null);
                 yield return new WaitForSeconds(0.5f);
             }
-
-            yield return new WaitForSeconds(timeBetweenWaves);
+            currTimer = timeBetweenWaves;
+            while (currTimer > 0)
+            {
+                yield return null;
+                currTimer -= Time.deltaTime;
+            }
+            currTimer = 0;
 
             waveIndex++;
         }
@@ -152,4 +164,30 @@ public class EnemySpawner : MonoBehaviour
         enemyStats.LoadModel();
     }
 
+
+    private void UpdateUI()
+    {
+        
+
+        if(waveIndex < waves.Count)
+        {
+            int waveNumber = waveIndex + 1;
+            int totalWaves = waves.Count;
+
+            waveCount.text = $"Wave {waveNumber} / {totalWaves}";
+        }
+        else
+        {
+            timeToWave.text = "All waves cleared";
+        }
+
+        if(activeEnemies.Count > 0)
+        {
+            timeToWave.text = $"Enemies Left: {activeEnemies.Count}";
+        }
+        else
+        {
+            timeToWave.text = $"Next wave in: {Mathf.Max(0, currTimer):F1}s";
+        }
+    }
 }
