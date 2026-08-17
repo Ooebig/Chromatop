@@ -9,13 +9,11 @@ public enum ItemType
     Currency
 }
 
-[CreateAssetMenu(fileName = "Inventory", menuName = "Persistence/Inventory")]
-
+[CreateAssetMenu(
+    fileName = "NewItem",
+    menuName = "Inventory/Item Data")]
 public class Inventory : ScriptableObject
 {
-    public int playerScore;
-    public string playerName;
-
     [Header("Basic Information")]
     public string itemName;
     public string itemID;
