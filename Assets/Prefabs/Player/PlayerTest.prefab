@@ -146,9 +146,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8451056196993457462}
-  - component: {fileID: 1006105299790397819}
+  - component: {fileID: 3846990933939509830}
   - component: {fileID: 4336869944496800674}
-  - component: {fileID: 2323851824268941641}
+  - component: {fileID: 3159846526123817354}
   - component: {fileID: 4692398124998047081}
   - component: {fileID: 7386132333913958001}
   - component: {fileID: 6819693881072554291}
@@ -178,7 +178,7 @@ Transform:
   - {fileID: 6271668324186158720}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1006105299790397819
+--- !u!114 &3846990933939509830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,11 +187,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562699871064588692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7469331569eb145abb128b1c4f905d, type: 3}
+  m_Script: {fileID: 11500000, guid: b5301e3bdf9d63247ab13de4bab23b76, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  baseMaxHealth: 100
   currentHealth: 0
-  maxHealth: 100
+  baseMovementSpeed: 5
+  baseExperienceGain: 1
+  basePickupRange: 2
 --- !u!114 &4336869944496800674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 8
---- !u!114 &2323851824268941641
+--- !u!114 &3159846526123817354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,13 +217,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562699871064588692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8d37a9d8fcc7a04f926286e64e29fbf, type: 3}
+  m_Script: {fileID: 11500000, guid: bb26bfc2621f38e469e5890820513d12, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerExperience
-  currentLevel: 1
-  currentXP: 0
-  xpToNextLevel: 200
-  xpRequirementMultiplier: 1.25
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  items:
+  - {fileID: 0}
 --- !u!33 &4692398124998047081
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -293,7 +294,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -368,7 +369,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408506078354818433}
-  - component: {fileID: 3438779136342719498}
+  - component: {fileID: 4423566948137273651}
   - component: {fileID: 5686662268654481445}
   m_Layer: 0
   m_Name: CurrencyPickupRange
@@ -386,13 +387,13 @@ Transform:
   m_GameObject: {fileID: 3638680003666380930}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.386, y: -0.09334999, z: -0.31781}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8451056196993457462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3438779136342719498
+--- !u!114 &4423566948137273651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,10 +402,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3638680003666380930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1956607221a8df4e870d1aab64b2edd, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ab091232a375da41b738ac4486e82e2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CurrencyPickup
-  currencyAmount: 10
+  m_EditorClassIdentifier: Assembly-CSharp::PickupRangeController
 --- !u!135 &5686662268654481445
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2105635537963943014
 PrefabInstance:

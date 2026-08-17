@@ -4,14 +4,27 @@ public class CurrencyPickup : MonoBehaviour
 {
     [SerializeField] private int currencyAmount = 10;
 
+    private bool collected;
+
     private void OnTriggerEnter(Collider other)
     {
-        IPickup pickup = other.GetComponent<IPickup>();
+        IPickup receiver =
+            other.GetComponentInParent<IPickup>();
 
-        if (pickup != null)
+        if (receiver != null)
         {
-            pickup.AddCurrency(currencyAmount);
-            Destroy(gameObject);
+            Collect(receiver);
         }
+    }
+
+    public void Collect(IPickup receiver)
+    {
+        if (collected || receiver == null)
+            return;
+
+        collected = true;
+
+        receiver.AddCurrency(currencyAmount);
+        Destroy(gameObject);
     }
 }
