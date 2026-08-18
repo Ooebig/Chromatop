@@ -278,6 +278,8 @@ public class gameManager : MonoBehaviour
             return;
         }
 
+        //Finding the menus by name under the "Menus" root object, using ? to avoid null reference exceptions if not found
+
         menuPause = menuRt.transform.Find("Pause Menu")?.gameObject;
         menuWin = menuRt.transform.Find("Level Complete Menu")?.gameObject;
         menuLose = menuRt.transform.Find("Death Menu")?.gameObject;
