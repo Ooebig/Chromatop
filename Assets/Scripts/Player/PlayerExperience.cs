@@ -1,28 +1,63 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// Tracks player XP and level.
-/// Leveling up now happens automatically without opening a menu.
+/// Experience-gain relics are calculated through PlayerStats.
 public class PlayerExperience : MonoBehaviour
 {
     [Header("Experience Settings")]
     [SerializeField] private int currentLevel = 1;
-    [SerializeField] private int currentXP = 0;
+    [SerializeField] private int currentXP;
     [SerializeField] private int xpToNextLevel = 200;
+
+    [Min(1f)]
     [SerializeField] private float xpRequirementMultiplier = 1.25f;
 
-    /// Adds XP to the player.
-    /// Called by XP orbs.
-    public void AddXP(int amount)
-    {
-        currentXP += amount;
+    private PlayerStats playerStats;
 
-        Debug.Log("XP gained: " + amount + ". Current XP: " + currentXP + " / " + xpToNextLevel);
+    public int CurrentLevel => currentLevel;
+    public int CurrentXP => currentXP;
+    public int XPToNextLevel => xpToNextLevel;
+
+    private void Awake()
+    {
+        playerStats = GetComponent<PlayerStats>();
+
+        if (playerStats == null)
+        {
+            playerStats =
+                GetComponentInParent<PlayerStats>();
+        }
+    }
+
+    /// Adds XP after applying the player's experience multiplier.
+    public void AddXP(int baseAmount)
+    {
+        if (baseAmount <= 0)
+            return;
+
+        float experienceMultiplier =
+            playerStats != null
+                ? playerStats.ExperienceGainMultiplier
+                : 1f;
+
+        int finalAmount = Mathf.Max(
+            1,
+            Mathf.RoundToInt(
+                baseAmount * experienceMultiplier
+            )
+        );
+
+        currentXP += finalAmount;
+
+        Debug.Log(
+            $"XP gained: {finalAmount}. " +
+            $"Current XP: {currentXP}/{xpToNextLevel}",
+            this
+        );
 
         CheckForLevelUp();
     }
 
-    /// Checks if the player has enough XP to level up.
     private void CheckForLevelUp()
     {
         while (currentXP >= xpToNextLevel)
@@ -30,9 +65,15 @@ public class PlayerExperience : MonoBehaviour
             currentXP -= xpToNextLevel;
             currentLevel++;
 
-            xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * xpRequirementMultiplier);
+            xpToNextLevel = Mathf.RoundToInt(
+                xpToNextLevel *
+                xpRequirementMultiplier
+            );
 
-            Debug.Log("LEVEL UP! New level: " + currentLevel);
+            Debug.Log(
+                $"LEVEL UP! New level: {currentLevel}",
+                this
+            );
         }
     }
 }

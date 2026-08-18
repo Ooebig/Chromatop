@@ -15,6 +15,13 @@ public class Weapon : MonoBehaviour
     [HideInInspector]
     public bool statsUpdated;
 
+    protected PlayerStats playerStats;
+
+    protected virtual void Awake()
+    {
+        playerStats = GetComponentInParent<PlayerStats>();
+    }
+
     public WeaponStats CurrentStats
     {
         get
