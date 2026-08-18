@@ -155,6 +155,8 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyStats.speed = 5f;
             enemyStats.maxHp = 150f;
+            enemyStats.chargeDelay = 3f;
+            enemyStats.maxCharge = 1.5f;
         }
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Shooter)
         {

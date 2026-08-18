@@ -47,10 +47,29 @@ using UnityEngine;
 
         IEnumerator ChargerBehavior()
         {
-            while (true)
-            {
-                yield return null;
+        while (true)
+        {
+            
+            
+            float delayTime = 0;
 
+            while (delayTime < stats.chargeDelay)
+            {
+                transform.LookAt(player.position);
+                delayTime += Time.deltaTime;
+                yield return null;
+            }
+
+            Vector3 target = player.position;
+            Vector3 dir = (player.position - transform.position).normalized;
+            float chargeTime = 0;
+            while (chargeTime < stats.maxCharge)
+            {
+                transform.position += dir * (stats.speed * 2f) * Time.deltaTime;
+                chargeTime += Time.deltaTime;
+                yield return null;
+            }
+            yield return new WaitForSeconds(stats.chargeDelay);
         }
         }
 
