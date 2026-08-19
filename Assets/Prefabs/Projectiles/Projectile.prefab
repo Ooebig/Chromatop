@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
   damageAmount: 5
-  damageColor: 0
+  damageColor: 6
   lifeTime: 5
 --- !u!33 &8206960498050467239
 MeshFilter:

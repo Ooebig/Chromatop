@@ -176,9 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpinWeapon
   stats:
   - levelName: Level 1
-    baseDamage: 5
+    baseDamage: 1000
     knockback: 0
-    area: 1
+    area: 0.5
     speed: 100
     cooldown: 3
     interval: 0.1

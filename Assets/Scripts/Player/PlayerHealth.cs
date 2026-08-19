@@ -73,18 +73,21 @@ public class PlayerHealth : MonoBehaviour, iDamage
         gameManager.ColorType dmgColor
     )
     {
+
+        Debug.Log("Player Took Dmg " + amount);
         float damage = gameManager.damageCalc(
             amount,
             gameManager.ColorType.GREY,
             dmgColor
         );
-
+        Debug.Log("A " + damage);
         if (playerStats != null)
         {
+            Debug.Log("Playerstats null");
             damage *=
                 1f - playerStats.DamageReduction;
         }
-
+        Debug.Log("B " + damage);
         currentHealth = Mathf.Max(
             0f,
             currentHealth - damage
@@ -92,6 +95,7 @@ public class PlayerHealth : MonoBehaviour, iDamage
 
         if (currentHealth <= 0f)
         {
+            Debug.Log("Playerdeath");
             gameObject.SetActive(false);
         }
     }
