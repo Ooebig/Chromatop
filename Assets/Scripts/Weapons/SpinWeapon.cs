@@ -78,7 +78,6 @@ public class SpinWeapon : Weapon
             orbSpawnPoint.rotation,
             holder
         );
-
         ConfigureOrb(newOrb);
 
         newOrb.gameObject.SetActive(true);
@@ -89,21 +88,21 @@ public class SpinWeapon : Weapon
         newOrb.localScale =
             Vector3.one * currentStats.area;
 
-        EnemyDamager orbDamager =
-            newOrb.GetComponentInChildren<EnemyDamager>(true);
+        damage orbDamager =
+            newOrb.GetComponentInChildren<damage>(true);
 
         if (orbDamager == null)
         {
             Debug.LogError(
-                "The spawned orb needs an EnemyDamager component.",
+                "The spawned orb needs a damage component.",
                 newOrb
             );
 
             return;
         }
-
-        orbDamager.SetDamage(currentStats.baseDamage);
-        orbDamager.SetLifeTime(currentStats.duration);
+        orbDamager.damageAmount = currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
+        orbDamager.bulletDestroyTime = currentStats.duration;
+        orbDamager.GetComponent<MeshRenderer>().material = gameManager.instance.activeMaterial;
     }
 
     private void SetStats()

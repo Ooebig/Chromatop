@@ -56,47 +56,37 @@ public class PlayerHealth : MonoBehaviour, iDamage
         }
     }
 
-    private void Update()
-    {
-        // Temporary testing input.
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            takeDamage(
-                10f,
-                gameManager.ColorType.GREY
-            );
-        }
-    }
-
     public void takeDamage(
         float amount,
         gameManager.ColorType dmgColor
     )
     {
 
-        Debug.Log("Player Took Dmg " + amount);
+        //Debug.Log("Player Took Dmg " + amount);
         float damage = gameManager.damageCalc(
             amount,
-            gameManager.ColorType.GREY,
+            gameManager.instance.activeColor,
             dmgColor
         );
-        Debug.Log("A " + damage);
+        //Debug.Log("A " + damage);
         if (playerStats != null)
         {
             Debug.Log("Playerstats null");
             damage *=
                 1f - playerStats.DamageReduction;
         }
-        Debug.Log("B " + damage);
+        //Debug.Log("B " + damage);
         currentHealth = Mathf.Max(
             0f,
             currentHealth - damage
         );
-
+        gameManager.instance.updatePlayerHP(currentHealth, MaxHealth);
+        gameManager.instance.DamageFlash(dmgColor);
         if (currentHealth <= 0f)
         {
             Debug.Log("Playerdeath");
-            gameObject.SetActive(false);
+            gameManager.instance.youLose();
+            //gameObject.SetActive(false);
         }
     }
 

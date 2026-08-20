@@ -1,177 +1,174 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ConsumableEffectType
-{
-    None,
-    Heal,
-    TemporaryDamage,
-    TemporarySpeed,
-    TemporaryDefense
-}
 
-[CreateAssetMenu(
-    fileName = "NewItem",
-    menuName = "Inventory/Item Data"
-)]
-public class ItemData : ScriptableObject
+public abstract class ItemData : ScriptableObject
 {
     [Header("Basic Information")]
+    
     public string itemName;
-    public int itemID;
+    [Tooltip("For ItemID:\nNonActive: 0000+\nWeapon: 1000+\nPassive: 2000+\nOnHit: 3000+\nOnKill: 4000+\nOnDamage: 5000+\nOnHeal: 6000+\nOnPickup: 7000+\nTime: 8000+\nOnStart: 9000+")]
+    public int itemID = 0;
+    
 
     [TextArea]
     public string description;
 
     public Sprite icon;
 
-    [Header("World Appearance")]
-    [Tooltip("Physical prefab spawned when this item is dropped.")]
-    public GameObject worldPrefab;
-
     [Header("Inventory Pocket")]
-    public PocketType pocketType;
+    public abstract Inventory.PocketType pocketType { get; }
 
-    [Header("Stacking")]
-    public bool isStackable;
+    [Header("Set")]
+    public Inventory.ItemSet itemSet = Inventory.ItemSet.Generic;
 
-    [Min(1)]
-    public int maxStackSize = 1;
+    //[Header("Weapon Settings")]
+    //[Tooltip("Only used by Weapon items.")]
+    //public GameObject weaponPrefab;
 
-    [Header("Weapon Settings")]
-    [Tooltip("Only used by Weapon items.")]
-    public GameObject weaponPrefab;
+    //[Header("Passive Settings")]
+    //public PassiveEffectType passiveEffect = PassiveEffectType.None;
+    //public float passiveValue = 0f;
 
-    [Header("Relic Settings")]
-    [Tooltip("Only used by Relic items.")]
-    public List<StatModifier> statModifiers =
-        new List<StatModifier>();
+    //MORE TO BE ADDED IN BETA
 
-    [Header("Consumable Settings")]
-    public ConsumableEffectType consumableEffect;
-    public float consumableValue;
+    //[Header("Relic Settings")]
+    //[Tooltip("Only used by Relic items.")]
+    //public List<StatModifier> statModifiers =
+    //    new List<StatModifier>();
 
-    [Min(0f)]
-    public float consumableDuration;
+    //[Header("Consumable Settings")]
+    //public ConsumableEffectType consumableEffect;
+    //public float consumableValue;
 
-    [Header("Currency Settings")]
-    [Min(0)]
-    public int currencyValue;
+    //[Min(0f)]
+    //public float consumableDuration;
+
+    //[Header("Currency Settings")]
+    //[Min(0)]
+    //public int currencyValue;
 
     public virtual void Activate(ItemContext context)
     {
-        if (context == null || context.player == null)
-        {
-            Debug.LogWarning(
-                $"{itemName} was activated without a valid ItemContext.",
-                this
-            );
-
-            return;
-        }
-
-        switch (pocketType)
-        {
-            case PocketType.Relic:
-                ActivateRelic(context);
-                break;
-
-            case PocketType.Weapon:
-                ActivateWeapon(context);
-                break;
-
-            case PocketType.Consumable:
-                ActivateConsumable(context);
-                break;
-
-            case PocketType.Currency:
-                break;
-        }
-    }
-
-    private void ActivateRelic(ItemContext context)
-    {
-        if (context.playerStats == null)
-        {
-            Debug.LogWarning(
-                $"{itemName} could not find PlayerStats.",
-                this
-            );
-
-            return;
-        }
-
-        context.playerStats.AddModifiers(
-            this,
-            statModifiers
-        );
-
         Debug.Log(
-            $"Equipped relic: {itemName}",
+            $"Activated NonActive item: {itemName}",
             this
         );
     }
 
-    private void ActivateWeapon(ItemContext context)
-    {
-        if (weaponPrefab == null)
-        {
-            Debug.LogWarning(
-                $"{itemName} does not have a weapon prefab.",
-                this
-            );
+    //private void ActivateRelic(ItemContext context)
+    //{
+    //    if (context.playerStats == null)
+    //    {
+    //        Debug.LogWarning(
+    //            $"{itemName} could not find PlayerStats.",
+    //            this
+    //        );
 
-            return;
-        }
+    //        return;
+    //    }
 
-        GameObject newWeapon = Instantiate(
-            weaponPrefab,
-            context.player.transform
-        );
+    //    context.playerStats.AddModifiers(
+    //        this,
+    //        statModifiers
+    //    );
 
-        newWeapon.transform.localPosition =
-            Vector3.zero;
+    //    Debug.Log(
+    //        $"Equipped relic: {itemName}",
+    //        this
+    //    );
+    //}
 
-        Debug.Log(
-            $"Equipped weapon: {itemName}",
-            this
-        );
-    }
+    //private void ActivateWeapon(ItemContext context)
+    //{
+    //    if (weaponPrefab == null)
+    //    {
+    //        Debug.LogWarning(
+    //            $"{itemName} does not have a weapon prefab.",
+    //            this
+    //        );
 
-    private void ActivateConsumable(ItemContext context)
-    {
-        if (context.playerHealth == null)
-        {
-            Debug.LogWarning(
-                $"{itemName} could not find PlayerHealth.",
-                this
-            );
+    //        return;
+    //    }
 
-            return;
-        }
+    //    GameObject newWeapon = Instantiate(
+    //        weaponPrefab,
+    //        context.player.transform
+    //    );
 
-        switch (consumableEffect)
-        {
-            case ConsumableEffectType.Heal:
-                context.playerHealth.Heal(
-                    consumableValue
-                );
-                break;
+    //    newWeapon.transform.localPosition =
+    //        Vector3.zero;
 
-            case ConsumableEffectType.None:
-                Debug.LogWarning(
-                    $"{itemName} does not have an effect.",
-                    this
-                );
-                break;
+    //    Debug.Log(
+    //        $"Equipped weapon: {itemName}",
+    //        this
+    //    );
+    //}
 
-            default:
-                Debug.LogWarning(
-                    $"{consumableEffect} is not implemented yet.",
-                    this
-                );
-                break;
-        }
-    }
+    //private void ActivateConsumable(ItemContext context)
+    //{
+    //    if (context.playerHealth == null)
+    //    {
+    //        Debug.LogWarning(
+    //            $"{itemName} could not find PlayerHealth.",
+    //            this
+    //        );
+
+    //        return;
+    //    }
+
+    //    switch (consumableEffect)
+    //    {
+    //        case ConsumableEffectType.Heal:
+    //            context.playerHealth.Heal(
+    //                consumableValue
+    //            );
+    //            break;
+
+    //        case ConsumableEffectType.None:
+    //            Debug.LogWarning(
+    //                $"{itemName} does not have an effect.",
+    //                this
+    //            );
+    //            break;
+
+    //        default:
+    //            Debug.LogWarning(
+    //                $"{consumableEffect} is not implemented yet.",
+    //                this
+    //            );
+    //            break;
+    //    }
+    //}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

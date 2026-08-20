@@ -2,48 +2,11 @@ using UnityEngine;
 
 public class CurrencyPickup : MonoBehaviour
 {
-    [SerializeField] private ItemData itemData;
+    [SerializeField] private int currencyValue = 1;
 
-    private bool collected;
-
-    public ItemData ItemData => itemData;
-
-    private void Awake()
+    public void Collect()
     {
-        if (itemData == null)
-        {
-            Debug.LogError(
-                "CurrencyPickup needs an ItemData asset.",
-                this
-            );
-        }
-    }
-
-    public void Collect(IPickup receiver)
-    {
-        if (collected ||
-            receiver == null ||
-            itemData == null)
-        {
-            return;
-        }
-
-        if (itemData.pocketType != PocketType.Currency)
-        {
-            Debug.LogError(
-                $"{itemData.itemName} is not a Currency item.",
-                this
-            );
-
-            return;
-        }
-
-        collected = true;
-
-        receiver.AddCurrency(
-            itemData.currencyValue
-        );
-
+        gameManager.instance.inventory.AddCurrency(currencyValue);
         Destroy(gameObject);
     }
 
@@ -54,7 +17,7 @@ public class CurrencyPickup : MonoBehaviour
 
         if (receiver != null)
         {
-            Collect(receiver);
+            Collect();
         }
     }
 }

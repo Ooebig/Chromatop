@@ -22,6 +22,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void restart()
     {
+        Debug.Log("Restart button pressed");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         gameManager.instance.StartCoroutine(gameManager.instance.RefreshAfterLoad());
@@ -29,6 +30,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void quit()
     {
+        Debug.Log("Quit button pressed");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -79,14 +81,16 @@ public class buttonFunctions : MonoBehaviour
 
     public void next()
     {
+
         //visits next inventory page
 
     }
 
     public void playgame()
     {
-        gameManager.instance.CloseCurrentMenu();
-        SceneManager.LoadScene("Level1");
+        Debug.Log("Playgame button pressed");
+        //gameManager.instance.CloseCurrentMenu();
+        SceneManager.LoadScene("Gameplay");
     }
 
 

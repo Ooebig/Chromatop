@@ -2,11 +2,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class gameManager : MonoBehaviour
 {
+    public enum ColorType { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GREY }
     public static gameManager instance;
+    [Header("Starting Settings")]
+    [SerializeField]
+    public List<ItemData> startingItems =
+        new List<ItemData>();
 
+    [Header("Color Management")]
+    [SerializeField] public Material redMat;
+    [SerializeField] public Material orangeMat;
+    [SerializeField] public Material yellowMat;
+    [SerializeField] public Material greenMat;
+    [SerializeField] public Material blueMat;
+    [SerializeField] public Material purpleMat;
+    [SerializeField] public Material greyMat;
+    public Dictionary<ColorType, Material> colorMaterials =
+        new Dictionary<ColorType, Material>();
+
+    [SerializeField] public List<ColorType> colorsUnlocked = new List<ColorType>(6);
+    public List<ColorType> colorOrder = new List<ColorType>(6);
+    [SerializeField] public List<Image> slices = new List<Image>();
+
+    [Header("Scene Management")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -16,17 +38,23 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuStats;
     [SerializeField] public GameObject menuInventory;
     [SerializeField] public GameObject menuMain;
+
+
     GameObject menuPrevious;
 
     //public GameObject checkPointPopup;
     public Image playerHPBar;
-    //public GameObject playerDamageScreen;
+    public TMP_Text playerHPText;
+    public GameObject playerDamageScreen;
     public TMP_Text roundTimerText;
 
     public bool isPaused;
-    // public GameObject player;
+    public GameObject player;
     //public playerController playerScript;
-   //  public GameObject playerStartPos;
+    public Inventory inventory;
+    public GameObject playerStartPos;
+    public ColorType activeColor;
+    public Material activeMaterial;
 
 
 
@@ -42,14 +70,180 @@ public class gameManager : MonoBehaviour
             Destroy(gameObject); // Prevent duplicates when returning to this scene
             return;
         }
+
         instance = this;
         timeScaleOrig = Time.timeScale;
-        //player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
         //playerScript = player.GetComponent<playerController>();
-        //playerStartPos = GameObject.FindWithTag("Player Start Pos");
-        DontDestroyOnLoad(gameObject);
+        inventory = player.GetComponent<Inventory>();
+        playerStartPos = GameObject.FindWithTag("Player Start Pos");
+        activeColor = colorsUnlocked[0];
+        colorMaterials[ColorType.RED] = redMat;
+        colorMaterials[ColorType.ORANGE] = orangeMat;
+        colorMaterials[ColorType.YELLOW] = yellowMat;
+        colorMaterials[ColorType.GREEN] = greenMat;
+        colorMaterials[ColorType.BLUE] = blueMat;
+        colorMaterials[ColorType.PURPLE] = purpleMat;
+        colorMaterials[ColorType.GREY] = greyMat;
+
+        //DontDestroyOnLoad(gameObject);
         RefreshMenuRef();
     }
+
+    void Start()
+    {
+        if (startingItems.Count > 0)
+        {
+            for (int i = 0; i < startingItems.Count; i++)
+            {
+                inventory.AddItem(startingItems[i]);
+            }
+            inventory.ActivatePocket(Inventory.PocketType.Passive);
+            inventory.ActivatePocket(Inventory.PocketType.Weapon);
+        }
+        ChangeColor(2);
+    }
+
+    void ChangeColor(int direction)
+    {
+        int currentIndex = colorOrder.IndexOf(activeColor);
+        bool valid = false;
+        while (!valid){
+            if (direction == 1)
+            {
+                currentIndex = (currentIndex + 1) % colorOrder.Count;
+            }
+            else if (direction == 0)
+            {
+                currentIndex = (currentIndex - 1 + colorOrder.Count) % colorOrder.Count;
+            }
+            if (colorsUnlocked.Contains(colorOrder[currentIndex]))
+            {
+                valid = true;
+            }
+        }
+        activeColor = colorOrder[currentIndex];
+        switch (activeColor)
+        {
+            case ColorType.RED:
+                activeMaterial = redMat;
+                break;
+            case ColorType.ORANGE:
+                activeMaterial = orangeMat;
+                break;
+            case ColorType.YELLOW:
+                activeMaterial = yellowMat;
+                break;
+            case ColorType.GREEN:
+                activeMaterial = greenMat;
+                break;
+            case ColorType.BLUE:
+                activeMaterial = blueMat;
+                break;
+            case ColorType.PURPLE:
+                activeMaterial = purpleMat;
+                break;
+            default:
+                activeMaterial = greyMat;
+                break;
+        }
+        player.GetComponent<MeshRenderer>().material = activeMaterial;
+        UpdateColorUI();
+    }
+
+    void UpdateColorUI()
+    {
+        int currentIndex = colorOrder.IndexOf(activeColor);
+        for (int i = 0; i < colorOrder.Count; i++) {
+            if (colorsUnlocked.Contains(colorOrder[currentIndex])) {
+                switch (colorOrder[currentIndex]) {
+                    case ColorType.RED:
+                        slices[i].color = redMat.color;
+                        break;
+                    case ColorType.ORANGE:
+                        slices[i].color = orangeMat.color;
+                        break;
+                    case ColorType.YELLOW:
+                        slices[i].color = yellowMat.color;
+                        break;
+                    case ColorType.GREEN:
+                        slices[i].color = greenMat.color;
+                        break;
+                    case ColorType.BLUE:
+                        slices[i].color = blueMat.color;
+                        break;
+                    case ColorType.PURPLE:
+                        slices[i].color = purpleMat.color;
+                        break;
+                    default:
+                        slices[i].color = greyMat.color;
+                        break;
+                }
+                
+            }
+            else
+            {
+                slices[i].color = greyMat.color;
+            }
+            currentIndex++;
+            if (currentIndex == 6)
+            {
+                currentIndex = 0;
+            }
+        }
+        
+    }
+
+    
+
+    void UnlockColor(ColorType color)
+    {
+        if (!colorsUnlocked.Contains(color))
+        {
+            colorsUnlocked.Add(color);
+        }
+    }
+
+    public void DamageFlash(ColorType color)
+    {
+        if (playerDamageScreen != null)
+        {
+            float alpha = playerDamageScreen.GetComponent<Image>().color.a;
+            switch (color)
+            {
+                case ColorType.RED:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, redMat.color);
+                    break;
+                case ColorType.ORANGE:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, orangeMat.color);
+                    break;
+                case ColorType.YELLOW:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, yellowMat.color);
+                    break;
+                case ColorType.GREEN:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, greenMat.color);
+                    break;
+                case ColorType.BLUE:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, blueMat.color);
+                    break;
+                case ColorType.PURPLE:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, purpleMat.color);
+                    break;
+                default:
+                    playerDamageScreen.GetComponent<Image>().color = ColorFade(alpha, greyMat.color);
+                    break;
+            }
+            StartCoroutine(StartDamageFlash());
+        }
+    }
+    Color ColorFade(float alpha, Color color)
+    {
+        Color endColor = color;
+        endColor = color;
+        endColor.a = alpha;
+        return endColor;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -69,7 +263,17 @@ public class gameManager : MonoBehaviour
                 ReturnToPrevious();
             }
         }
+        if (Input.GetButtonDown("RotateLeft"))
+        {
+            ChangeColor(0);
+        }
+        else if (Input.GetButtonDown("RotateRight"))
+        {
+            ChangeColor(1);
+        }
     }
+
+    
 
     public void statePause()
     {
@@ -107,8 +311,20 @@ public class gameManager : MonoBehaviour
         ShowMenu(menuLose);
     }
 
+    public void updatePlayerHP(float current, float max)
+    {
+        if (playerHPBar != null)
+        {
+            playerHPBar.fillAmount = current / max;
+        }
+        if (playerHPText != null)
+        {
+            playerHPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
+        }
+    }
 
-    public enum ColorType { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GREY }
+
+    
 
     public static float damageCalc(float damage, ColorType A = ColorType.GREY, ColorType B = ColorType.GREY)
     {
@@ -302,6 +518,13 @@ public class gameManager : MonoBehaviour
         RefreshMenuRef();
         stateUnpause();
 
+    }
+
+    IEnumerator StartDamageFlash()
+    {
+        playerDamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        playerDamageScreen.SetActive(false);
     }
 
 }

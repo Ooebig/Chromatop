@@ -2,55 +2,55 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
-    public class EnemyBehavior : MonoBehaviour, iDamage
+public class EnemyBehavior : MonoBehaviour, iDamage
+{
+    public enum EnemyType { Simple, Charger, Shooter }
+
+
+    public EnemyStats stats;
+    public Transform player;
+    public GameObject projectilePrefab;
+    public Transform firepoint;
+    public float lastShot;
+
+    public int Team => 0;
+
+    void Start()
     {
-        public enum EnemyType { Simple, Charger, Shooter }
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
+        stats = GetComponent<EnemyStats>();
 
-    
-        public EnemyStats stats;
-        public Transform player;
-        public GameObject projectilePrefab;
-        public Transform firepoint;
-        public float lastShot;
-
-        public int Team => throw new System.NotImplementedException();
-
-        void Start()
+        switch (stats.type)
         {
-            if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-            stats = GetComponent<EnemyStats>();
-            
-            switch (stats.type)
-            {
-                case EnemyType.Simple:
-                    StartCoroutine(SimpleBehavior());
-                    break;
-                case EnemyType.Charger:
-                    StartCoroutine(ChargerBehavior());
-                    break;
-                case EnemyType.Shooter:
-                    StartCoroutine(ShooterBehavior());
-                    break;
-            }
+            case EnemyType.Simple:
+                StartCoroutine(SimpleBehavior());
+                break;
+            case EnemyType.Charger:
+                StartCoroutine(ChargerBehavior());
+                break;
+            case EnemyType.Shooter:
+                StartCoroutine(ShooterBehavior());
+                break;
         }
+    }
 
-        IEnumerator SimpleBehavior()
-        {
-            while (true)
-            {
-                Vector3 dir = (player.position - transform.position).normalized;
-                transform.position += dir * stats.speed * Time.deltaTime;
-                transform.LookAt(player.position);
-                yield return null;
-            }
-        }
-
-        IEnumerator ChargerBehavior()
-        {
+    IEnumerator SimpleBehavior()
+    {
         while (true)
         {
-            
-            
+            Vector3 dir = (player.position - transform.position).normalized;
+            transform.position += dir * stats.speed * Time.deltaTime;
+            transform.LookAt(player.position);
+            yield return null;
+        }
+    }
+
+    IEnumerator ChargerBehavior()
+    {
+        while (true)
+        {
+
+
             float delayTime = 0;
 
             while (delayTime < stats.chargeDelay)
@@ -71,13 +71,13 @@ using UnityEngine;
             }
             yield return new WaitForSeconds(stats.chargeDelay);
         }
-        }
+    }
 
-        IEnumerator ShooterBehavior()
-        {
+    IEnumerator ShooterBehavior()
+    {
         lastShot = Time.time + UnityEngine.Random.Range(0f, 0.5f);
-            while (true)
-            {
+        while (true)
+        {
             float disToPlayer = Vector3.Distance(transform.position, player.position);
             transform.LookAt(player.position);
 
@@ -93,44 +93,46 @@ using UnityEngine;
             }
             yield return null;
         }
-        }
+    }
 
-        public void takeDamage(float amount, gameManager.ColorType dmgColor)
+    public void takeDamage(float amount, gameManager.ColorType dmgColor)
+    {
+        float damage = gameManager.damageCalc(amount, stats.Color, dmgColor);
+        Debug.Log("Enemy took damage: " + damage);
+        stats.currentHp -= damage;
+
+        if (stats.currentHp < 0)
         {
-            float damage = gameManager.damageCalc(amount, stats.Color, dmgColor);
-            stats.currentHp -= damage;
+            // Drop the enemy's assigned currency before destroying it.
+            EnemyCurrencyDrop currencyDrop =
+                GetComponent<EnemyCurrencyDrop>();
 
-            if (stats.currentHp < 0) 
+            if (currencyDrop != null)
             {
-                // Drop the enemy's assigned currency before destroying it.
-                EnemyCurrencyDrop currencyDrop =
-                    GetComponent<EnemyCurrencyDrop>();
+                currencyDrop.DropCurrency();
+            }
 
-                if (currencyDrop != null)
-                {
-                    currencyDrop.DropCurrency();
-                }
+            Destroy(gameObject);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log("Enemy hit something: " + other.gameObject.name);
+        if (other.CompareTag("Player"))
+        {
+            iDamage playerDamage = other.GetComponent<iDamage>();
 
-                Destroy(gameObject);
+            if (playerDamage != null)
+            {
+                playerDamage.takeDamage(stats.contactDamage, stats.Color);
             }
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            Debug.Log("Enemy hit something: " + other.gameObject.name);
-            if (other.CompareTag("Player"))
-            {
-                iDamage playerDamage = other.GetComponent<iDamage>();
-
-                if (playerDamage != null)
-                {
-                    playerDamage.takeDamage(stats.contactDamage, stats.Color);
-                }
-            }
-        }
+    }
     private void Shoot()
     {
         Vector3 spawnPos = firepoint.position;
         quaternion spawnRot = firepoint.rotation;
         GameObject bullet = Instantiate(projectilePrefab, spawnPos, spawnRot);
+        bullet.GetComponent<MeshRenderer>().material = gameManager.instance.colorMaterials[stats.Color];
     }
-    }
+}

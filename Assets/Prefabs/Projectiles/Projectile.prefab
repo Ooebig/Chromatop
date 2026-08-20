@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 347372738801382657}
-  - component: {fileID: 2932574089401974828}
-  - component: {fileID: 6411625316479851618}
+  - component: {fileID: -1979546425851342633}
   - component: {fileID: 8206960498050467239}
   - component: {fileID: 4529214105896982094}
   - component: {fileID: 6037068356880631117}
@@ -37,7 +36,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2932574089401974828
+--- !u!114 &-1979546425851342633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,26 +45,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5739662961804610152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 973452a91bcd94c4f86b2d14ae9d6d70, type: 3}
+  m_Script: {fileID: 11500000, guid: afe7e18e07e92eb4a919cd162d82d79c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  moveSpeed: 12
-  lifeTime: 3
---- !u!114 &6411625316479851618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5739662961804610152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593f6ff939830b74e9e1fc017e60e5cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
-  damageAmount: 5
-  damageColor: 6
-  lifeTime: 5
+  m_EditorClassIdentifier: Assembly-CSharp::damage
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  team: 1
+  dmgColor: 6
+  rb: {fileID: 6037068356880631117}
+  damageAmount: 20
+  damageRate: 0
+  bulletSpeed: 3
+  destroyOnImpact: 1
+  bulletDestroyTime: 3
 --- !u!33 &8206960498050467239
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -131,7 +124,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5739662961804610152}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

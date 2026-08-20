@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Weapon
   - Enemy
+  - Player Start Pos
   layers:
   - Default
   - TransparentFX
