@@ -99,9 +99,7 @@ public class PickupRangeController : MonoBehaviour
         if (currencyPickup != null &&
             pickupReceiver != null)
         {
-            currencyPickup.Collect(
-                pickupReceiver
-            );
+            currencyPickup.Collect();
         }
     }
 }

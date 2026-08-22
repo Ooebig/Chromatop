@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProjectileWeapon : Weapon
 {
     [Header("Projectile References")]
-    [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private damage projectilePrefab;
     [SerializeField] private Transform firePoint;
 
     [Header("Targeting")]
@@ -98,7 +98,7 @@ public class ProjectileWeapon : Weapon
                 Vector3.up
             );
 
-        Projectile newProjectile = Instantiate(
+        damage newProjectile = Instantiate(
             projectilePrefab,
             spawnPosition,
             spawnRotation
@@ -110,35 +110,42 @@ public class ProjectileWeapon : Weapon
     }
 
     private void ConfigureProjectile(
-        Projectile newProjectile
+        damage newProjectile
     )
     {
-        newProjectile.moveSpeed =
+        newProjectile.bulletSpeed =
             currentStats.speed;
 
         newProjectile.transform.localScale =
             Vector3.one * currentStats.area;
 
-        newProjectile.SetLifeTime(
-            currentStats.duration
-        );
+        newProjectile.bulletDestroyTime =
+            currentStats.duration;
 
-        EnemyDamager projectileDamager =
-            newProjectile.GetComponentInChildren<EnemyDamager>(true);
+        newProjectile.dmgColor =
+            gameManager.instance.activeColor;
 
-        if (projectileDamager != null)
-        {
-            projectileDamager.SetDamage(
-                currentStats.baseDamage
-            );
-        }
-        else
-        {
-            Debug.LogError(
-                "The projectile needs an EnemyDamager component.",
-                newProjectile
-            );
-        }
+        newProjectile.GetComponent<MeshRenderer>().material = gameManager.instance.activeMaterial;
+
+        newProjectile.damageAmount =
+            currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
+
+        //EnemyDamager projectileDamager =
+        //    newProjectile.GetComponentInChildren<EnemyDamager>(true);
+
+        //if (projectileDamager != null)
+        //{
+        //    projectileDamager.SetDamage(
+        //        currentStats.baseDamage
+        //    );
+        //}
+        //else
+        //{
+        //    Debug.LogError(
+        //        "The projectile needs an EnemyDamager component.",
+        //        newProjectile
+        //    );
+        //}
     }
 
     private void SetStats()
@@ -159,25 +166,27 @@ public class ProjectileWeapon : Weapon
         // values before their Start methods run.
         if (projectilePrefab != null)
         {
-            projectilePrefab.moveSpeed =
+            projectilePrefab.bulletSpeed =
                 currentStats.speed;
 
             projectilePrefab.transform.localScale =
                 Vector3.one * currentStats.area;
 
-            projectilePrefab.SetLifeTime(
-                currentStats.duration
-            );
+            projectilePrefab.bulletDestroyTime =
+                currentStats.duration;
 
-            EnemyDamager prefabDamager =
-                projectilePrefab.GetComponentInChildren<EnemyDamager>(true);
+            projectilePrefab.damageAmount =
+            currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
 
-            if (prefabDamager != null)
-            {
-                prefabDamager.SetDamage(
-                    currentStats.baseDamage
-                );
-            }
+            //damage prefabDamager =
+            //    projectilePrefab.GetComponentInChildren<damage>(true);
+
+            //if (prefabDamager != null)
+            //{
+            //    prefabDamager.SetDamage(
+            //        currentStats.baseDamage
+            //    );
+            //}
         }
 
         shotCounter = 0f;

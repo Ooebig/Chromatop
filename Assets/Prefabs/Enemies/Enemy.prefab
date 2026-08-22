@@ -57,8 +57,11 @@ MonoBehaviour:
   firerate: 0
   stopDistance: 0
   contactDamage: 0
+  chargeTime: 0
+  maxCharge: 0
+  chargeDelay: 0
   simpleModel: {fileID: 7978622217230841106, guid: 4cd52e2fefb2ade45bb0856f9d7c4f14, type: 3}
-  chargerModel: {fileID: 0}
+  chargerModel: {fileID: 2095308645744673393, guid: 4104faa9c25deee48baf13a54ad00d9e, type: 3}
   shooterModel: {fileID: 2105576305621111132, guid: b0c6fd2c5614340488e280e51517aed3, type: 3}
 --- !u!114 &4427321979866163136
 MonoBehaviour:

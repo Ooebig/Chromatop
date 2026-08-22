@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyCurrencyDrop : MonoBehaviour
 {
-    [SerializeField] private ItemData currencyItem;
+    [SerializeField] private GameObject currencyItem;
 
     [Range(0f, 1f)]
     [SerializeField] private float dropChance = 1f;
@@ -10,7 +10,7 @@ public class EnemyCurrencyDrop : MonoBehaviour
     public void DropCurrency()
     {
         if (currencyItem == null ||
-            currencyItem.worldPrefab == null)
+            currencyItem == null)
         {
             Debug.LogWarning(
                 "Enemy currency drop is missing its item or world prefab.",
@@ -24,7 +24,7 @@ public class EnemyCurrencyDrop : MonoBehaviour
             return;
 
         Instantiate(
-            currencyItem.worldPrefab,
+            currencyItem,
             transform.position,
             Quaternion.identity
         );

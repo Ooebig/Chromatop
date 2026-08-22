@@ -148,16 +148,29 @@ public class EnemySpawner : MonoBehaviour
 
         if (TypeToSpawn == EnemyBehavior.EnemyType.Simple)
         {
-            enemyStats.speed = 3f;
             enemyStats.maxHp = 100f;
+            enemyStats.speed = 3f;
+            enemyStats.damage = 20f;
+            enemyStats.firerate = 0f;
+            enemyStats.stopDistance = 0f;
+            enemyStats.contactDamage = 10f;
+            enemyStats.maxCharge = 0f;
+            enemyStats.chargeDelay = 0f;
         }
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Charger)
         {
-            enemyStats.speed = 5f;
             enemyStats.maxHp = 150f;
+            enemyStats.speed = 5f;
+            enemyStats.damage = 20f;
+            enemyStats.firerate = 0f;
+            enemyStats.stopDistance = 0f;
+            enemyStats.contactDamage = 20f;
+            enemyStats.chargeDelay = 3f;
+            enemyStats.maxCharge = 1.5f;
         }
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Shooter)
         {
+
             enemyStats.firerate = 1.5f;
             enemyStats.stopDistance = 7f;
             enemyStats.speed = 2f;

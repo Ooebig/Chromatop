@@ -74,12 +74,12 @@ public class WeaponStats
     [Tooltip("Label shown in the Inspector, such as Level 1 or Rapid Orbs.")]
     public string levelName = "Level 1";
 
-    [Header("Damage")]
+    [Header("Damage Multiplier")]
 
-    [Tooltip("Damage dealt by each hit.")]
+    [Tooltip("How much damage the weapon deals, multiplied off the player's base damage.")]
     [FormerlySerializedAs("damage")]
     [Min(0f)]
-    public float baseDamage = 1f;
+    public float baseDamageMult = 1f; //Changed from damage to baseDamageMult so it can scale with player damage
 
     [Tooltip("Force applied when the weapon hits an enemy.")]
     [Min(0f)]

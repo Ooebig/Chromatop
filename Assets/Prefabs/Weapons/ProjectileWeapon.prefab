@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileWeapon
   stats:
   - levelName: Basic Projectile
-    baseDamage: 5
+    baseDamageMult: 1
     knockback: 0
     area: 1
     speed: 12
@@ -58,7 +58,7 @@ MonoBehaviour:
     amount: 1
   weaponLevel: 0
   statsUpdated: 0
-  projectilePrefab: {fileID: 2932574089401974828, guid: 50948d5e89ade214cbc9e73f45ec5a04, type: 3}
+  projectilePrefab: {fileID: -1979546425851342633, guid: 50948d5e89ade214cbc9e73f45ec5a04, type: 3}
   firePoint: {fileID: 3813753516247874934}
   weaponRange: 10
   whatIsEnemy:

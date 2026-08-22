@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3240453616858632725}
   - component: {fileID: 3446753600067235209}
   - component: {fileID: 6296848848592579561}
+  - component: {fileID: 2348509876837626884}
   m_Layer: 0
   m_Name: OrbTemplate
   m_TagString: Untagged
@@ -44,12 +45,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3660605748863633260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593f6ff939830b74e9e1fc017e60e5cc, type: 3}
+  m_Script: {fileID: 11500000, guid: afe7e18e07e92eb4a919cd162d82d79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
-  damageAmount: 1
-  damageColor: 0
-  lifeTime: 5
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  team: 1
+  dmgColor: 6
+  rb: {fileID: 2348509876837626884}
+  damageAmount: 0
+  damageRate: 0.5
+  bulletSpeed: 0
+  destroyOnImpact: 0
+  bulletDestroyTime: 1
 --- !u!33 &3240453616858632725
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128,6 +137,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2348509876837626884
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660605748863633260}
+  serializedVersion: 5
+  m_Mass: 0.0000001
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5926135577726204308
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,9 +213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpinWeapon
   stats:
   - levelName: Level 1
-    baseDamage: 5
+    baseDamageMult: 2
     knockback: 0
-    area: 1
+    area: 0.5
     speed: 100
     cooldown: 3
     interval: 0.1
