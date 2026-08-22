@@ -684,6 +684,11 @@ Transform:
   - {fileID: 342925287}
   m_Father: {fileID: 393490223}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1126347807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5023579227170760770, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1129694446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1069,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258891759}
   m_CullTransparentMesh: 1
+--- !u!114 &1390437667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4304081043344272669, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1437699683 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3973460707665964215, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
@@ -1214,6 +1230,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475369094}
   m_CullTransparentMesh: 1
+--- !u!1 &1602065447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2706939144294416463, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1680836429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1338,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1693018508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 279962855218925150, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1707485500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1494,6 +1526,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1822961866 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7254011627125483296, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &1826355109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1794391058565010293, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1957738898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1823,9 +1871,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1794391058565010293, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_Name
+      value: Destiny 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1866674893692764537, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706939144294416463, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_Name
+      value: Destiny 1
       objectReference: {fileID: 0}
     - target: {fileID: 2931377479105626286, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1896,6 +1952,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: destinyButtons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: 'startingItems.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e15e535b2642c524cb43f5bf18bd2000, type: 2}
@@ -1903,9 +1963,41 @@ PrefabInstance:
       propertyPath: 'startingItems.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 49d33c4667516b64093ca2666cde687c, type: 2}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1602065447}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1126347807}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtons.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1826355109}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: destinyButtonTexts.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtonTexts.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1822961866}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtonTexts.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1390437667}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: 'destinyButtonTexts.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1693018508}
     - target: {fileID: 4737116444560699439, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5023579227170760770, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_Name
+      value: Destiny 2
       objectReference: {fileID: 0}
     - target: {fileID: 5092206979820682835, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_Name
@@ -1943,11 +2035,19 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5626132175837484043, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5854851706627054568, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_text
       value: 'Quit Game
 
 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6018381851464437415, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6248814949934480973, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_IsActive

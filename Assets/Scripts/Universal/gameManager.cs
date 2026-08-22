@@ -44,6 +44,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuPrompt;
     GameObject menuPrevious;
 
+    [Header("In-Between Menu UI")]
+    public GameObject[] destinyButtons;
+    public TMP_Text[] destinyButtonTexts;
+
+
     //public GameObject checkPointPopup;
     public Image playerHPBar;
     public TMP_Text playerHPText;
@@ -110,7 +115,8 @@ public class gameManager : MonoBehaviour
     {
         int currentIndex = colorOrder.IndexOf(activeColor);
         bool valid = false;
-        while (!valid){
+        while (!valid)
+        {
             if (direction == 1)
             {
                 currentIndex = (currentIndex + 1) % colorOrder.Count;
@@ -156,9 +162,12 @@ public class gameManager : MonoBehaviour
     void UpdateColorUI()
     {
         int currentIndex = colorOrder.IndexOf(activeColor);
-        for (int i = 0; i < colorOrder.Count; i++) {
-            if (colorsUnlocked.Contains(colorOrder[currentIndex])) {
-                switch (colorOrder[currentIndex]) {
+        for (int i = 0; i < colorOrder.Count; i++)
+        {
+            if (colorsUnlocked.Contains(colorOrder[currentIndex]))
+            {
+                switch (colorOrder[currentIndex])
+                {
                     case ColorType.RED:
                         slices[i].color = redMat.color;
                         break;
@@ -181,7 +190,7 @@ public class gameManager : MonoBehaviour
                         slices[i].color = greyMat.color;
                         break;
                 }
-                
+
             }
             else
             {
@@ -193,10 +202,10 @@ public class gameManager : MonoBehaviour
                 currentIndex = 0;
             }
         }
-        
+
     }
 
-    
+
 
     void UnlockColor(ColorType color)
     {
@@ -256,7 +265,7 @@ public class gameManager : MonoBehaviour
             {
                 ShowMenu(menuPause);
             }
-            else if(menuActive == menuPause)
+            else if (menuActive == menuPause)
             {
                 CloseCurrentMenu();
             }
@@ -275,7 +284,7 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    
+
 
     public void statePause()
     {
@@ -283,7 +292,7 @@ public class gameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        
+
     }
     public void stateUnpause()
     {
@@ -326,7 +335,7 @@ public class gameManager : MonoBehaviour
     }
 
 
-    
+
 
     public static float damageCalc(float damage, ColorType A = ColorType.GREY, ColorType B = ColorType.GREY)
     {
@@ -446,7 +455,8 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void ShowMenu(GameObject newMenu) {
+    public void ShowMenu(GameObject newMenu)
+    {
 
         if (menuActive != null)
         {
@@ -461,7 +471,7 @@ public class gameManager : MonoBehaviour
         statePause();
     }
 
-    public void ReturnToPrevious() 
+    public void ReturnToPrevious()
     {
         if (menuPrevious != null)
         {
@@ -509,7 +519,7 @@ public class gameManager : MonoBehaviour
 
         if (menuPause == null)
         {
-            Debug.LogWarning("Pause Menu not found."); 
+            Debug.LogWarning("Pause Menu not found.");
         }
     }
 
@@ -538,4 +548,79 @@ public class gameManager : MonoBehaviour
         ShowMenu(menuPrompt);
     }
 
+    public enum PossibleDestinies
+    {
+        Easy, Medium, Hard, Mystery, Shop, Curse, Gambling, Boss
+    }
+
+    public int currentRound;
+
+    public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
+
+    public void GenerateOptions()
+    {
+        destinyList.Clear();
+
+        if (currentRound % 10 == 0) //boss round
+        {
+            destinyList.Add(PossibleDestinies.Boss);
+            return;
+
+        }
+
+        List<PossibleDestinies> difficulties = new List<PossibleDestinies>() //at least one of each difficulty
+        {
+            PossibleDestinies.Easy,
+            PossibleDestinies.Medium,
+            PossibleDestinies.Hard
+        };
+
+        int forcediff = Random.Range(0, difficulties.Count);
+        PossibleDestinies forced = difficulties[forcediff];
+        destinyList.Add(forced); //force at least one difficulty into the list
+
+        List<PossibleDestinies> others = new List<PossibleDestinies>();
+
+        for (int i = 0; i < difficulties.Count; i++)
+        {
+            if (difficulties[i] != forced)
+            {
+                others.Add(difficulties[i]);
+            }
+        }
+
+        //other possible destinies
+
+        others.Add(PossibleDestinies.Mystery);
+        others.Add(PossibleDestinies.Shop);
+        others.Add(PossibleDestinies.Curse);
+        others.Add(PossibleDestinies.Gambling);
+
+        while (destinyList.Count < 3 && others.Count > 0) // while we have less than 3 destinies
+                                                          //and there are still other destinies to choose from, randomly select one,
+                                                          //and add it to the destinyList
+        {
+            int rand = Random.Range(0, others.Count);
+            destinyList.Add(others[rand]);
+            others.RemoveAt(rand);
+        }
+    }
+
+    public void updateinbetweenUI() // update the in-between menu UI with the current destiny options
+    {
+        GenerateOptions();
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < destinyList.Count)
+            {
+                destinyButtons[i].SetActive(true);
+                destinyButtonTexts[i].text = destinyList[i].ToString();
+            }
+            else
+            {
+                destinyButtons[i].SetActive(false);
+            }
+        }
+    }
 }

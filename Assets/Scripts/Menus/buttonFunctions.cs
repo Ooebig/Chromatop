@@ -13,6 +13,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void continuing()
     {
+        gameManager.instance.updateinbetweenUI();
         gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
     }
 
