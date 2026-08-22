@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 public class gameManager : MonoBehaviour
 {
+    public enum Pending { None, ReturntoMenu, Quit } // Enum for pending actions after a menu is closed
+    public Pending action = Pending.None; // Current pending action
+
     public enum ColorType { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GREY }
     public static gameManager instance;
     [Header("Starting Settings")]
@@ -38,8 +41,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuStats;
     [SerializeField] public GameObject menuInventory;
     [SerializeField] public GameObject menuMain;
-
-
+    [SerializeField] public GameObject menuPrompt;
     GameObject menuPrevious;
 
     //public GameObject checkPointPopup;
@@ -525,6 +527,15 @@ public class gameManager : MonoBehaviour
         playerDamageScreen.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         playerDamageScreen.SetActive(false);
+    }
+
+    public void ReqConf(Pending requestAction) // Request confirmation for an action (Return to Menu or Quit)
+    {
+        //Store the action. Then Show the prompt.
+
+        action = requestAction;
+
+        ShowMenu(menuPrompt);
     }
 
 }

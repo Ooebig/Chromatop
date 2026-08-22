@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,33 +21,31 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.ReturnToPrevious();
     }
 
-    public void restart()
-    {
-        Debug.Log("Restart button pressed");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //public void restart()
+    //{
+    //    Debug.Log("Restart button pressed");
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        gameManager.instance.StartCoroutine(gameManager.instance.RefreshAfterLoad());
-    }
+    //    gameManager.instance.StartCoroutine(gameManager.instance.RefreshAfterLoad());
+    //}
 
     public void quit()
     {
+        gameManager.instance.ReqConf(gameManager.Pending.Quit);
+
         Debug.Log("Quit button pressed");
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    } 
+    }
 
     public void difficulty()
     {
         gameManager.instance.CloseCurrentMenu();
 
         //Will decide later on what to do with this button
-        
+
     }
 
-    public void mystery(){
+    public void mystery()
+    {
         gameManager.instance.CloseCurrentMenu();
 
     }
@@ -72,11 +71,11 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.ShowMenu(gameManager.instance.menuSettings);
     }
-    
+
 
     public void previous()
     {
-       //visits previous inventory page
+        //visits previous inventory page
     }
 
     public void next()
@@ -93,8 +92,37 @@ public class buttonFunctions : MonoBehaviour
         SceneManager.LoadScene("Gameplay");
     }
 
+    public void returntoMainMenu()
+    {
+        gameManager.instance.ReqConf(gameManager.Pending.ReturntoMenu); //Request confirmation to return to main menu
+    }
 
+    public void promptYes()
+    {
+        switch (gameManager.instance.action)
+        {
+            case gameManager.Pending.ReturntoMenu:
+                SceneManager.LoadScene("Title Screen");
+                break;
+            case gameManager.Pending.Quit:
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                    Application.Quit();
+#endif
+                break;
+        }
 
+        gameManager.instance.action = gameManager.Pending.None; // Reset the action to None after handling the confirmation
+    }
+
+    public void promptNo()
+    {
+        gameManager.instance.action = gameManager.Pending.None; // Reset the action to None if the user cancels
+        gameManager.instance.ReturnToPrevious(); // Return to the previous menu without taking any action
+
+    }
+}
 
     //public void loadLevel(int lvl)
     //{
@@ -108,4 +136,3 @@ public class buttonFunctions : MonoBehaviour
     //    //gameManager.instance.stateUnpause();
     //}
 
-}
