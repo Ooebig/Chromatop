@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7923620222678089669}
   - component: {fileID: 5079134820302738253}
+  - component: {fileID: 7669603809245812689}
   m_Layer: 0
   m_Name: ProjectileWeapon
   m_TagString: Weapon
@@ -62,7 +63,22 @@ MonoBehaviour:
   weaponRange: 10
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+--- !u!114 &7669603809245812689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3841012474719316860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593f6ff939830b74e9e1fc017e60e5cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
+  damageAmount: 1
+  damageColor: 0
+  lifeTime: 5
 --- !u!1 &3858395370531056966
 GameObject:
   m_ObjectHideFlags: 0

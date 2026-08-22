@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3694933097887766487}
   - component: {fileID: 5515044423261335474}
+  - component: {fileID: -1966976933967029477}
   m_Layer: 0
   m_Name: SpinWeapon
   m_TagString: Weapon
@@ -190,6 +191,21 @@ MonoBehaviour:
   orbToSpawn: {fileID: 2786623981355599585}
   orbSpawnPoint: {fileID: 7367872828671615232}
   rotateSpeed: 100
+--- !u!114 &-1966976933967029477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926135577726204308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593f6ff939830b74e9e1fc017e60e5cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
+  damageAmount: 1
+  damageColor: 0
+  lifeTime: 5
 --- !u!1 &6008137444476077368
 GameObject:
   m_ObjectHideFlags: 0
