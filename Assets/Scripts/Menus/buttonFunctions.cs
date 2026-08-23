@@ -88,9 +88,8 @@ public class buttonFunctions : MonoBehaviour
 
     public void playgame()
     {
-        Debug.Log("Playgame button pressed");
-        //gameManager.instance.CloseCurrentMenu();
-        SceneManager.LoadScene("Gameplay");
+        Debug.Log("Play game button pressed");
+        gameManager.instance.CloseCurrentMenu();
     }
 
     public void returntoMainMenu()
@@ -103,7 +102,7 @@ public class buttonFunctions : MonoBehaviour
         switch (gameManager.instance.action)
         {
             case gameManager.Pending.ReturntoMenu:
-                SceneManager.LoadScene("Title Screen");
+               gameManager.instance.ShowMenu(gameManager.instance.menuMain);
                 break;
             case gameManager.Pending.Quit:
 #if UNITY_EDITOR

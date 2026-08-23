@@ -109,6 +109,8 @@ public class gameManager : MonoBehaviour
             inventory.ActivatePocket(Inventory.PocketType.Weapon);
         }
         ChangeColor(2);
+
+        ShowMenu(menuMain);
     }
 
     void ChangeColor(int direction)
