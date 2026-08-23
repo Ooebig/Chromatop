@@ -10,6 +10,7 @@ public class audioManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioClip confirmSound;
     public AudioClip backSound;
+    public AudioClip menuOpenSound;
 
     [Header("Volume Settings")]
     [Range(0f, 1f)] public float masterVolume = 1f;
@@ -86,5 +87,9 @@ public class audioManager : MonoBehaviour
     public void PlayBackSound()
     {
         PlaySFX(backSound);
+    }
+    public void PlayMenuOpenSound()
+    {
+        PlaySFX(menuOpenSound);
     }
 }   

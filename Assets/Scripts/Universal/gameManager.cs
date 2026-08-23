@@ -475,7 +475,13 @@ public class gameManager : MonoBehaviour
 
         newMenu.SetActive(true);
 
+        if (audioManager.instance != null)
+        {
+            audioManager.instance.PlayMenuOpenSound();
+        }
+
         statePause();
+
     }
 
     public void ReturnToPrevious()
@@ -702,4 +708,28 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void OpeningMenu(GameObject menu)
+    {
+        if (menuActive != null)
+        {
+            menuPrevious = menuActive;
+            menuActive.SetActive(false);
+        }
+
+        menuActive = menu;
+        menu.SetActive(true);
+
+        if (audioManager.instance != null)
+        {
+            audioManager.instance.PlayMenuOpenSound();
+
+            statePause();
+        }
+
+        else
+        {
+            Debug.LogWarning("OpeningMenu called with a null menu reference.");
+        }
+
+    }
 }
