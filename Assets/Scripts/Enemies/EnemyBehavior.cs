@@ -133,6 +133,7 @@ public class EnemyBehavior : MonoBehaviour, iDamage
         Vector3 spawnPos = firepoint.position;
         quaternion spawnRot = firepoint.rotation;
         GameObject bullet = Instantiate(projectilePrefab, spawnPos, spawnRot);
+        bullet.GetComponent<damage>().dmgColor = stats.Color;
         bullet.GetComponent<MeshRenderer>().material = gameManager.instance.colorMaterials[stats.Color];
     }
 }
