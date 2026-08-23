@@ -42,6 +42,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuInventory;
     [SerializeField] public GameObject menuMain;
     [SerializeField] public GameObject menuPrompt;
+    [SerializeField] public GameObject menuShop;
+    [SerializeField] public GameObject menuCurse;
+    [SerializeField] public GameObject menuGambling;
+    [SerializeField] public GameObject menuMystery;
+
     GameObject menuPrevious;
 
     [Header("In-Between Menu UI")]
@@ -518,6 +523,11 @@ public class gameManager : MonoBehaviour
         menuStats = menuRt.transform.Find("Stats Menu")?.gameObject;
         menuInventory = menuRt.transform.Find("Inventory Menu")?.gameObject;
         menuMain = menuRt.transform.Find("Main Menu")?.gameObject;
+        menuPrompt = menuRt.transform.Find("Prompt?")?.gameObject;
+        menuShop = menuRt.transform.Find("Shop Menu")?.gameObject;
+        menuCurse = menuRt.transform.Find("Curse Menu")?.gameObject;
+        menuGambling = menuRt.transform.Find("Gambling Menu")?.gameObject;
+        menuMystery = menuRt.transform.Find("Mystery Menu")?.gameObject;
 
         if (menuPause == null)
         {
@@ -625,4 +635,71 @@ public class gameManager : MonoBehaviour
             }
         }
     }
+
+    public void OnDestinyClick(int index) // called when a destiny button is clicked, index is the button index (0, 1, or 2)
+    {
+        if (index < 0 || index >= destinyList.Count)
+        {
+            Debug.LogWarning("Invalid destiny index: " + index);
+
+            PossibleDestinies chosendestiny = destinyList[index];
+
+            switch (chosendestiny)
+            {
+                case PossibleDestinies.Easy:
+                    Debug.Log("Easy destiny chosen");
+
+                    // set difficulty to easy, spawn easy enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with easy difficulty
+                    break;
+
+                case PossibleDestinies.Medium:
+                    Debug.Log("Medium destiny chosen");
+                    // set difficulty to medium, spawn medium enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with medium difficulty
+                    break;
+
+                case PossibleDestinies.Hard:
+                    Debug.Log("Hard destiny chosen");
+                    // set difficulty to hard, spawn hard enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with hard difficulty
+                    break;
+
+                case PossibleDestinies.Mystery:
+                    Debug.Log("Mystery destiny chosen");
+                    ShowMenu(menuMystery);
+                    break;
+
+                case PossibleDestinies.Shop:
+                    Debug.Log("Shop destiny chosen");
+                    ShowMenu(menuShop);
+                    break;
+
+                case PossibleDestinies.Curse:
+                    Debug.Log("Curse destiny chosen");
+                    ShowMenu(menuCurse);
+                    break;
+
+                case PossibleDestinies.Gambling:
+                    Debug.Log("Gambling destiny chosen");
+                    ShowMenu(menuGambling);
+                    break;
+
+                case PossibleDestinies.Boss:
+                    Debug.Log("Boss destiny chosen");
+                    // set difficulty to boss, spawn boss enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with boss difficulty
+                    break;
+
+                default:
+                    Debug.LogWarning("Unknown destiny chosen: " + chosendestiny);
+                    break;
+            }
+        }
+    }
+
 }

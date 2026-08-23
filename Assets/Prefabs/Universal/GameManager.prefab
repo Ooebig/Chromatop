@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c7126e6b7e7bd4394e03b485451c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
+  action: 0
   startingItems:
   - {fileID: 0}
   - {fileID: 0}
@@ -150,6 +151,13 @@ MonoBehaviour:
   menuStats: {fileID: 4802329760493124042}
   menuInventory: {fileID: 9162095673147455451}
   menuMain: {fileID: 1866674893692764537}
+  menuPrompt: {fileID: 0}
+  menuShop: {fileID: 0}
+  menuCurse: {fileID: 0}
+  menuGambling: {fileID: 0}
+  menuMystery: {fileID: 0}
+  destinyButtons: []
+  destinyButtonTexts: []
   playerHPBar: {fileID: 2720022683911708821}
   playerHPText: {fileID: 8343633129677323411}
   playerDamageScreen: {fileID: 6323161410268702716}
@@ -160,6 +168,8 @@ MonoBehaviour:
   playerStartPos: {fileID: 0}
   activeColor: 0
   activeMaterial: {fileID: 0}
+  currentRound: 0
+  destinyList: 
 --- !u!1001 &4197138887756964902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -671,6 +681,52 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1277258804846227511, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2570026169755363674, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_Name
       value: Menus
@@ -678,6 +734,10 @@ PrefabInstance:
     - target: {fileID: 2780769710985533872, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505356909518274389, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 2
       objectReference: {fileID: 0}
     - target: {fileID: 4014849394707656413, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
@@ -695,13 +755,49 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5668338537917872650, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801247609293346648, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7851203332817671790, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7922997298603279458, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8322157852769512053, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570474895486982473, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -97,6 +97,13 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.ReqConf(gameManager.Pending.ReturntoMenu); //Request confirmation to return to main menu
     }
 
+    public void returntoInBetween()
+    {
+        gameManager.instance.updateinbetweenUI();
+
+        gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
+    }   
+
     public void promptYes()
     {
         switch (gameManager.instance.action)
@@ -122,6 +129,8 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.ReturnToPrevious(); // Return to the previous menu without taking any action
 
     }
+
+
 }
 
     //public void loadLevel(int lvl)
