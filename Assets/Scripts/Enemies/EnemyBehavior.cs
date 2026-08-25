@@ -111,7 +111,23 @@ public class EnemyBehavior : MonoBehaviour, iDamage
             {
                 currencyDrop.DropCurrency();
             }
-
+            Data.tempKillCount++;
+            Data.killCount++;
+            switch (stats.type)
+            {
+                case EnemyType.Simple:
+                    Data.basicKillCount++;
+                    Data.tempBasicKillCount++;
+                    break;
+                case EnemyType.Charger:
+                    Data.chargerKillCount++;
+                    Data.tempChargerKillCount++;
+                    break;
+                case EnemyType.Shooter:
+                    Data.shooterKillCount++;
+                    Data.tempShooterKillCount++;
+                    break;
+            }
             Destroy(gameObject);
         }
     }

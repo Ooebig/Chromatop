@@ -102,6 +102,7 @@ public class SpinWeapon : Weapon
         }
         orbDamager.damageAmount = currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
         orbDamager.bulletDestroyTime = currentStats.duration;
+        orbDamager.dmgColor = gameManager.instance.activeColor;
         orbDamager.GetComponent<MeshRenderer>().material = gameManager.instance.activeMaterial;
     }
 

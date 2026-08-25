@@ -8,7 +8,6 @@ public class ProjectileWeapon : Weapon
 
     [Header("Targeting")]
     [SerializeField] private float weaponRange = 10f;
-    [SerializeField] private LayerMask whatIsEnemy;
 
     private WeaponStats currentStats;
     private float shotCounter;
@@ -62,17 +61,28 @@ public class ProjectileWeapon : Weapon
 
         Collider[] enemies = Physics.OverlapSphere(
             origin,
-            detectionRange,
-            whatIsEnemy
+            detectionRange
         );
 
         if (enemies.Length == 0)
             return;
 
+        System.Collections.Generic.List<Collider> validEnemies =
+            new System.Collections.Generic.List<Collider>();
+
+        foreach (Collider enemy in enemies)
+        {
+            if (enemy.GetComponentInParent<EnemyStats>() != null)
+                validEnemies.Add(enemy);
+        }
+
+        if (validEnemies.Count == 0)
+            return;
+
         for (int i = 0; i < currentStats.amount; i++)
         {
             Collider target =
-                enemies[Random.Range(0, enemies.Length)];
+                validEnemies[Random.Range(0, validEnemies.Count)];
 
             FireProjectileAt(target, origin);
         }

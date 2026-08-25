@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -42,14 +43,39 @@ public class buttonFunctions : MonoBehaviour
         Debug.Log("Quit button pressed");
     }
 
-    public void difficulty()
+    public void difficultyEasy()
     {
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
 
-        //Will decide later on what to do with this button
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20+(Data.roomCount * 5)));
+    }
 
+    public void difficultyNormal()
+    {
+        audioManager.instance.PlayConfirmSound();
+
+        gameManager.instance.CloseCurrentMenu();
+
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (Data.roomCount * 5)));
+    }
+
+    public void difficultyHard()
+    {
+        audioManager.instance.PlayConfirmSound();
+
+        gameManager.instance.CloseCurrentMenu();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (Data.roomCount * 5)));
+    }
+
+    public void difficultyBoss()
+    {
+        audioManager.instance.PlayConfirmSound();
+
+        gameManager.instance.CloseCurrentMenu();
+
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (20 + (Data.roomCount * 5)));
     }
 
     public void mystery()
@@ -78,8 +104,9 @@ public class buttonFunctions : MonoBehaviour
     public void stats()
     {
         audioManager.instance.PlayConfirmSound();
-
+        
         gameManager.instance.ShowMenu(gameManager.instance.menuStats);
+        gameManager.instance.UpdateStatScreen();
     }
 
 
@@ -117,6 +144,7 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayConfirmSound();
         audioManager.instance.PlayGameMusic();
         gameManager.instance.CloseCurrentMenu();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, 20);
     }
 
     public void returntoMainMenu()
@@ -139,8 +167,8 @@ public class buttonFunctions : MonoBehaviour
         switch (gameManager.instance.action)
         {
             case gameManager.Pending.ReturntoMenu:
-               gameManager.instance.ShowMenu(gameManager.instance.menuMain);
-               audioManager.instance.PlayMainMenuMusic();
+                gameManager.instance.resetTimeScale();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 break;
             case gameManager.Pending.Quit:
 #if UNITY_EDITOR

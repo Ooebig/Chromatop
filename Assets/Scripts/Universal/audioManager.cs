@@ -40,7 +40,7 @@ public class audioManager : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject); 
+        //DontDestroyOnLoad(gameObject); 
     }
 
     public void PlayMusic(AudioClip clip, bool loop)

@@ -48,10 +48,10 @@ public class EnemySpawner : MonoBehaviour
     {
         UpdateUI();
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            StartWave(Wave.Difficulty.normal, 60f);
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    StartWave(Wave.Difficulty.normal, 60f);
+        //}
     }
     public void StartWave(Wave.Difficulty difficulty, float waveDuration)
     {
@@ -108,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(wave.timeToSpawn);
         }
         isSpawning = false;
-        
+        gameManager.instance.RoomEnd();
         while (activeEnemies.Count > 0)
         {
             activeEnemies.RemoveAll(item => item == null);

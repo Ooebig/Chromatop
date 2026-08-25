@@ -8,7 +8,10 @@ public class gameManager : MonoBehaviour
 {
     public enum Pending { None, ReturntoMenu, Quit } // Enum for pending actions after a menu is closed
     public Pending action = Pending.None; // Current pending action
-
+    public enum PossibleDestinies
+    {
+        Easy, Medium, Hard, Mystery, Shop, Curse, Gambling, Boss
+    }
     public enum ColorType { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GREY }
     public static gameManager instance;
     [Header("Starting Settings")]
@@ -49,9 +52,11 @@ public class gameManager : MonoBehaviour
 
     GameObject menuPrevious;
 
-    [Header("In-Between Menu UI")]
+    [Header("Menu Details")]
     public GameObject[] destinyButtons;
     public TMP_Text[] destinyButtonTexts;
+    public TMP_Text levelCompleteStatText;
+    public TMP_Text[] statScreenText;
 
     [Header("Slider Settings")]
     public Slider masterSlider;
@@ -60,11 +65,15 @@ public class gameManager : MonoBehaviour
 
 
 
+    [Header("Other")]
     //public GameObject checkPointPopup;
     public Image playerHPBar;
+    public Image playerEXPBar;
     public TMP_Text playerHPText;
+    public TMP_Text playerEXPText;
+    public TMP_Text roomCountText;
     public GameObject playerDamageScreen;
-    public TMP_Text roundTimerText;
+    public EnemySpawner waveManager;
 
     public bool isPaused;
     public GameObject player;
@@ -73,12 +82,16 @@ public class gameManager : MonoBehaviour
     public GameObject playerStartPos;
     public ColorType activeColor;
     public Material activeMaterial;
+    
 
+    public int currentRound;
+
+    public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
 
 
     //int gameGoalCount;
 
-    float timeScaleOrig;
+    public float timeScaleOrig;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -171,6 +184,11 @@ public class gameManager : MonoBehaviour
         }
         player.GetComponent<MeshRenderer>().material = activeMaterial;
         UpdateColorUI();
+    }
+
+    public void resetTimeScale()
+    {
+        Time.timeScale = timeScaleOrig;
     }
 
     void UpdateColorUI()
@@ -319,6 +337,7 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
+        roomCountText.text = "Room " + Data.roomCount;
     }
     //public void updateGameGoal(int amount)
     //{
@@ -345,6 +364,18 @@ public class gameManager : MonoBehaviour
         if (playerHPText != null)
         {
             playerHPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
+        }
+    }
+
+    public void updatePlayerEXP(float current, float max)
+    {
+        if (playerEXPBar != null)
+        {
+            playerEXPBar.fillAmount = current / max;
+        }
+        if (playerEXPText != null)
+        {
+            playerEXPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
         }
     }
 
@@ -573,14 +604,7 @@ public class gameManager : MonoBehaviour
         ShowMenu(menuPrompt);
     }
 
-    public enum PossibleDestinies
-    {
-        Easy, Medium, Hard, Mystery, Shop, Curse, Gambling, Boss
-    }
-
-    public int currentRound;
-
-    public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
+    
 
     public void GenerateOptions()
     {
@@ -739,4 +763,25 @@ public class gameManager : MonoBehaviour
         }
 
     }
-}
+
+    public void RoomEnd()
+    {
+        ShowMenu(menuWin);
+        UpdateLevelCompleteStats();
+    }
+
+    public void UpdateLevelCompleteStats()
+    {
+        levelCompleteStatText.text = "Enemies Killed: " + Data.tempKillCount + "\n\nBasic: " + Data.tempBasicKillCount + " | Charger: " + Data.tempChargerKillCount + " | Shooter: " + Data.tempShooterKillCount + "\n\nMoney Collected: " + Data.tempCoinCount;
+        Data.tempKillCount = 0;
+        Data.tempBasicKillCount = 0;
+        Data.tempChargerKillCount = 0;
+        Data.tempShooterKillCount = 0;
+        Data.tempCoinCount = 0;
+    }
+    public void UpdateStatScreen()
+    {
+        statScreenText[0].text = "Rooms Completed: " + Data.roomCount + "\n\nMoney Earned: " + Data.totalCoinCount + "\n\nExperience Gained: " + Data.totalExperience;
+        statScreenText[1].text = "Total Enemies Killed: " + Data.killCount + "\n\nBasic: " + Data.basicKillCount + "\n\nCharger: " + Data.chargerKillCount + "\n\nShooter: " + Data.shooterKillCount;
+    }
+} 

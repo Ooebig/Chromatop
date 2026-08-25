@@ -6,8 +6,6 @@ public class PickupRangeController : MonoBehaviour
 {
     private PlayerStats playerStats;
     private SphereCollider rangeCollider;
-    private IPickup pickupReceiver;
-
     private float previousRange = -1f;
 
     private void OnEnable()
@@ -52,12 +50,6 @@ public class PickupRangeController : MonoBehaviour
                 GetComponent<SphereCollider>();
         }
 
-        if (pickupReceiver == null)
-        {
-            pickupReceiver =
-                GetComponentInParent<IPickup>();
-        }
-
         if (rangeCollider != null)
         {
             rangeCollider.isTrigger = true;
@@ -88,18 +80,4 @@ public class PickupRangeController : MonoBehaviour
         rangeCollider.radius = newRange;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!Application.isPlaying)
-            return;
-
-        CurrencyPickup currencyPickup =
-            other.GetComponentInParent<CurrencyPickup>();
-
-        if (currencyPickup != null &&
-            pickupReceiver != null)
-        {
-            currencyPickup.Collect();
-        }
-    }
 }
