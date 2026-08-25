@@ -681,6 +681,25 @@ public class gameManager : MonoBehaviour
 
             PossibleDestinies chosendestiny = destinyList[index];
 
+            if (chosendestiny == PossibleDestinies.Mystery)
+            {
+
+                PossibleDestinies[] pool = new PossibleDestinies[]
+                {
+
+                    PossibleDestinies.Easy,
+                    PossibleDestinies.Medium,
+                    PossibleDestinies.Hard,
+                    PossibleDestinies.Shop,
+                    PossibleDestinies.Curse,
+                    PossibleDestinies.Gambling
+                };
+
+                chosendestiny = pool[Random.Range(0, pool.Length)];
+                Debug.Log("Mystery destiny chose: " + chosendestiny);
+
+            }
+
             switch (chosendestiny)
             {
                 case PossibleDestinies.Easy:
