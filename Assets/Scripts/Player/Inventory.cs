@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour
     {
         //// Activates items placed in the Inspector for testing.
         //ActivatePocket(PocketType.Passive);
-        //ActivatePocket(PocketType.Weapon);
+        ActivatePocket(PocketType.Weapon);
     }
 
     public void ActivatePocket(PocketType pocket)

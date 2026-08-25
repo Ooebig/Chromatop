@@ -85,6 +85,9 @@ public class SpinWeapon : Weapon
 
     private void ConfigureOrb(Transform newOrb)
     {
+        if (newOrb == null)
+            return;
+
         newOrb.localScale =
             Vector3.one * currentStats.area;
 
@@ -98,11 +101,44 @@ public class SpinWeapon : Weapon
                 newOrb
             );
 
+            Destroy(newOrb.gameObject);
             return;
         }
-        orbDamager.damageAmount = currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
-        orbDamager.bulletDestroyTime = currentStats.duration;
-        orbDamager.GetComponent<MeshRenderer>().material = gameManager.instance.activeMaterial;
+
+        PlayerStats playerStats =
+            gameManager.instance.player
+                .GetComponent<PlayerStats>();
+
+        float playerDamage = playerStats != null
+            ? playerStats.Damage
+            : 1f;
+
+        orbDamager.damageAmount =
+            currentStats.baseDamageMult *
+            playerDamage;
+
+        orbDamager.bulletDestroyTime =
+            currentStats.duration;
+
+        // Make the orb use the player's active damage color.
+        orbDamager.dmgColor =
+            gameManager.instance.activeColor;
+
+        MeshRenderer orbRenderer =
+            newOrb.GetComponentInChildren<MeshRenderer>(true);
+
+        if (orbRenderer != null)
+        {
+            orbRenderer.material =
+                gameManager.instance.activeMaterial;
+        }
+        else
+        {
+            Debug.LogWarning(
+                "The spawned orb does not have a MeshRenderer.",
+                newOrb
+            );
+        }
     }
 
     private void SetStats()
