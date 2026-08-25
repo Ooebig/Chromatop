@@ -88,6 +88,12 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.ShowMenu(gameManager.instance.menuSettings);
+
+        audioManager.instance.SyncAudioSliders(
+            audioManager.instance.masterSlider,
+            audioManager.instance.musicSlider,
+            audioManager.instance.sfxSlider);
+
     }
 
 

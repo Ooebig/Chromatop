@@ -53,6 +53,12 @@ public class gameManager : MonoBehaviour
     public GameObject[] destinyButtons;
     public TMP_Text[] destinyButtonTexts;
 
+    [Header("Slider Settings")]
+    public Slider masterSlider;
+    public Slider musicSlider;
+    public Slider sfxSlider;
+
+
 
     //public GameObject checkPointPopup;
     public Image playerHPBar;
