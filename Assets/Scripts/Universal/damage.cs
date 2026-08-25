@@ -33,8 +33,8 @@ public class damage : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.isTrigger)
-            return;
+        //if (other.isTrigger)
+        //    return;
 
         if ((ignoreLayer.value & (1 << other.gameObject.layer)) != 0)
             return;

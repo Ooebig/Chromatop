@@ -71,7 +71,7 @@ public class PlayerHealth : MonoBehaviour, iDamage
         //Debug.Log("A " + damage);
         if (playerStats != null)
         {
-            Debug.Log("Playerstats null");
+            //Debug.Log("Playerstats null");
             damage *=
                 1f - playerStats.DamageReduction;
         }

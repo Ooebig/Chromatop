@@ -16,7 +16,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float baseMovementSpeed = 6f;
 
     [Header("Offense")]
-    [SerializeField] private float baseDamage = 20f;
+    [SerializeField] private float baseDamage = 75f;
     [SerializeField] private float baseKnockback = 0f;
     [SerializeField] private float baseCriticalChance = 0.025f;
     [SerializeField] private float baseCriticalDamage = 1.5f;

@@ -8,7 +8,10 @@ public class gameManager : MonoBehaviour
 {
     public enum Pending { None, ReturntoMenu, Quit } // Enum for pending actions after a menu is closed
     public Pending action = Pending.None; // Current pending action
-
+    public enum PossibleDestinies
+    {
+        Easy, Medium, Hard, Mystery, Shop, Curse, Gambling, Boss
+    }
     public enum ColorType { RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GREY }
     public static gameManager instance;
     [Header("Starting Settings")]
@@ -42,18 +45,35 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject menuInventory;
     [SerializeField] public GameObject menuMain;
     [SerializeField] public GameObject menuPrompt;
+    [SerializeField] public GameObject menuShop;
+    [SerializeField] public GameObject menuCurse;
+    [SerializeField] public GameObject menuGambling;
+    [SerializeField] public GameObject menuMystery;
+
     GameObject menuPrevious;
 
-    [Header("In-Between Menu UI")]
+    [Header("Menu Details")]
     public GameObject[] destinyButtons;
     public TMP_Text[] destinyButtonTexts;
+    public TMP_Text levelCompleteStatText;
+    public TMP_Text[] statScreenText;
+
+    [Header("Slider Settings")]
+    public Slider masterSlider;
+    public Slider musicSlider;
+    public Slider sfxSlider;
 
 
+
+    [Header("Other")]
     //public GameObject checkPointPopup;
     public Image playerHPBar;
+    public Image playerEXPBar;
     public TMP_Text playerHPText;
+    public TMP_Text playerEXPText;
+    public TMP_Text roomCountText;
     public GameObject playerDamageScreen;
-    public TMP_Text roundTimerText;
+    public EnemySpawner waveManager;
 
     public bool isPaused;
     public GameObject player;
@@ -62,12 +82,16 @@ public class gameManager : MonoBehaviour
     public GameObject playerStartPos;
     public ColorType activeColor;
     public Material activeMaterial;
+    
 
+    public int currentRound;
+
+    public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
 
 
     //int gameGoalCount;
 
-    float timeScaleOrig;
+    public float timeScaleOrig;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -109,6 +133,9 @@ public class gameManager : MonoBehaviour
             inventory.ActivatePocket(Inventory.PocketType.Weapon);
         }
         ChangeColor(2);
+
+        ShowMenu(menuMain);
+        audioManager.instance.PlayMainMenuMusic();
     }
 
     void ChangeColor(int direction)
@@ -157,6 +184,11 @@ public class gameManager : MonoBehaviour
         }
         player.GetComponent<MeshRenderer>().material = activeMaterial;
         UpdateColorUI();
+    }
+
+    public void resetTimeScale()
+    {
+        Time.timeScale = timeScaleOrig;
     }
 
     void UpdateColorUI()
@@ -305,6 +337,7 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
+        roomCountText.text = "Room " + Data.roomCount;
     }
     //public void updateGameGoal(int amount)
     //{
@@ -331,6 +364,18 @@ public class gameManager : MonoBehaviour
         if (playerHPText != null)
         {
             playerHPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
+        }
+    }
+
+    public void updatePlayerEXP(float current, float max)
+    {
+        if (playerEXPBar != null)
+        {
+            playerEXPBar.fillAmount = current / max;
+        }
+        if (playerEXPText != null)
+        {
+            playerEXPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
         }
     }
 
@@ -468,7 +513,13 @@ public class gameManager : MonoBehaviour
 
         newMenu.SetActive(true);
 
+        if (audioManager.instance != null)
+        {
+            audioManager.instance.PlayMenuOpenSound();
+        }
+
         statePause();
+
     }
 
     public void ReturnToPrevious()
@@ -516,6 +567,11 @@ public class gameManager : MonoBehaviour
         menuStats = menuRt.transform.Find("Stats Menu")?.gameObject;
         menuInventory = menuRt.transform.Find("Inventory Menu")?.gameObject;
         menuMain = menuRt.transform.Find("Main Menu")?.gameObject;
+        menuPrompt = menuRt.transform.Find("Prompt?")?.gameObject;
+        menuShop = menuRt.transform.Find("Shop Menu")?.gameObject;
+        menuCurse = menuRt.transform.Find("Curse Menu")?.gameObject;
+        menuGambling = menuRt.transform.Find("Gambling Menu")?.gameObject;
+        menuMystery = menuRt.transform.Find("Mystery Menu")?.gameObject;
 
         if (menuPause == null)
         {
@@ -548,14 +604,7 @@ public class gameManager : MonoBehaviour
         ShowMenu(menuPrompt);
     }
 
-    public enum PossibleDestinies
-    {
-        Easy, Medium, Hard, Mystery, Shop, Curse, Gambling, Boss
-    }
-
-    public int currentRound;
-
-    public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
+    
 
     public void GenerateOptions()
     {
@@ -623,4 +672,135 @@ public class gameManager : MonoBehaviour
             }
         }
     }
-}
+
+    public void OnDestinyClick(int index) // called when a destiny button is clicked, index is the button index (0, 1, or 2)
+    {
+        if (index < 0 || index >= destinyList.Count)
+        {
+            Debug.LogWarning("Invalid destiny index: " + index);
+
+            PossibleDestinies chosendestiny = destinyList[index];
+
+            if (chosendestiny == PossibleDestinies.Mystery)
+            {
+
+                PossibleDestinies[] pool = new PossibleDestinies[]
+                {
+
+                    PossibleDestinies.Easy,
+                    PossibleDestinies.Medium,
+                    PossibleDestinies.Hard,
+                    PossibleDestinies.Shop,
+                    PossibleDestinies.Curse,
+                    PossibleDestinies.Gambling
+                };
+
+                chosendestiny = pool[Random.Range(0, pool.Length)];
+                Debug.Log("Mystery destiny chose: " + chosendestiny);
+
+            }
+
+            switch (chosendestiny)
+            {
+                case PossibleDestinies.Easy:
+                    Debug.Log("Easy destiny chosen");
+
+                    // set difficulty to easy, spawn easy enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with easy difficulty
+                    break;
+
+                case PossibleDestinies.Medium:
+                    Debug.Log("Medium destiny chosen");
+                    // set difficulty to medium, spawn medium enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with medium difficulty
+                    break;
+
+                case PossibleDestinies.Hard:
+                    Debug.Log("Hard destiny chosen");
+                    // set difficulty to hard, spawn hard enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with hard difficulty
+                    break;
+
+                case PossibleDestinies.Mystery:
+                    Debug.Log("Mystery destiny chosen");
+                    ShowMenu(menuMystery);
+                    break;
+
+                case PossibleDestinies.Shop:
+                    Debug.Log("Shop destiny chosen");
+                    ShowMenu(menuShop);
+                    break;
+
+                case PossibleDestinies.Curse:
+                    Debug.Log("Curse destiny chosen");
+                    ShowMenu(menuCurse);
+                    break;
+
+                case PossibleDestinies.Gambling:
+                    Debug.Log("Gambling destiny chosen");
+                    ShowMenu(menuGambling);
+                    break;
+
+                case PossibleDestinies.Boss:
+                    Debug.Log("Boss destiny chosen");
+                    // set difficulty to boss, spawn boss enemies, etc.
+                    CloseCurrentMenu();
+                    //start the next round with boss difficulty
+                    break;
+
+                default:
+                    Debug.LogWarning("Unknown destiny chosen: " + chosendestiny);
+                    break;
+            }
+        }
+    }
+
+    public void OpeningMenu(GameObject menu)
+    {
+        if (menuActive != null)
+        {
+            menuPrevious = menuActive;
+            menuActive.SetActive(false);
+        }
+
+        menuActive = menu;
+        menu.SetActive(true);
+
+        if (audioManager.instance != null)
+        {
+            audioManager.instance.PlayMenuOpenSound();
+
+            statePause();
+        }
+
+        else
+        {
+            Debug.LogWarning("OpeningMenu called with a null menu reference.");
+        }
+
+    }
+
+    public void RoomEnd()
+    {
+        ShowMenu(menuWin);
+        UpdateLevelCompleteStats();
+    }
+
+    public void UpdateLevelCompleteStats()
+    {
+        levelCompleteStatText.text = "Enemies Killed: " + Data.tempKillCount + "\n\nBasic: " + Data.tempBasicKillCount + " | Charger: " + Data.tempChargerKillCount + " | Shooter: " + Data.tempShooterKillCount + "\n\nMoney Collected: " + Data.tempCoinCount;
+        Data.tempKillCount = 0;
+        Data.tempBasicKillCount = 0;
+        Data.tempChargerKillCount = 0;
+        Data.tempShooterKillCount = 0;
+        Data.tempCoinCount = 0;
+    }
+    public void UpdateStatScreen()
+    {
+        statScreenText[0].text = "Rooms Completed: " + Data.roomCount + "\n\nMoney Earned: " + Data.totalCoinCount + "\n\nExperience Gained: " + Data.totalExperience;
+        statScreenText[1].text = "Total Enemies Killed: " + Data.killCount + "\n\nBasic: " + Data.basicKillCount + "\n\nCharger: " + Data.chargerKillCount + "\n\nShooter: " + Data.shooterKillCount;
+    }
+} 

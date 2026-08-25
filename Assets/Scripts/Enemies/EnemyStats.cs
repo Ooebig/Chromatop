@@ -27,7 +27,7 @@ public class EnemyStats : MonoBehaviour
 
     void Awake()
     {
-        currentHp = maxHp;
+        
     }
 
     public void LoadModel()

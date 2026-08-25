@@ -111,7 +111,23 @@ public class EnemyBehavior : MonoBehaviour, iDamage
             {
                 currencyDrop.DropCurrency();
             }
-
+            Data.tempKillCount++;
+            Data.killCount++;
+            switch (stats.type)
+            {
+                case EnemyType.Simple:
+                    Data.basicKillCount++;
+                    Data.tempBasicKillCount++;
+                    break;
+                case EnemyType.Charger:
+                    Data.chargerKillCount++;
+                    Data.tempChargerKillCount++;
+                    break;
+                case EnemyType.Shooter:
+                    Data.shooterKillCount++;
+                    Data.tempShooterKillCount++;
+                    break;
+            }
             Destroy(gameObject);
         }
     }
@@ -133,6 +149,7 @@ public class EnemyBehavior : MonoBehaviour, iDamage
         Vector3 spawnPos = firepoint.position;
         quaternion spawnRot = firepoint.rotation;
         GameObject bullet = Instantiate(projectilePrefab, spawnPos, spawnRot);
+        bullet.GetComponent<damage>().dmgColor = stats.Color;
         bullet.GetComponent<MeshRenderer>().material = gameManager.instance.colorMaterials[stats.Color];
     }
 }

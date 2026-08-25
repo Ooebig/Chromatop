@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1850024366036666179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 755463420720974599}
+  - component: {fileID: 9073396466300664354}
+  - component: {fileID: 3820006848111312489}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &755463420720974599
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850024366036666179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6669873334124257413}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -22.21521, y: 0.004638672}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9073396466300664354
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850024366036666179}
+  m_CullTransparentMesh: 1
+--- !u!114 &3820006848111312489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850024366036666179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6323161410268702716
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c7126e6b7e7bd4394e03b485451c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
+  action: 0
   startingItems:
   - {fileID: 0}
   - {fileID: 0}
@@ -150,6 +226,15 @@ MonoBehaviour:
   menuStats: {fileID: 4802329760493124042}
   menuInventory: {fileID: 9162095673147455451}
   menuMain: {fileID: 1866674893692764537}
+  menuPrompt: {fileID: 0}
+  menuShop: {fileID: 0}
+  menuCurse: {fileID: 0}
+  menuGambling: {fileID: 0}
+  menuMystery: {fileID: 0}
+  fadePanel: {fileID: 0}
+  fadeDuration: 0.4
+  destinyButtons: []
+  destinyButtonTexts: []
   playerHPBar: {fileID: 2720022683911708821}
   playerHPText: {fileID: 8343633129677323411}
   playerDamageScreen: {fileID: 6323161410268702716}
@@ -160,6 +245,8 @@ MonoBehaviour:
   playerStartPos: {fileID: 0}
   activeColor: 0
   activeMaterial: {fileID: 0}
+  currentRound: 0
+  destinyList: 
 --- !u!1001 &4197138887756964902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -524,6 +611,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 970274093910215067, guid: eb56fb4a9cc3eb54595c9b32915488b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3750161681697511490}
+    - targetCorrespondingSourceObject: {fileID: 970274093910215067, guid: eb56fb4a9cc3eb54595c9b32915488b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 755463420720974599}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb56fb4a9cc3eb54595c9b32915488b6, type: 3}
 --- !u!114 &369363934125399954 stripped
@@ -671,6 +761,52 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1277258804846227511, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357330960561343104, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361485827863823986, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2570026169755363674, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_Name
       value: Menus
@@ -678,6 +814,10 @@ PrefabInstance:
     - target: {fileID: 2780769710985533872, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505356909518274389, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 2
       objectReference: {fileID: 0}
     - target: {fileID: 4014849394707656413, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
@@ -695,13 +835,49 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5668338537917872650, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5801247609293346648, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7851203332817671790, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7922997298603279458, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_Name
+      value: Destiny 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8322157852769512053, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570474895486982473, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_text
+      value: '...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4428362839517583801}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDestinyClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665293519348368492, guid: 587e3f811d1ef574383725f6b52fd772, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: gameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

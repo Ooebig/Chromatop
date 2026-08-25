@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4427321979866163136}
   - component: {fileID: -2462393473314772854}
   - component: {fileID: 1640062537299610972}
+  - component: {fileID: 4613076219172152209}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Simple
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,6 +131,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4613076219172152209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2467691941630471906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517f4e0c08306ed47891f844a8a58acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCurrencyDrop
+  currencyItem: {fileID: 325180345454495119, guid: 64e1ed91b196f4b4eb67d6c0fb003e5a, type: 3}
+  dropChance: 1
 --- !u!1 &7514610047398893253
 GameObject:
   m_ObjectHideFlags: 0

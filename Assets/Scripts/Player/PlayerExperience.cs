@@ -75,5 +75,6 @@ public class PlayerExperience : MonoBehaviour
                 this
             );
         }
+        gameManager.instance.updatePlayerEXP(currentXP, xpToNextLevel);
     }
 }
