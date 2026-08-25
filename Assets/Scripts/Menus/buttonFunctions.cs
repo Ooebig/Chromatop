@@ -9,14 +9,13 @@ public class buttonFunctions : MonoBehaviour
     public void resume()
     {
         audioManager.instance.PlayConfirmSound();
-
+        audioManager.instance.PlayGameMusic();
         gameManager.instance.CloseCurrentMenu();
     }
 
     public void continuing()
     {
         audioManager.instance.PlayConfirmSound();
-
         gameManager.instance.updateinbetweenUI();
         gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
     }
@@ -110,12 +109,14 @@ public class buttonFunctions : MonoBehaviour
     {
         Debug.Log("Play game button pressed");
         audioManager.instance.PlayConfirmSound();
+        audioManager.instance.PlayGameMusic();
         gameManager.instance.CloseCurrentMenu();
     }
 
     public void returntoMainMenu()
     {
         audioManager.instance.PlayBackSound();
+        
         gameManager.instance.ReqConf(gameManager.Pending.ReturntoMenu); //Request confirmation to return to main menu
     }
 
@@ -133,6 +134,7 @@ public class buttonFunctions : MonoBehaviour
         {
             case gameManager.Pending.ReturntoMenu:
                gameManager.instance.ShowMenu(gameManager.instance.menuMain);
+               audioManager.instance.PlayMainMenuMusic();
                 break;
             case gameManager.Pending.Quit:
 #if UNITY_EDITOR

@@ -8,9 +8,16 @@ public class audioManager : MonoBehaviour
     [Header("Audio Sources")]
     public AudioSource musicSource;
     public AudioSource sfxSource;
+
+    [Header("SFX")]
     public AudioClip confirmSound;
     public AudioClip backSound;
     public AudioClip menuOpenSound;
+
+    [Header("Music")]
+    public AudioClip mainMenuMusic;
+    public AudioClip gameMusic;
+
 
     [Header("Volume Settings")]
     [Range(0f, 1f)] public float masterVolume = 1f;
@@ -92,4 +99,19 @@ public class audioManager : MonoBehaviour
     {
         PlaySFX(menuOpenSound);
     }
+    public void PlayMainMenuMusic()
+    {
+        PlayMusic(mainMenuMusic, true);
+    }
+
+    public void PlayGameMusic()
+    {
+        PlayMusic(gameMusic, true);
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
+
 }   

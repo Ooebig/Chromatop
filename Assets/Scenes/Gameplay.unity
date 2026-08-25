@@ -5330,6 +5330,8 @@ MonoBehaviour:
   confirmSound: {fileID: 8300000, guid: c9937ce4d56fb264ab5cce318fead9b1, type: 3}
   backSound: {fileID: 8300000, guid: dcfd407f6e0c48f4284784fd65bfa541, type: 3}
   menuOpenSound: {fileID: 8300000, guid: 8ac83c53c0b5d5342af33405c5a9ff91, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: d43d2e6266fb0cf46aa5e3dcb050eb70, type: 3}
+  gameMusic: {fileID: 8300000, guid: cfa51988cba24d548b8d33a796e71138, type: 3}
   masterVolume: 1
   musicVolume: 1
   sfxVolume: 0.5

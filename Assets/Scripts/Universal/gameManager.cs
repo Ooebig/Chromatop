@@ -116,6 +116,7 @@ public class gameManager : MonoBehaviour
         ChangeColor(2);
 
         ShowMenu(menuMain);
+        audioManager.instance.PlayMainMenuMusic();
     }
 
     void ChangeColor(int direction)
