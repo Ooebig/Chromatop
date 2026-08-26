@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Bits: 0
   team: 1
   dmgColor: 6
-  damageAmount: 20
+  damageAmount: 10
   damageRate: 1
   destroyOnImpact: 1
   rb: {fileID: 6037068356880631117}

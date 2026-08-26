@@ -213,7 +213,19 @@ public class Inventory : MonoBehaviour
     {
 
         currentCurrency += amount;
+        Data.totalCoinCount += amount;
+        if (Data.totalCoinCount < 0)
+        {
+            Data.totalCoinCount = 0;
+        }
+        Data.tempCoinCount += amount;
+        if (Data.tempCoinCount < 0)
+        {
+            Data.tempCoinCount = 0;
+        }
 
+        gameManager.instance.playerCurrencyText.text = currentCurrency.ToString();
+        
         //Debug.Log(
         //    $"Currency added: {amount}. Total: {currentCurrency}",
         //    this

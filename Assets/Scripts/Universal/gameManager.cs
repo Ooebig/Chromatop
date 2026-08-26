@@ -57,6 +57,9 @@ public class gameManager : MonoBehaviour
     public TMP_Text[] destinyButtonTexts;
     public TMP_Text levelCompleteStatText;
     public TMP_Text[] statScreenText;
+    public TMP_Text[] inventoryScreenText;
+    public TMP_Text[] levelCompleteButtonText;
+    public TMP_Text inBetweenScreenDataText;
 
     [Header("Slider Settings")]
     public Slider masterSlider;
@@ -71,9 +74,11 @@ public class gameManager : MonoBehaviour
     public Image playerEXPBar;
     public TMP_Text playerHPText;
     public TMP_Text playerEXPText;
+    public TMP_Text playerCurrencyText;
     public TMP_Text roomCountText;
     public GameObject playerDamageScreen;
     public EnemySpawner waveManager;
+    public ItemCatalogue itemCatalogue;
 
     public bool isPaused;
     public GameObject player;
@@ -87,6 +92,7 @@ public class gameManager : MonoBehaviour
     public int currentRound = 1;
 
     public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
+    public List<ItemData> possibleDrops = new List<ItemData>();
 
 
     //int gameGoalCount;
@@ -130,8 +136,10 @@ public class gameManager : MonoBehaviour
         colorMaterials[ColorType.PURPLE] = purpleMat;
         colorMaterials[ColorType.GREY] = greyMat;
 
+        
+
         //DontDestroyOnLoad(gameObject);
-        RefreshMenuRef();
+        //RefreshMenuRef();
     }
 
     void Start()
@@ -149,6 +157,8 @@ public class gameManager : MonoBehaviour
 
         ShowMenu(menuMain);
         audioManager.instance.PlayMainMenuMusic();
+        updatePlayerHP(player.GetComponent<PlayerHealth>().CurrentHealth, player.GetComponent<PlayerHealth>().MaxHealth);
+        updatePlayerEXP(player.GetComponent<PlayerExperience>().CurrentXP, player.GetComponent<PlayerExperience>().XPToNextLevel);
     }
 
     void ChangeColor(int direction)
@@ -391,7 +401,6 @@ public class gameManager : MonoBehaviour
             playerEXPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
         }
     }
-
 
 
 
@@ -676,6 +685,8 @@ public class gameManager : MonoBehaviour
     {
         GenerateOptions();
 
+        inBetweenScreenDataText.text = "Currency: " + inventory.currentCurrency + "\nLevel: " + player.GetComponent<PlayerExperience>().CurrentLevel + "\nExperience: " + player.GetComponent<PlayerExperience>().CurrentXP + "/" + player.GetComponent<PlayerExperience>().XPToNextLevel + "\nRoom: " + currentRound;
+
         for (int i = 0; i < 3; i++)
         {
             if (i < destinyList.Count)
@@ -813,6 +824,20 @@ public class gameManager : MonoBehaviour
         UpdateLevelCompleteStats();
     }
 
+    public void RefreshRound()
+    {
+        Data.tempCoinCount = 0;
+        Data.tempKillCount = 0;
+        Data.tempBasicKillCount = 0;
+        Data.tempChargerKillCount = 0;
+        Data.tempShooterKillCount = 0;
+        waveManager.ClearWave();
+        player.GetComponent<PlayerHealth>().FullHeal();
+        updatePlayerEXP(player.GetComponent<PlayerExperience>().CurrentXP, player.GetComponent<PlayerExperience>().XPToNextLevel);
+        updatePlayerHP(player.GetComponent<PlayerHealth>().CurrentHealth, player.GetComponent<PlayerHealth>().MaxHealth);
+
+    }
+
     public void UpdateLevelCompleteStats()
     {
         levelCompleteStatText.text = "Enemies Killed: " + Data.tempKillCount + "\n\nBasic: " + Data.tempBasicKillCount + " | Charger: " + Data.tempChargerKillCount + " | Shooter: " + Data.tempShooterKillCount + "\n\nMoney Collected: " + Data.tempCoinCount;
@@ -821,10 +846,60 @@ public class gameManager : MonoBehaviour
         Data.tempChargerKillCount = 0;
         Data.tempShooterKillCount = 0;
         Data.tempCoinCount = 0;
+        randomizeLevelRewards();
     }
     public void UpdateStatScreen()
     {
         statScreenText[0].text = "Rooms Completed: " + currentRound + "\n\nMoney Earned: " + Data.totalCoinCount + "\n\nExperience Gained: " + Data.totalExperience;
         statScreenText[1].text = "Total Enemies Killed: " + Data.killCount + "\n\nBasic: " + Data.basicKillCount + "\n\nCharger: " + Data.chargerKillCount + "\n\nShooter: " + Data.shooterKillCount;
     }
+
+    public void UpdateInventoryScreen()
+    {
+        inventoryScreenText[0].text = "";
+        inventoryScreenText[1].text = "";
+        for (int i = 0; i < inventory.allItems.Count; i++)
+        {
+            int x = 0;
+            if (i > 9) { x = 1; }
+            inventoryScreenText[x].text += inventory.allItems[i].itemName + "\n";
+
+        }
+    }
+
+    public void randomizeLevelRewards()
+    {
+        possibleDrops = new List<ItemData>();
+        while (possibleDrops.Count < 3 && itemCatalogue.regularItemDrops.Length >= 3)
+        {
+            int rand = Random.Range(0, itemCatalogue.regularItemDrops.Length);
+            if (possibleDrops.Contains(itemCatalogue.regularItemDrops[rand]))
+            {
+                continue;
+            }
+            possibleDrops.Add(itemCatalogue.regularItemDrops[rand]);
+        }
+        levelCompleteButtonText[0].text = possibleDrops[0].itemName;
+        levelCompleteButtonText[1].text = possibleDrops[1].itemName;
+        levelCompleteButtonText[2].text = possibleDrops[2].itemName;
+    }
+
+    public void OnLevelCompleteRewardClick(int index)
+    {
+        if (index < 0 || index >= possibleDrops.Count)
+        {
+            Debug.LogWarning("Invalid reward index: " + index);
+            return;
+        }
+        ItemData chosenReward = possibleDrops[index];
+        inventory.AddItem(chosenReward);
+        inventory.ActivatePocket(Inventory.PocketType.Passive);
+        inventory.ActivatePocket(Inventory.PocketType.Weapon);
+        Debug.Log("Level complete reward chosen: " + chosenReward.itemName);
+        
+        
+    }
+
+
+
 } 

@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Player Start Pos
   - PlayerPickup
+  - Drop
   layers:
   - Default
   - TransparentFX

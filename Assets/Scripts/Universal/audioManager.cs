@@ -21,8 +21,8 @@ public class audioManager : MonoBehaviour
 
 
     [Header("Volume Settings")]
-    [Range(0f, 1f)] public float masterVolume = 1f;
-    [Range(0f, 1f)] public float musicVolume = 1f;
+    [Range(0f, 1f)] public float masterVolume = 0.75f;
+    [Range(0f, 1f)] public float musicVolume = 0.5f;
     [Range(0f, 1f)] public float sfxVolume = 1f;
 
     [Header("Sliders")]

@@ -27,13 +27,13 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.ReturnToPrevious();
     }
 
-    //public void restart()
-    //{
-    //    Debug.Log("Restart button pressed");
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-    //    gameManager.instance.StartCoroutine(gameManager.instance.RefreshAfterLoad());
-    //}
+    public void itemClaim(int val)
+    {
+        gameManager.instance.OnLevelCompleteRewardClick(val);
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.updateinbetweenUI();
+        gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
+    }
 
     public void quit()
     {
@@ -45,37 +45,42 @@ public class buttonFunctions : MonoBehaviour
 
     public void difficultyEasy()
     {
+        gameManager.instance.currentRound++;
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
-
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20+(gameManager.instance.currentRound * 5)));
+        gameManager.instance.RefreshRound();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (15 + (gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyNormal()
     {
+        gameManager.instance.currentRound++;
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
-
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (gameManager.instance.currentRound * 5)));
+        gameManager.instance.RefreshRound();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (15 + (gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyHard()
     {
+        gameManager.instance.currentRound++;
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (gameManager.instance.currentRound * 5)));
+        gameManager.instance.RefreshRound();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (15 + (gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyBoss()
     {
+        gameManager.instance.currentRound++;
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
-
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (20 + (gameManager.instance.currentRound * 5)));
+        gameManager.instance.RefreshRound();
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (15 + (gameManager.instance.currentRound * 5)));
     }
 
     public void mystery()
@@ -97,7 +102,7 @@ public class buttonFunctions : MonoBehaviour
     public void inventory()
     {
         audioManager.instance.PlayConfirmSound();
-
+        gameManager.instance.UpdateInventoryScreen();
         gameManager.instance.ShowMenu(gameManager.instance.menuInventory);
     }
 

@@ -6,6 +6,11 @@ public class CoinPickup : MonoBehaviour
 
     private bool collected;
 
+    void Start()
+    {
+        gameManager.instance.player.GetComponent<PlayerExperience>().AddXP(coinValue);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (collected)
@@ -33,9 +38,6 @@ public class CoinPickup : MonoBehaviour
         collected = true;
 
         inventory.AddCurrency(coinValue);
-
-        Data.totalCoinCount += coinValue;
-        Data.tempCoinCount += coinValue;
 
         // Activate effects that happen whenever currency is collected.
         inventory.ActivatePocket(

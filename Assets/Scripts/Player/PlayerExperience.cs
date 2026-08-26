@@ -47,6 +47,8 @@ public class PlayerExperience : MonoBehaviour
             )
         );
 
+
+        Data.totalExperience += finalAmount;
         currentXP += finalAmount;
 
         Debug.Log(

@@ -90,6 +90,25 @@ public class PlayerStats : MonoBehaviour
             baseDamage
         );
 
+    public float CriticalChance =>
+        Calculate(
+            StatType.CriticalChance,
+            baseCriticalChance
+        );
+
+    public float CriticalDamage =>
+        Calculate(
+            StatType.CriticalDamage,
+            baseCriticalDamage
+        );
+
+    public float HealthRegeneration =>
+        Calculate(
+            StatType.HealthRegeneration,
+            baseHealthRegeneration
+        );
+     
+
     public float ExperienceGainMultiplier =>
         Calculate(
             StatType.ExperienceGain,

@@ -101,6 +101,8 @@ public class PlayerHealth : MonoBehaviour, iDamage
         );
     }
 
+    public void FullHeal() { currentHealth = MaxHealth; }
+
     private void HandleStatsChanged()
     {
         float newMaxHealth = MaxHealth;

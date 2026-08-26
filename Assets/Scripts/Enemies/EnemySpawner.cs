@@ -32,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     
     public TextMeshProUGUI waveTimerText;
+    public TMP_Text difficultyText;
 
 
     private float waveTimer;
@@ -55,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void StartWave(Wave.Difficulty difficulty, float waveDuration)
     {
+
         currentWaveIndex++;
 
         Wave dynamic = new Wave();
@@ -68,6 +70,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.chargerRatio = 10f;
                 dynamic.shooterRatio = 10f;
                 dynamic.Multiplier = 0.75f;
+                difficultyText.text = "Easy";
                 break;
             case Wave.Difficulty.normal:
                 dynamic.timeToSpawn = 1.0f;
@@ -75,6 +78,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.chargerRatio = 25f;
                 dynamic.shooterRatio = 25f;
                 dynamic.Multiplier = 1f;
+                difficultyText.text = "Normal";
                 break;
             case Wave.Difficulty.hard:
                 dynamic.timeToSpawn = 0.75f;
@@ -82,6 +86,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.chargerRatio = 30f;
                 dynamic.shooterRatio = 30f;
                 dynamic.Multiplier = 1.5f;
+                difficultyText.text = "Hard";
                 break;
             case Wave.Difficulty.boss:
                 dynamic.timeToSpawn = 0.5f;
@@ -89,6 +94,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.chargerRatio = 40f;
                 dynamic.shooterRatio = 40f;
                 dynamic.Multiplier = 2.0f;
+                difficultyText.text = "Boss";
                 break;
 
         }
@@ -193,7 +199,7 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyStats.maxHp = 100f;
             enemyStats.speed = 3f;
-            enemyStats.damage = 20f;
+            enemyStats.damage = 10f;
             enemyStats.firerate = 0f;
             enemyStats.stopDistance = 0f;
             enemyStats.contactDamage = 10f;
@@ -205,7 +211,7 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyStats.maxHp = 150f;
             enemyStats.speed = 5f;
-            enemyStats.damage = 20f;
+            enemyStats.damage = 15f;
             enemyStats.firerate = 0f;
             enemyStats.stopDistance = 0f;
             enemyStats.contactDamage = 20f;
