@@ -84,7 +84,7 @@ public class gameManager : MonoBehaviour
     public Material activeMaterial;
     
 
-    public int currentRound;
+    public int currentRound = 1;
 
     public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
 
@@ -350,7 +350,7 @@ public class gameManager : MonoBehaviour
             menuActive.SetActive(false);
             menuActive = null;
         }
-        roomCountText.text = "Room " + Data.roomCount;
+        roomCountText.text = "Room " + currentRound;
     }
     //public void updateGameGoal(int amount)
     //{
@@ -627,7 +627,7 @@ public class gameManager : MonoBehaviour
         destinyList.Add(PossibleDestinies.Medium);
         destinyList.Add(PossibleDestinies.Hard);
 
-        /* if (currentRound % 10 == 0) //boss round
+        if (currentRound % 10 == 0) //boss round
          {
              destinyList.Add(PossibleDestinies.Boss);
              return;
@@ -669,7 +669,7 @@ public class gameManager : MonoBehaviour
              int rand = Random.Range(0, others.Count);
              destinyList.Add(others[rand]);
              others.RemoveAt(rand);
-         }*/
+         }
     }
 
     public void updateinbetweenUI() // update the in-between menu UI with the current destiny options
@@ -682,6 +682,9 @@ public class gameManager : MonoBehaviour
             {
                 destinyButtons[i].SetActive(true);
                 destinyButtonTexts[i].text = destinyList[i].ToString();
+                //switch for it's given roomtype
+                //destinyButtons[i].GetComponent<Button>().CHANGETHEBUTTON
+                //button onClick function should change to it's associated buttonFunctions function
             }
             else
             {
@@ -727,7 +730,7 @@ public class gameManager : MonoBehaviour
 
                     audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20 + (Data.roomCount * 5)));
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20 + (currentRound * 5)));
                     break;
 
                 case PossibleDestinies.Medium:
@@ -735,14 +738,14 @@ public class gameManager : MonoBehaviour
 
                     audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (Data.roomCount * 5)));
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (currentRound * 5)));
                     break;
 
                 case PossibleDestinies.Hard:
                     Debug.Log("Hard destiny chosen");
                     audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (Data.roomCount * 5)));
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (currentRound * 5)));
                     break;
 
                 case PossibleDestinies.Mystery:
@@ -821,7 +824,7 @@ public class gameManager : MonoBehaviour
     }
     public void UpdateStatScreen()
     {
-        statScreenText[0].text = "Rooms Completed: " + Data.roomCount + "\n\nMoney Earned: " + Data.totalCoinCount + "\n\nExperience Gained: " + Data.totalExperience;
+        statScreenText[0].text = "Rooms Completed: " + currentRound + "\n\nMoney Earned: " + Data.totalCoinCount + "\n\nExperience Gained: " + Data.totalExperience;
         statScreenText[1].text = "Total Enemies Killed: " + Data.killCount + "\n\nBasic: " + Data.basicKillCount + "\n\nCharger: " + Data.chargerKillCount + "\n\nShooter: " + Data.shooterKillCount;
     }
 } 

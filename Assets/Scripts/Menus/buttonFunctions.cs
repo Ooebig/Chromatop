@@ -49,7 +49,7 @@ public class buttonFunctions : MonoBehaviour
 
         gameManager.instance.CloseCurrentMenu();
 
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20+(Data.roomCount * 5)));
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20+(gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyNormal()
@@ -58,7 +58,7 @@ public class buttonFunctions : MonoBehaviour
 
         gameManager.instance.CloseCurrentMenu();
 
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (Data.roomCount * 5)));
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyHard()
@@ -66,7 +66,7 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayConfirmSound();
 
         gameManager.instance.CloseCurrentMenu();
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (Data.roomCount * 5)));
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (gameManager.instance.currentRound * 5)));
     }
 
     public void difficultyBoss()
@@ -75,7 +75,7 @@ public class buttonFunctions : MonoBehaviour
 
         gameManager.instance.CloseCurrentMenu();
 
-        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (20 + (Data.roomCount * 5)));
+        gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (20 + (gameManager.instance.currentRound * 5)));
     }
 
     public void mystery()

@@ -4,7 +4,6 @@ public class Data : MonoBehaviour
 {
     
     public static Data instance;
-    public static int roomCount = 0; // Number of rooms cleared
     public static int killCount = 0; // Total number of enemies killed
     public static int basicKillCount = 0; // Number of basic enemies killed
     public static int chargerKillCount = 0; // Number of charger enemies killed
