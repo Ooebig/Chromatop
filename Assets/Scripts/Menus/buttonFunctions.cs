@@ -106,7 +106,8 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayConfirmSound();
         
         gameManager.instance.ShowMenu(gameManager.instance.menuStats);
-        gameManager.instance.UpdateStatScreen();
+
+      gameManager.instance.UpdateStatScreen();
     }
 
 

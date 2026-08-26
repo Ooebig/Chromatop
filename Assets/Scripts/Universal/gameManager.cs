@@ -623,49 +623,53 @@ public class gameManager : MonoBehaviour
     {
         destinyList.Clear();
 
-        if (currentRound % 10 == 0) //boss round
-        {
-            destinyList.Add(PossibleDestinies.Boss);
-            return;
+        destinyList.Add(PossibleDestinies.Easy);
+        destinyList.Add(PossibleDestinies.Medium);
+        destinyList.Add(PossibleDestinies.Hard);
 
-        }
+        /* if (currentRound % 10 == 0) //boss round
+         {
+             destinyList.Add(PossibleDestinies.Boss);
+             return;
 
-        List<PossibleDestinies> difficulties = new List<PossibleDestinies>() //at least one of each difficulty
-        {
-            PossibleDestinies.Easy,
-            PossibleDestinies.Medium,
-            PossibleDestinies.Hard
-        };
+         }
 
-        int forcediff = Random.Range(0, difficulties.Count);
-        PossibleDestinies forced = difficulties[forcediff];
-        destinyList.Add(forced); //force at least one difficulty into the list
+         List<PossibleDestinies> difficulties = new List<PossibleDestinies>() //at least one of each difficulty
+         {
+             PossibleDestinies.Easy,
+             PossibleDestinies.Medium,
+             PossibleDestinies.Hard
+         };
 
-        List<PossibleDestinies> others = new List<PossibleDestinies>();
+         int forcediff = Random.Range(0, difficulties.Count);
+         PossibleDestinies forced = difficulties[forcediff];
+         destinyList.Add(forced); //force at least one difficulty into the list
 
-        for (int i = 0; i < difficulties.Count; i++)
-        {
-            if (difficulties[i] != forced)
-            {
-                others.Add(difficulties[i]);
-            }
-        }
+         List<PossibleDestinies> others = new List<PossibleDestinies>();
 
-        //other possible destinies
+         for (int i = 0; i < difficulties.Count; i++)
+         {
+             if (difficulties[i] != forced)
+             {
+                 others.Add(difficulties[i]);
+             }
+         }
 
-        others.Add(PossibleDestinies.Mystery);
-        others.Add(PossibleDestinies.Shop);
-        others.Add(PossibleDestinies.Curse);
-        others.Add(PossibleDestinies.Gambling);
+         //other possible destinies
 
-        while (destinyList.Count < 3 && others.Count > 0) // while we have less than 3 destinies
-                                                          //and there are still other destinies to choose from, randomly select one,
-                                                          //and add it to the destinyList
-        {
-            int rand = Random.Range(0, others.Count);
-            destinyList.Add(others[rand]);
-            others.RemoveAt(rand);
-        }
+         others.Add(PossibleDestinies.Mystery);
+         others.Add(PossibleDestinies.Shop);
+         others.Add(PossibleDestinies.Curse);
+         others.Add(PossibleDestinies.Gambling);
+
+         while (destinyList.Count < 3 && others.Count > 0) // while we have less than 3 destinies
+                                                           //and there are still other destinies to choose from, randomly select one,
+                                                           //and add it to the destinyList
+         {
+             int rand = Random.Range(0, others.Count);
+             destinyList.Add(others[rand]);
+             others.RemoveAt(rand);
+         }*/
     }
 
     public void updateinbetweenUI() // update the in-between menu UI with the current destiny options
@@ -688,13 +692,16 @@ public class gameManager : MonoBehaviour
 
     public void OnDestinyClick(int index) // called when a destiny button is clicked, index is the button index (0, 1, or 2)
     {
+
+        Debug.Log("Destiny button clicked! Index = " + index);
+
         if (index < 0 || index >= destinyList.Count)
         {
             Debug.LogWarning("Invalid destiny index: " + index);
 
             PossibleDestinies chosendestiny = destinyList[index];
 
-            if (chosendestiny == PossibleDestinies.Mystery)
+           /* if (chosendestiny == PossibleDestinies.Mystery)
             {
 
                 PossibleDestinies[] pool = new PossibleDestinies[]
@@ -711,30 +718,31 @@ public class gameManager : MonoBehaviour
                 chosendestiny = pool[Random.Range(0, pool.Length)];
                 Debug.Log("Mystery destiny chose: " + chosendestiny);
 
-            }
+            }*/
 
             switch (chosendestiny)
             {
                 case PossibleDestinies.Easy:
                     Debug.Log("Easy destiny chosen");
 
-                    // set difficulty to easy, spawn easy enemies, etc.
+                    audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    //start the next round with easy difficulty
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20 + (Data.roomCount * 5)));
                     break;
 
                 case PossibleDestinies.Medium:
                     Debug.Log("Medium destiny chosen");
-                    // set difficulty to medium, spawn medium enemies, etc.
+
+                    audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    //start the next round with medium difficulty
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (Data.roomCount * 5)));
                     break;
 
                 case PossibleDestinies.Hard:
                     Debug.Log("Hard destiny chosen");
-                    // set difficulty to hard, spawn hard enemies, etc.
+                    audioManager.instance.PlayConfirmSound();
                     CloseCurrentMenu();
-                    //start the next round with hard difficulty
+                    waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (Data.roomCount * 5)));
                     break;
 
                 case PossibleDestinies.Mystery:
