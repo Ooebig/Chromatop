@@ -53,11 +53,11 @@ MonoBehaviour:
     m_Bits: 0
   team: 1
   dmgColor: 6
-  rb: {fileID: 6037068356880631117}
   damageAmount: 20
   damageRate: 1
-  bulletSpeed: 12
   destroyOnImpact: 1
+  rb: {fileID: 6037068356880631117}
+  bulletSpeed: 12
   bulletDestroyTime: 3
 --- !u!33 &8206960498050467239
 MeshFilter:
@@ -142,7 +142,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!135 &3900976811388302033
 SphereCollider:
   m_ObjectHideFlags: 0

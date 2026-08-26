@@ -2990,7 +2990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3850756320148753589}
   - component: {fileID: 3379707569930916999}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pentagon Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

@@ -85,16 +85,13 @@ public class SpinWeapon : Weapon
 
     private void ConfigureOrb(Transform newOrb)
     {
-        if (newOrb == null)
+        if (newOrb == null || currentStats == null)
             return;
 
-        newOrb.localScale =
-            Vector3.one * currentStats.area;
-
-        damage orbDamager =
+        damage orbDamage =
             newOrb.GetComponentInChildren<damage>(true);
 
-        if (orbDamager == null)
+        if (orbDamage == null)
         {
             Debug.LogError(
                 "The spawned orb needs a damage component.",
@@ -105,40 +102,42 @@ public class SpinWeapon : Weapon
             return;
         }
 
-        PlayerStats playerStats =
-            gameManager.instance.player
-                .GetComponent<PlayerStats>();
+        gameManager manager =
+            gameManager.instance;
 
-        float playerDamage = playerStats != null
-            ? playerStats.Damage
-            : 1f;
+        if (manager == null)
+        {
+            manager =
+                FindFirstObjectByType<gameManager>();
+        }
 
-        orbDamager.damageAmount =
+        gameManager.ColorType weaponColor =
+            manager != null
+                ? manager.activeColor
+                : gameManager.ColorType.GREY;
+
+        Material weaponMaterial =
+            manager != null
+                ? manager.activeMaterial
+                : null;
+
+        float finalDamage =
             currentStats.baseDamageMult *
-            playerDamage;
+            (playerStats != null
+                ? playerStats.Damage
+                : 1f);
 
-        orbDamager.bulletDestroyTime =
-            currentStats.duration;
+        newOrb.localScale =
+            Vector3.one * currentStats.area;
 
-        // Make the orb use the player's active damage color.
-        orbDamager.dmgColor =
-            gameManager.instance.activeColor;
-
-        MeshRenderer orbRenderer =
-            newOrb.GetComponentInChildren<MeshRenderer>(true);
-
-        if (orbRenderer != null)
-        {
-            orbRenderer.material =
-                gameManager.instance.activeMaterial;
-        }
-        else
-        {
-            Debug.LogWarning(
-                "The spawned orb does not have a MeshRenderer.",
-                newOrb
-            );
-        }
+        orbDamage.Configure(
+            finalDamage,
+            0f,
+            currentStats.duration,
+            weaponColor,
+            1,
+            weaponMaterial
+);
     }
 
     private void SetStats()

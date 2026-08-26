@@ -3,20 +3,33 @@ using UnityEngine;
 
 public class damage : MonoBehaviour
 {
-    [SerializeField] LayerMask ignoreLayer;
-    [SerializeField] int team;
+    [Header("Collision")]
+    [SerializeField] private LayerMask ignoreLayer;
+    [SerializeField] private int team;
 
+    [Header("Damage")]
     [SerializeField] public gameManager.ColorType dmgColor;
-    [SerializeField] Rigidbody rb;
-
     [SerializeField] public float damageAmount;
     [SerializeField] public float damageRate;
-    [SerializeField] public float bulletSpeed;
     [SerializeField] public bool destroyOnImpact;
+
+    [Header("Projectile")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] public float bulletSpeed;
     [SerializeField] public float bulletDestroyTime;
+
 
     private Dictionary<iDamage, float> damageTimers =
         new Dictionary<iDamage, float>(); //dictionary so each thing can be hit individually with its own timer
+
+
+    private void Awake()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+    }
 
     void Start()
     {
@@ -31,49 +44,113 @@ public class damage : MonoBehaviour
         }
     }
 
+    public void Configure(
+        float newDamage,
+        float newSpeed,
+        float newLifetime,
+        gameManager.ColorType newColor,
+        int ownerTeam,
+        Material newMaterial
+    )
+    {
+        damageAmount = newDamage;
+        bulletSpeed = newSpeed;
+        bulletDestroyTime = newLifetime;
+        dmgColor = newColor;
+        team = ownerTeam;
+
+        MeshRenderer meshRenderer =
+            GetComponentInChildren<MeshRenderer>(true);
+
+        if (meshRenderer != null && newMaterial != null)
+        {
+            meshRenderer.material = newMaterial;
+        }
+
+        ApplyVelocity();
+    }
+
+    private void ApplyVelocity()
+    {
+        if (rb != null && bulletSpeed != 0f)
+        {
+            rb.linearVelocity =
+                transform.forward * bulletSpeed;
+        }
+    }
+
+    private bool TryGetDamageTarget(
+        Collider other,
+        out iDamage target
+    )
+    {
+        target = null;
+
+        if ((ignoreLayer.value &
+             (1 << other.gameObject.layer)) != 0)
+        {
+            return false;
+        }
+
+        target = other.GetComponentInParent<iDamage>();
+
+        if (target == null || target.Team == team)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!destroyOnImpact)
+            return;
+
+        if (!TryGetDamageTarget(other, out iDamage target))
+            return;
+
+        target.takeDamage(
+            damageAmount,
+            dmgColor
+        );
+
+        Destroy(gameObject);
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        //if (other.isTrigger)
-        //    return;
-
-        if ((ignoreLayer.value & (1 << other.gameObject.layer)) != 0)
+        if (destroyOnImpact)
             return;
 
-        iDamage dmg = other.GetComponentInParent<iDamage>();
-
-        if (dmg == null || dmg.Team == team)
+        if (!TryGetDamageTarget(other, out iDamage target))
             return;
 
-        if (!destroyOnImpact)
+        if (!damageTimers.ContainsKey(target))
         {
-            if (!damageTimers.ContainsKey(dmg))
-            {
-                damageTimers[dmg] = 0f;
-            }
-
-            if (Time.time >= damageTimers[dmg])
-            {
-                dmg.takeDamage(damageAmount, dmgColor);
-
-                damageTimers[dmg] = Time.time + damageRate;
-            }
-            
+            damageTimers[target] = 0f;
         }
-        else
-        {
-            dmg.takeDamage(damageAmount, dmgColor);
-            Destroy(gameObject);
-        }
+
+        if (Time.time < damageTimers[target])
+            return;
+
+        target.takeDamage(
+            damageAmount,
+            dmgColor
+        );
+
+        damageTimers[target] =
+            Time.time + Mathf.Max(0.01f, damageRate);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
-        iDamage dmg = other.GetComponentInParent<iDamage>();
+        iDamage target =
+            other.GetComponentInParent<iDamage>();
 
-        if (dmg != null)
+        if (target != null)
         {
-            damageTimers.Remove(dmg);
+            damageTimers.Remove(target);
         }
     }
 }

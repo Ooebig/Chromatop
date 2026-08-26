@@ -104,10 +104,23 @@ public class gameManager : MonoBehaviour
 
         instance = this;
         timeScaleOrig = Time.timeScale;
+
         player = GameObject.FindWithTag("Player");
-        //playerScript = player.GetComponent<playerController>();
-        inventory = player.GetComponent<Inventory>();
+
+        if (player != null)
+        {
+            inventory = player.GetComponent<Inventory>();
+        }
+        else
+        {
+            Debug.LogError(
+                "GameManager could not find an object tagged Player.",
+                this
+            );
+        }
+
         playerStartPos = GameObject.FindWithTag("Player Start Pos");
+
         activeColor = colorsUnlocked[0];
         colorMaterials[ColorType.RED] = redMat;
         colorMaterials[ColorType.ORANGE] = orangeMat;

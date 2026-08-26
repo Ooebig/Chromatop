@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7923620222678089669}
   - component: {fileID: 5079134820302738253}
-  - component: {fileID: 7669603809245812689}
+  - component: {fileID: 6962975730866353319}
   m_Layer: 0
   m_Name: ProjectileWeapon
   m_TagString: Weapon
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3841012474719316860}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.17716, y: 0, z: -3.86634}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63,8 +63,8 @@ MonoBehaviour:
   weaponRange: 10
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 256
---- !u!114 &7669603809245812689
+    m_Bits: 8
+--- !u!114 &6962975730866353319
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,12 +73,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3841012474719316860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 593f6ff939830b74e9e1fc017e60e5cc, type: 3}
+  m_Script: {fileID: 11500000, guid: afe7e18e07e92eb4a919cd162d82d79c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamager
-  damageAmount: 1
-  damageColor: 0
-  lifeTime: 5
+  m_EditorClassIdentifier: Assembly-CSharp::damage
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  team: 1
+  dmgColor: 0
+  damageAmount: 2
+  damageRate: 2
+  destroyOnImpact: 1
+  rb: {fileID: 6037068356880631117, guid: 50948d5e89ade214cbc9e73f45ec5a04, type: 3}
+  bulletSpeed: 2
+  bulletDestroyTime: 0
 --- !u!1 &3858395370531056966
 GameObject:
   m_ObjectHideFlags: 0

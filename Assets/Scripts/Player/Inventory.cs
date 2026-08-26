@@ -139,7 +139,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         //// Activates items placed in the Inspector for testing.
-        //ActivatePocket(PocketType.Passive);
+        ActivatePocket(PocketType.Passive);
         ActivatePocket(PocketType.Weapon);
     }
 
@@ -167,6 +167,12 @@ public class Inventory : MonoBehaviour
         allItems.Add(item);
 
         allPockets[(int)item.pocketType].Add(item);
+
+        if (item.pocketType == PocketType.Weapon ||
+            item.pocketType == PocketType.Passive)
+        {
+            item.Activate(CreateContext());
+        }
 
     }
 
@@ -216,9 +222,14 @@ public class Inventory : MonoBehaviour
 
     private ItemContext CreateContext()
     {
+        GameObject playerObject =
+            playerStats != null
+                ? playerStats.gameObject
+                : gameObject;
+
         return new ItemContext
         {
-            player = gameObject,
+            player = playerObject,
             playerStats = playerStats,
             playerHealth = playerHealth
         };

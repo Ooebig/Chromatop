@@ -8,6 +8,7 @@ public class ProjectileWeapon : Weapon
 
     [Header("Targeting")]
     [SerializeField] private float weaponRange = 10f;
+    [SerializeField] private LayerMask whatIsEnemy;
 
     private WeaponStats currentStats;
     private float shotCounter;
@@ -44,9 +45,18 @@ public class ProjectileWeapon : Weapon
 
         FireAtEnemies();
 
+        float finalCooldown =
+            playerStats != null
+                ? playerStats.Calculate(
+                    StatType.Cooldown,
+                    currentStats.cooldown
+                )
+
+                : currentStats.cooldown;
+
         shotCounter = Mathf.Max(
             0.01f,
-            currentStats.cooldown
+            finalCooldown
         );
     }
 
@@ -61,7 +71,9 @@ public class ProjectileWeapon : Weapon
 
         Collider[] enemies = Physics.OverlapSphere(
             origin,
-            detectionRange
+            detectionRange,
+            whatIsEnemy,
+            QueryTriggerInteraction.Collide
         );
 
         if (enemies.Length == 0)
@@ -120,42 +132,51 @@ public class ProjectileWeapon : Weapon
     }
 
     private void ConfigureProjectile(
-        damage newProjectile
-    )
+    damage newProjectile
+)
     {
-        newProjectile.bulletSpeed =
-            currentStats.speed;
+        if (newProjectile == null ||
+            currentStats == null)
+        {
+            return;
+        }
+
+        gameManager manager =
+    gameManager.instance;
+
+        if (manager == null)
+        {
+            manager =
+                FindFirstObjectByType<gameManager>();
+        }
+
+        gameManager.ColorType weaponColor =
+            manager != null
+                ? manager.activeColor
+                : gameManager.ColorType.GREY;
+
+        Material weaponMaterial =
+            manager != null
+                ? manager.activeMaterial
+                : null;
+
+        float finalDamage =
+            currentStats.baseDamageMult *
+            (playerStats != null
+                ? playerStats.Damage
+                : 1f);
 
         newProjectile.transform.localScale =
             Vector3.one * currentStats.area;
 
-        newProjectile.bulletDestroyTime =
-            currentStats.duration;
-
-        newProjectile.dmgColor =
-            gameManager.instance.activeColor;
-
-        newProjectile.GetComponent<MeshRenderer>().material = gameManager.instance.activeMaterial;
-
-        newProjectile.damageAmount =
-            currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
-
-        //EnemyDamager projectileDamager =
-        //    newProjectile.GetComponentInChildren<EnemyDamager>(true);
-
-        //if (projectileDamager != null)
-        //{
-        //    projectileDamager.SetDamage(
-        //        currentStats.baseDamage
-        //    );
-        //}
-        //else
-        //{
-        //    Debug.LogError(
-        //        "The projectile needs an EnemyDamager component.",
-        //        newProjectile
-        //    );
-        //}
+        newProjectile.Configure(
+        finalDamage,
+            currentStats.speed,
+            currentStats.duration,
+            weaponColor,
+            1,
+            weaponMaterial
+);
     }
 
     private void SetStats()
@@ -170,33 +191,6 @@ public class ProjectileWeapon : Weapon
             );
 
             return;
-        }
-
-        // Configure the template so active clones inherit valid
-        // values before their Start methods run.
-        if (projectilePrefab != null)
-        {
-            projectilePrefab.bulletSpeed =
-                currentStats.speed;
-
-            projectilePrefab.transform.localScale =
-                Vector3.one * currentStats.area;
-
-            projectilePrefab.bulletDestroyTime =
-                currentStats.duration;
-
-            projectilePrefab.damageAmount =
-            currentStats.baseDamageMult * gameManager.instance.player.GetComponent<PlayerStats>().Damage;
-
-            //damage prefabDamager =
-            //    projectilePrefab.GetComponentInChildren<damage>(true);
-
-            //if (prefabDamager != null)
-            //{
-            //    prefabDamager.SetDamage(
-            //        currentStats.baseDamage
-            //    );
-            //}
         }
 
         shotCounter = 0f;

@@ -53,11 +53,11 @@ MonoBehaviour:
     m_Bits: 0
   team: 1
   dmgColor: 6
-  rb: {fileID: 2348509876837626884}
-  damageAmount: 0
-  damageRate: 0.5
-  bulletSpeed: 0
+  damageAmount: 1
+  damageRate: 0.25
   destroyOnImpact: 0
+  rb: {fileID: 2348509876837626884}
+  bulletSpeed: 0
   bulletDestroyTime: 1
 --- !u!33 &3240453616858632725
 MeshFilter:
@@ -174,8 +174,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3694933097887766487}
   - component: {fileID: 5515044423261335474}
-  - component: {fileID: 6410262532314949651}
-  - component: {fileID: 6582562603015400156}
   m_Layer: 0
   m_Name: SpinWeapon
   m_TagString: Weapon
@@ -228,56 +226,6 @@ MonoBehaviour:
   orbToSpawn: {fileID: 2786623981355599585}
   orbSpawnPoint: {fileID: 7367872828671615232}
   rotateSpeed: 100
---- !u!114 &6410262532314949651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5926135577726204308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe7e18e07e92eb4a919cd162d82d79c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::damage
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  team: 0
-  dmgColor: 0
-  rb: {fileID: 0}
-  damageAmount: 0
-  damageRate: 0
-  bulletSpeed: 0
-  destroyOnImpact: 0
-  bulletDestroyTime: 3.2
---- !u!54 &6582562603015400156
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5926135577726204308}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 3
 --- !u!1 &6008137444476077368
 GameObject:
   m_ObjectHideFlags: 0
