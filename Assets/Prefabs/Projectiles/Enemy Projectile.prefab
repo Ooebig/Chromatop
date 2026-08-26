@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6037068356880631117}
   - component: {fileID: 3900976811388302033}
   - component: {fileID: 5497515593791637062}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy Projectile
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -54,11 +54,11 @@ MonoBehaviour:
     m_Bits: 0
   team: 0
   dmgColor: 6
-  rb: {fileID: 6037068356880631117}
   damageAmount: 10
   damageRate: 0
-  bulletSpeed: 3
   destroyOnImpact: 1
+  rb: {fileID: 6037068356880631117}
+  bulletSpeed: 3
   bulletDestroyTime: 3
 --- !u!33 &8206960498050467239
 MeshFilter:
@@ -182,9 +182,9 @@ MonoBehaviour:
     m_Bits: 0
   team: 0
   dmgColor: 6
-  rb: {fileID: 6037068356880631117}
   damageAmount: 5
   damageRate: 0
-  bulletSpeed: 12
   destroyOnImpact: 0
+  rb: {fileID: 6037068356880631117}
+  bulletSpeed: 12
   bulletDestroyTime: 3

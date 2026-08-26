@@ -108,7 +108,7 @@ public class SpinWeapon : Weapon
         if (manager == null)
         {
             manager =
-                FindFirstObjectByType<gameManager>();
+                FindAnyObjectByType<gameManager>();
         }
 
         gameManager.ColorType weaponColor =

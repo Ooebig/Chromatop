@@ -220,8 +220,9 @@ public class PlayerStats : MonoBehaviour
     {
         displayedMaxHealth = MaxHealth;
         displayedMovementSpeed = MovementSpeed;
+        displayedDamage = Damage;
+        displayedDamageReduction = DamageReduction;
         displayedExperienceGain = ExperienceGainMultiplier;
         displayedPickupRange = PickupRange;
-        displayedDamageReduction = DamageReduction;
     }
 }

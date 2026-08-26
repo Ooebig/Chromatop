@@ -15,11 +15,11 @@ TagManager:
   - Enemy
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PickupRange
+  - Player
+  - PlayerProjectile
+  - EnemyProjectile
+  - Pickup
   - 
   - 
   - 

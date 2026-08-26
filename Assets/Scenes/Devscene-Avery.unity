@@ -7963,42 +7963,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerTest (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 1706910005331570479, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: orthographic size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: weapons.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: 'weapons.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 973fb23e20db4d546a31dd61cc0005cd, type: 2}
-    - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: weaponPocket.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: 'weaponPocket.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: e15e535b2642c524cb43f5bf18bd2000, type: 2}
-    - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: 'weaponPocket.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 49d33c4667516b64093ca2666cde687c, type: 2}
-    - target: {fileID: 3638680003666380930, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: m_TagString
-      value: PlayerPickup
-      objectReference: {fileID: 0}
-    - target: {fileID: 3846990933939509830, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: baseMaxHealth
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3846990933939509830, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
-      propertyPath: displayedMaxHealth
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 8451056196993457462, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

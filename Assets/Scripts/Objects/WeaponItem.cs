@@ -14,14 +14,28 @@ public class WeaponItem : ItemData
 
     public override void Activate(ItemContext context)
     {
-        if (weaponPrefab == null)
+        if (weaponPrefab == null ||
+            context == null ||
+            context.player == null)
         {
-            Debug.LogWarning(
-                $"{itemName} does not have a weapon prefab.",
-                this
-            );
-
             return;
+        }
+
+        EquippedWeaponMarker[] equippedWeapons =
+            context.player.GetComponentsInChildren
+                <EquippedWeaponMarker>(true);
+
+        foreach (EquippedWeaponMarker equipped in equippedWeapons)
+        {
+            if (equipped.SourceItem == this)
+            {
+                Debug.Log(
+                    $"{itemName} is already equipped.",
+                    context.player
+                );
+
+                return;
+            }
         }
 
         GameObject newWeapon = Instantiate(
@@ -32,9 +46,20 @@ public class WeaponItem : ItemData
         newWeapon.transform.localPosition =
             Vector3.zero;
 
+        EquippedWeaponMarker marker =
+            newWeapon.GetComponent<EquippedWeaponMarker>();
+
+        if (marker == null)
+        {
+            marker =
+                newWeapon.AddComponent<EquippedWeaponMarker>();
+        }
+
+        marker.Initialize(this);
+
         Debug.Log(
             $"Equipped weapon: {itemName}",
-            this
+            newWeapon
         );
     }
 }

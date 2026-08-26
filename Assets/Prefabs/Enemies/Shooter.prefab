@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517f4e0c08306ed47891f844a8a58acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCurrencyDrop
-  currencyItem: {fileID: 325180345454495119, guid: 64e1ed91b196f4b4eb67d6c0fb003e5a, type: 3}
+  currencyPrefab: {fileID: 325180345454495119, guid: 64e1ed91b196f4b4eb67d6c0fb003e5a, type: 3}
   dropChance: 1
 --- !u!1 &7514610047398893253
 GameObject:

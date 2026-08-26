@@ -142,12 +142,12 @@ public class ProjectileWeapon : Weapon
         }
 
         gameManager manager =
-    gameManager.instance;
+            gameManager.instance;
 
         if (manager == null)
         {
             manager =
-                FindFirstObjectByType<gameManager>();
+                FindAnyObjectByType<gameManager>();
         }
 
         gameManager.ColorType weaponColor =

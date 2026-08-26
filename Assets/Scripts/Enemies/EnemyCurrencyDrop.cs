@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class EnemyCurrencyDrop : MonoBehaviour
 {
-    [SerializeField] private GameObject currencyItem;
+    [Header("Currency Drop")]
+    [SerializeField] private GameObject currencyPrefab;
 
     [Range(0f, 1f)]
     [SerializeField] private float dropChance = 1f;
 
     public void DropCurrency()
     {
-        if (currencyItem == null ||
-            currencyItem == null)
+        if (currencyPrefab == null)
         {
             Debug.LogWarning(
-                "Enemy currency drop is missing its item or world prefab.",
+                "EnemyCurrencyDrop is missing its currency prefab.",
                 this
             );
 
@@ -24,7 +24,7 @@ public class EnemyCurrencyDrop : MonoBehaviour
             return;
 
         Instantiate(
-            currencyItem,
+            currencyPrefab,
             transform.position,
             Quaternion.identity
         );

@@ -69,7 +69,7 @@ Camera:
   far clip plane: 30
   field of view: 60
   orthographic: 1
-  orthographic size: 18
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 7386132333913958001}
   - component: {fileID: 6819693881072554291}
   - component: {fileID: 4241567683869195793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerTest
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -221,15 +221,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5301e3bdf9d63247ab13de4bab23b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  baseMaxHealth: 100
+  baseMaxHealth: 1000
+  baseHealthRegeneration: 0
+  baseDamageReduction: 0
   baseMovementSpeed: 5
+  baseDamage: 20
+  baseKnockback: 0
+  baseCriticalChance: 0.025
+  baseCriticalDamage: 1.5
+  baseCooldown: 1
+  baseAttackInterval: 1
+  baseWeaponSize: 1
+  baseWeaponSpeed: 1
+  baseWeaponDuration: 1
+  baseProjectileCount: 1
   baseExperienceGain: 1
   basePickupRange: 2
-  displayedMaxHealth: 100
+  baseLuck: 1
+  displayedMaxHealth: 1000
+  displayedHealthRegeneration: 0
   displayedMovementSpeed: 5
+  displayedDamage: 0
+  displayedDamageReduction: 0
+  displayedKnockback: 0
+  displayedCriticalChance: 0
+  displayedCriticalDamage: 0
+  displayedCooldown: 0
+  displayedAttackInterval: 0
+  displayedWeaponSize: 0
+  displayedWeaponSpeed: 0
+  displayedWeaponDuration: 0
+  displayedProjectileCount: 0
   displayedExperienceGain: 1
   displayedPickupRange: 2
-  displayedDamageReduction: 0
+  displayedLuck: 0
 --- !u!114 &4336869944496800674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,13 +280,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb26bfc2621f38e469e5890820513d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  relics:
-  - {fileID: 11400000, guid: ea65ce0072cade94f9485a8c21d7b618, type: 2}
-  - {fileID: 11400000, guid: 877db39654948554e90deda0042ea7f7, type: 2}
-  weapons:
-  - {fileID: 11400000, guid: 878608e928067584589850c67e80c495, type: 2}
-  consumables: []
-  currencies: []
+  weaponPocket: []
+  passivePocket: []
+  onHitPocket: []
+  onKillPocket: []
+  onDamagePocket: []
+  onHealPocket: []
+  onPickupPocket: []
+  timePocket: []
+  onStartPocket: []
+  nonActive: []
+  allItems: []
   currentCurrency: 0
 --- !u!33 &4692398124998047081
 MeshFilter:
@@ -379,7 +408,7 @@ GameObject:
   - component: {fileID: 8408506078354818433}
   - component: {fileID: 4423566948137273651}
   - component: {fileID: 5686662268654481445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CurrencyPickupRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

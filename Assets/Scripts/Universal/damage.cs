@@ -80,11 +80,17 @@ public class damage : MonoBehaviour
     }
 
     private bool TryGetDamageTarget(
-        Collider other,
-        out iDamage target
-    )
+    Collider other,
+    out iDamage target
+)
     {
         target = null;
+
+        // Pickup detection colliders are not combat hitboxes.
+        if (other.GetComponentInParent<PickupRangeController>() != null)
+        {
+            return false;
+        }
 
         if ((ignoreLayer.value &
              (1 << other.gameObject.layer)) != 0)

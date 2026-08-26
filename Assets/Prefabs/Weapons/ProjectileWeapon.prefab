@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileWeapon
   stats:
   - levelName: Basic Projectile
-    baseDamageMult: 1
-    knockback: 0
+    baseDamageMult: 2
+    knockback: 1
     area: 1
     speed: 12
     cooldown: 1
