@@ -4,8 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class buttonFunctions : MonoBehaviour
 {
+
+    public void destinySlot0() { gameManager.instance.OnDestinyClick(0); }
+    public void destinySlot1() { gameManager.instance.OnDestinyClick(1); }
+    public void destinySlot2() { gameManager.instance.OnDestinyClick(2); }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void resume()
     {
@@ -83,20 +89,48 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.boss, (15 + (gameManager.instance.currentRound * 5)));
     }
 
-    public void mystery()
-    {
-        audioManager.instance.PlayConfirmSound();
-
-        gameManager.instance.CloseCurrentMenu();
-
-    }
-
     public void shop()
     {
         audioManager.instance.PlayConfirmSound();
+        gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Shop);
+    }
 
-        gameManager.instance.CloseCurrentMenu();
+    public void mystery()
+    {
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Mystery);
+    }
 
+    public void curse()
+    {
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Curse);
+    }
+
+    public void gambling()
+    {
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Gambling);
+    }
+
+    public void shopDone()
+    {
+        audioManager.instance.PlayConfirmSound();
+
+        gameManager.instance.CompletedSpecialRoom();
+
+    }
+
+    public void curseDone()
+    {
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.CompletedSpecialRoom();
+    }
+
+    public void gamblingDone()
+    {
+        audioManager.instance.PlayConfirmSound();
+        gameManager.instance.CompletedSpecialRoom();
     }
 
     public void inventory()
