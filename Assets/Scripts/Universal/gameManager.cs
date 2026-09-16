@@ -889,6 +889,10 @@ public class gameManager : MonoBehaviour
                 break;
             case PossibleDestinies.Shop:
                 ShowMenu(menuShop);
+                if (shopManager.instance != null)
+                    shopManager.instance.OpenShop();
+                else
+                    Debug.LogError("ShopManager is missing on Shop Menu.");
                 break;
             case PossibleDestinies.Curse:
                 ShowMenu(menuCurse);
@@ -899,6 +903,7 @@ public class gameManager : MonoBehaviour
             case PossibleDestinies.Mystery:
                 ApplyDestiny(MysteryRoll());
                 break;
+
             default:
                 Debug.LogWarning("Unknown destiny chosen: " + chosendestiny);
                 break;
@@ -923,7 +928,14 @@ public class gameManager : MonoBehaviour
 
     public void CompletedSpecialRoom()
     {
-        RoomEnd();
+        updateinbetweenUI();
+        ShowMenu(menuInBetween);
+    }
+
+    public void UpdateCurrencyUI()
+    {
+        if (playerCurrencyText != null && inventory != null)
+            playerCurrencyText.text = inventory.currentCurrency.ToString();
     }
 
     /* Debug.Log("Destiny button clicked! Index = " + index);
@@ -1054,6 +1066,7 @@ public class gameManager : MonoBehaviour
         player.GetComponent<PlayerHealth>().FullHeal();
         updatePlayerEXP(player.GetComponent<PlayerExperience>().CurrentXP, player.GetComponent<PlayerExperience>().XPToNextLevel);
         updatePlayerHP(player.GetComponent<PlayerHealth>().CurrentHealth, player.GetComponent<PlayerHealth>().MaxHealth);
+        UpdateCurrencyUI();
 
     }
 
@@ -1066,6 +1079,8 @@ public class gameManager : MonoBehaviour
         Data.tempShooterKillCount = 0;
         Data.tempCoinCount = 0;
         randomizeLevelRewards();
+        UpdateCurrencyUI();
+
     }
     public void UpdateStatScreen()
     {

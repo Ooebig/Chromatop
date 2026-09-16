@@ -12,6 +12,26 @@ public class buttonFunctions : MonoBehaviour
     public void destinySlot1() { gameManager.instance.OnDestinyClick(1); }
     public void destinySlot2() { gameManager.instance.OnDestinyClick(2); }
 
+    public void shopBuy0() { shopManager.instance.Buy(0); }
+    public void shopBuy1() { shopManager.instance.Buy(1); }
+    public void shopBuy2() { shopManager.instance.Buy(2); }
+
+    public void shopReroll() { shopManager.instance.Reroll(); }
+
+    public void shopDone()
+    {
+        audioManager.instance.PlayConfirmSound();
+
+        if (shopManager.instance != null)
+        {
+            shopManager.instance.Leave();
+        }
+        else
+        {
+            gameManager.instance.CompletedSpecialRoom();
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void resume()
     {
@@ -112,15 +132,6 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayConfirmSound();
         gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Gambling);
     }
-
-    public void shopDone()
-    {
-        audioManager.instance.PlayConfirmSound();
-
-        gameManager.instance.CompletedSpecialRoom();
-
-    }
-
     public void curseDone()
     {
         audioManager.instance.PlayConfirmSound();
