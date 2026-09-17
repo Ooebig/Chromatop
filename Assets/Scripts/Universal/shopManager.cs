@@ -268,9 +268,5 @@ public class shopManager : MonoBehaviour
            Debug.Log("Shop Status: " + message);
         }
     }   
-    
-    void Update()
-    {
-        
-    }
+   
 }

@@ -899,6 +899,10 @@ public class gameManager : MonoBehaviour
                 break;
             case PossibleDestinies.Gambling:
                 ShowMenu(menuGambling);
+                if (GamblingManager.instance != null)
+                    GamblingManager.instance.OpenGambling();
+                else
+                    Debug.LogError("GamblingManager is missing on Gambling Menu.");
                 break;
             case PossibleDestinies.Mystery:
                 ApplyDestiny(MysteryRoll());

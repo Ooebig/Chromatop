@@ -16,8 +16,72 @@ public class buttonFunctions : MonoBehaviour
     public void shopBuy1() { shopManager.instance.Buy(1); }
     public void shopBuy2() { shopManager.instance.Buy(2); }
 
-    public void shopReroll() { shopManager.instance.Reroll(); }
+    public void shopReroll()
+    {
+        shopManager.instance.Reroll();
+    }
+    public void gambleStakeUp()
+    {
+        GamblingManager.instance.AdjustStake(1);
+    }
+    public void gambleStakeDown()
+    {
+        GamblingManager.instance.AdjustStake(-1);
+    }
+    public void gambleStake10()
+    {
+        GamblingManager.instance.PresetStake(10);
+    }
+    public void gambleStake25()
+    {
+        GamblingManager.instance.PresetStake(25);
+    }
+    public void gambleStake50()
+    {
+        GamblingManager.instance.PresetStake(50);
+    }
+    public void gambleStakeMax()
+    {
+        GamblingManager.instance.PresetStake(0);
+    }
+    public void gambleColor0()
+    {
+        GamblingManager.instance.SelectColor(0);
+    } // Red
+    public void gambleColor1()
+    {
+        GamblingManager.instance.SelectColor(1);
+    } // Orange
+    public void gambleColor2()
+    {
+        GamblingManager.instance.SelectColor(2);
+    } // Yellow
+    public void gambleColor3()
+    {
+        GamblingManager.instance.SelectColor(3);
+    } // Green
+    public void gambleColor4()
+    {
+        GamblingManager.instance.SelectColor(4);
+    } // Blue
+    public void gambleColor5()
+    {
+        GamblingManager.instance.SelectColor(5);
+    } // Purple
 
+    public void gambleSpin() { GamblingManager.instance.Spin(); }
+
+    public void gambleDone()
+    {
+        if (GamblingManager.instance != null)
+        {
+            GamblingManager.instance.Leave();
+        }
+        else
+        {
+            gameManager.instance.CompletedSpecialRoom();
+        }
+    }
     public void shopDone()
     {
         audioManager.instance.PlayConfirmSound();
