@@ -5890,7 +5890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
       propertyPath: currentCurrency
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3159846526123817354, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
       propertyPath: weapons.Array.size
@@ -5954,7 +5954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8485780890049372580, guid: d76688d2f55f1464bb61beed1314b975, type: 3}
       propertyPath: xpToNextLevel
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16487,6 +16487,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1987516116}
   m_CullTransparentMesh: 1
+--- !u!114 &2020779518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2002046288387849655, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+  m_PrefabInstance: {fileID: 5134425237716476251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &2034563242
 GameObject:
   m_ObjectHideFlags: 0
@@ -17928,6 +17939,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2002046288387849655, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2239174464167546995, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -18179,6 +18194,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7771985277593064891}
     - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: playerLevelText
+      value: 
+      objectReference: {fileID: 2020779518}
+    - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: playerCurrencyText
       value: 
       objectReference: {fileID: 1653558328}
@@ -18192,7 +18211,7 @@ PrefabInstance:
       objectReference: {fileID: 1317298811}
     - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: startingItems.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4428362839517583801, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: destinyButtons.Array.size

@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
 
         Wave dynamic = new Wave();
         dynamic.difficulty = difficulty;
-
+        dynamic.Multiplier = 1f + (0.25f * Mathf.Floor(gameManager.instance.currentRound / 5));
         switch (difficulty)
         {
             case Wave.Difficulty.easy:
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.simpleRatio = 80f;
                 dynamic.chargerRatio = 10f;
                 dynamic.shooterRatio = 10f;
-                dynamic.Multiplier = 0.75f;
+                dynamic.Multiplier *= 0.75f;
                 difficultyText.text = "Easy";
                 break;
             case Wave.Difficulty.normal:
@@ -77,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.simpleRatio = 50f;
                 dynamic.chargerRatio = 25f;
                 dynamic.shooterRatio = 25f;
-                dynamic.Multiplier = 1f;
+                dynamic.Multiplier *= 1f;
                 difficultyText.text = "Normal";
                 break;
             case Wave.Difficulty.hard:
@@ -85,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.simpleRatio = 40f;
                 dynamic.chargerRatio = 30f;
                 dynamic.shooterRatio = 30f;
-                dynamic.Multiplier = 1.5f;
+                dynamic.Multiplier *= 1.5f;
                 difficultyText.text = "Hard";
                 break;
             case Wave.Difficulty.boss:
@@ -93,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
                 dynamic.simpleRatio = 20;
                 dynamic.chargerRatio = 40f;
                 dynamic.shooterRatio = 40f;
-                dynamic.Multiplier = 2.0f;
+                dynamic.Multiplier *= 2.0f;
                 difficultyText.text = "Boss";
                 break;
 
@@ -197,7 +197,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (TypeToSpawn == EnemyBehavior.EnemyType.Simple)
         {
-            enemyStats.maxHp = 100f;
+            enemyStats.maxHp = 20f;
             enemyStats.speed = 3f;
             enemyStats.damage = 10f;
             enemyStats.firerate = 0f;
@@ -209,7 +209,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Charger)
         {
-            enemyStats.maxHp = 150f;
+            enemyStats.maxHp = 30f;
             enemyStats.speed = 5f;
             enemyStats.damage = 15f;
             enemyStats.firerate = 0f;
@@ -222,7 +222,7 @@ public class EnemySpawner : MonoBehaviour
         else if(TypeToSpawn == EnemyBehavior.EnemyType.Shooter)
         {
 
-            enemyStats.firerate = 1.5f;
+            enemyStats.firerate = 15f;
             enemyStats.stopDistance = 7f;
             enemyStats.speed = 2f;
             enemyStats.maxHp = 70f;

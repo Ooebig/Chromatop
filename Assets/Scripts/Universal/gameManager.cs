@@ -80,6 +80,7 @@ public class gameManager : MonoBehaviour
     public Image playerEXPBar;
     public TMP_Text playerHPText;
     public TMP_Text playerEXPText;
+    public TMP_Text playerLevelText;
     public TMP_Text playerCurrencyText;
     public TMP_Text roomCountText;
     public GameObject playerDamageScreen;
@@ -88,7 +89,7 @@ public class gameManager : MonoBehaviour
 
     public bool isPaused;
     public GameObject player;
-    //public playerController playerScript;
+    public PlayerExperience playerEXP;
     public Inventory inventory;
     public GameObject playerStartPos;
     public ColorType activeColor;
@@ -118,6 +119,7 @@ public class gameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
+        playerEXP = player.GetComponent<PlayerExperience>();
 
         if (player != null)
         {
@@ -407,6 +409,10 @@ public class gameManager : MonoBehaviour
         if (playerEXPText != null)
         {
             playerEXPText.text = Mathf.CeilToInt(current).ToString() + " / " + Mathf.CeilToInt(max).ToString();
+        }
+        if (playerLevelText != null)
+        {
+            playerLevelText.text = playerEXP.CurrentLevel.ToString();
         }
     }
 
