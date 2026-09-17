@@ -894,8 +894,13 @@ public class gameManager : MonoBehaviour
                 else
                     Debug.LogError("ShopManager is missing on Shop Menu.");
                 break;
+            
             case PossibleDestinies.Curse:
                 ShowMenu(menuCurse);
+                if (CurseManager.instance != null)
+                    CurseManager.instance.OpenCurseRoom();
+                else
+                    Debug.LogError("CurseManager is missing on Curse Menu.");
                 break;
             case PossibleDestinies.Gambling:
                 ShowMenu(menuGambling);

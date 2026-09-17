@@ -96,7 +96,23 @@ public class buttonFunctions : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void curseTake0() { CurseManager.instance.Take(0); }
+    public void curseTake1() { CurseManager.instance.Take(1); }
+
+    public void curseDone()
+    {
+        if (CurseManager.instance != null)
+        {
+            CurseManager.instance.Leave();
+        }
+        else
+        {
+            audioManager.instance.PlayConfirmSound();
+            gameManager.instance.CompletedSpecialRoom();
+        }
+    }
+
+   
     public void resume()
     {
         audioManager.instance.PlayConfirmSound();
@@ -195,11 +211,6 @@ public class buttonFunctions : MonoBehaviour
     {
         audioManager.instance.PlayConfirmSound();
         gameManager.instance.ApplyDestiny(gameManager.PossibleDestinies.Gambling);
-    }
-    public void curseDone()
-    {
-        audioManager.instance.PlayConfirmSound();
-        gameManager.instance.CompletedSpecialRoom();
     }
 
     public void gamblingDone()
