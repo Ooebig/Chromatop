@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class ItemCatalogue : MonoBehaviour
 {
-    
+    [Header("Level-complete draft")]
     public ItemData[] regularItemDrops;
-    public ItemData[] cursedItemDrops;
 
+    [Header("Shop only")]
+    public ItemData[] shopItemDrops;
+
+    [Header("Curse room only")]
+    public ItemData[] cursedItemDrops;
 }

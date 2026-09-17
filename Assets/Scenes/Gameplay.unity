@@ -15371,6 +15371,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8578d9dcf4a89a849babec20df75c6c4, type: 2}
   - {fileID: 11400000, guid: fd0cd194e4b7b584d9089bde5ec76b2e, type: 2}
   - {fileID: 11400000, guid: 849a2c99d68696a40a9fd25ca328c7b7, type: 2}
+  shopItemDrops: []
   cursedItemDrops: []
 --- !u!4 &809626467589818649
 Transform:

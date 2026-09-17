@@ -9,12 +9,18 @@ public abstract class ItemData : ScriptableObject
     public string itemName;
     [Tooltip("For ItemID:\nNonActive: 0000+\nWeapon: 1000+\nPassive: 2000+\nOnHit: 3000+\nOnKill: 4000+\nOnDamage: 5000+\nOnHeal: 6000+\nOnPickup: 7000+\nTime: 8000+\nOnStart: 9000+")]
     public int itemID = 0;
-    
+
 
     [TextArea]
     public string description;
 
     public Sprite icon;
+
+    [Header("Shop / Curse")]
+    [Min(0)]
+    public int shopPrice = 0;
+    [TextArea]
+    public string curseLine;
 
     [Header("Inventory Pocket")]
     public abstract Inventory.PocketType pocketType { get; }
