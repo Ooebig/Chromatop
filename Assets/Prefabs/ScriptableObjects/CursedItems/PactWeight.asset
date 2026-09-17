@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: PactWeight
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
   itemName: Pact Weight
-  itemID: 0
-  description: 
+  itemID: 2107
+  description: Hits linger and grow.
   icon: {fileID: 0}
   shopPrice: 0
-  curseLine: 
+  curseLine: The deal is heavy. Speed down.
   itemSet: 2
-  statModifiers: []
+  statModifiers:
+  - statType: 10
+    modifierType: 1
+    value: 0.25
+  - statType: 2
+    modifierType: 1
+    value: -0.25
   maxApplications: 1

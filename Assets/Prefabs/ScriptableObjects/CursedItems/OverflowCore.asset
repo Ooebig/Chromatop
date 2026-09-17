@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: OverflowCore
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
   itemName: Overflow Core
-  itemID: 0
-  description: 
+  itemID: 2105
+  description: Your attacks swell.
   icon: {fileID: 0}
   shopPrice: 0
-  curseLine: 
+  curseLine: They also come later. Cooldown up.
   itemSet: 2
-  statModifiers: []
+  statModifiers:
+  - statType: 10
+    modifierType: 1
+    value: 0.5
+  - statType: 8
+    modifierType: 1
+    value: 0.2
   maxApplications: 1

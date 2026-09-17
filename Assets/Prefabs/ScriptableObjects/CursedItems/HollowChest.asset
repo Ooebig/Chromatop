@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: HollowChest
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
   itemName: Hollow Chest
-  itemID: 0
-  description: 
+  itemID: 2106
+  description: A second heart. Empty.
   icon: {fileID: 0}
   shopPrice: 0
-  curseLine: 
+  curseLine: More body, less bite. Damage down.
   itemSet: 2
-  statModifiers: []
+  statModifiers:
+  - statType: 4
+    modifierType: 1
+    value: 0.7
+  - statType: 3
+    modifierType: 1
+    value: -0.25
   maxApplications: 1

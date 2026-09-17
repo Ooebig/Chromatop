@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: LeechBargain
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
   itemName: Leech Bargain
-  itemID: 0
-  description: 
+  itemID: 2108
+  description: Borrowed power.
   icon: {fileID: 0}
   shopPrice: 0
-  curseLine: 
+  curseLine: Borrowed blood. Max health down.
   itemSet: 2
-  statModifiers: []
+  statModifiers:
+  - statType: 5
+    modifierType: 1
+    value: 3
+  - statType: 0
+    modifierType: 1
+    value: -0.25
   maxApplications: 1

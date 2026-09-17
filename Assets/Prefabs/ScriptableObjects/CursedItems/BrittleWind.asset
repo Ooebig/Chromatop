@@ -21,9 +21,9 @@ MonoBehaviour:
   itemSet: 2
   statModifiers:
   - statType: 2
-    modifierType: 0
+    modifierType: 1
     value: 0.35
   - statType: 1
-    modifierType: 0
+    modifierType: 1
     value: -0.3
   maxApplications: 1
