@@ -10,20 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e63087e206bf19349b6633b8203c3bd2, type: 3}
-  m_Name: PactWeight
+  m_Name: MagnetCoil
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
-  itemName: Pact Weight
-  itemID: 2107
-  description: Hits linger and grow.
+  itemName: Magnet Coil
+  itemID: 2010
+  description: Pickups pull in from farther away.
   icon: {fileID: 0}
   shopPrice: 0
-  curseLine: The deal is heavy. Speed down.
-  itemSet: 2
+  curseLine: 
+  itemSet: 0
   statModifiers:
-  - statType: 10
+  - statType: 15
     modifierType: 1
-    value: 1.75
-  - statType: 2
-    modifierType: 1
-    value: -0.25
+    value: 1.35
   maxApplications: 1
