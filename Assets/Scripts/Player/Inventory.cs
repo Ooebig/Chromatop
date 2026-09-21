@@ -171,7 +171,7 @@ public class Inventory : MonoBehaviour
         if (item.pocketType == PocketType.Weapon ||
             item.pocketType == PocketType.Passive)
         {
-            item.Activate(CreateContext());
+            item.Activate(CreateContext(), null);
         }
 
     }
