@@ -8,7 +8,7 @@ public class OnDamageItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.OnDamage;
 
-    public override void Activate(ItemContext context) //When the player takes damage, do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the player takes damage, do this
     {
         Debug.Log(
             $"Activated OnDamage item: {itemName}",

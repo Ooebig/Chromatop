@@ -15,7 +15,7 @@ public class PassiveItem : ItemData
 
     int appliedCount = 0; // Track how many times the passive effect has been applied
 
-    public override void Activate(ItemContext context)
+    public override void Activate(ItemContext context, GameObject gameObject)
     {
         if (appliedCount >= maxApplications)
             return;

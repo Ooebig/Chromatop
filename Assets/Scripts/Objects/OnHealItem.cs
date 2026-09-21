@@ -8,7 +8,7 @@ public class OnHealItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.OnHeal;
 
-    public override void Activate(ItemContext context) //When the player heals, do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the player heals, do this
     {
         Debug.Log(
             $"Activated OnHeal item: {itemName}",

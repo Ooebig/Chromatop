@@ -8,7 +8,7 @@ public class OnHitItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.OnHit;
 
-    public override void Activate(ItemContext context) //When the player hits an enemy, do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the player hits an enemy, do this
     {
         Debug.Log(
             $"Activated OnHit item: {itemName}",

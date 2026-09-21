@@ -8,7 +8,7 @@ public class TimeItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.Time;
 
-    public override void Activate(ItemContext context) //When the clock hits a certain time or on set intervals, do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the clock hits a certain time or on set intervals, do this
     {
         Debug.Log(
             $"Activated Time item: {itemName}",

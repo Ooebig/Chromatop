@@ -12,7 +12,7 @@ public class WeaponItem : ItemData
 
     public override Inventory.PocketType pocketType => Inventory.PocketType.Weapon;
 
-    public override void Activate(ItemContext context)
+    public override void Activate(ItemContext context, GameObject gameObject)
     {
         if (weaponPrefab == null ||
             context == null ||

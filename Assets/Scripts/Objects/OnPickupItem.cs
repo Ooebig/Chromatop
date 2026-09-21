@@ -8,7 +8,7 @@ public class OnPickupItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.OnPickup;
 
-    public override void Activate(ItemContext context) //When the player picks up an item (currency), do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the player picks up an item (currency), do this
     {
         Debug.Log(
             $"Activated OnPickup item: {itemName}",

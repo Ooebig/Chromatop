@@ -143,7 +143,7 @@ public class Inventory : MonoBehaviour
         ActivatePocket(PocketType.Weapon);
     }
 
-    public void ActivatePocket(PocketType pocket)
+    public void ActivatePocket(PocketType pocket, GameObject gameObject = null)
     {
         ItemContext context = CreateContext();
 
@@ -152,7 +152,7 @@ public class Inventory : MonoBehaviour
             if (item == null)
                 continue;
 
-            item.Activate(context);
+            item.Activate(context, gameObject);
         }
     }
 

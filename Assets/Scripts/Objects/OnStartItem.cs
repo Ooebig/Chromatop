@@ -8,7 +8,7 @@ public class OnStartItem : ItemData
 {
     public override Inventory.PocketType pocketType => Inventory.PocketType.OnStart;
 
-    public override void Activate(ItemContext context) //When the player starts the game, do this
+    public override void Activate(ItemContext context, GameObject gameObject) //When the player starts the game, do this
     {
         Debug.Log(
             $"Activated OnStart item: {itemName}",

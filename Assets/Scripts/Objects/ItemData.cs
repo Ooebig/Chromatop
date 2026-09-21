@@ -54,7 +54,7 @@ public abstract class ItemData : ScriptableObject
     //[Min(0)]
     //public int currencyValue;
 
-    public virtual void Activate(ItemContext context)
+    public virtual void Activate(ItemContext context, GameObject gameObject)
     {
         Debug.Log(
             $"Activated NonActive item: {itemName}",
