@@ -166,8 +166,8 @@ public class ProjectileWeapon : Weapon
                 ? playerStats.Damage
                 : 1f);
 
-        newProjectile.transform.localScale =
-            Vector3.one * currentStats.area;
+        //newProjectile.transform.localScale =
+        //    Vector3.one * currentStats.area;
 
         newProjectile.Configure(
         finalDamage,
