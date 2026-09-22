@@ -13527,7 +13527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChromaLight
   targetLight: {fileID: 0}
-  intensity: 4
+  intensity: 8
 --- !u!1 &1632337902
 GameObject:
   m_ObjectHideFlags: 0

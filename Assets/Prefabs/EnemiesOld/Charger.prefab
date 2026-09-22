@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 2467691941630471906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.98452, y: -0, z: -1.68107}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -164,16 +164,16 @@ MonoBehaviour:
   brightStrong: 0.7
   brightWeak: 0.4
   brightImmune: 0.18
-  glowDirect: 2.2
-  glowStrong: 1.1
-  glowWeak: 0.45
-  glowImmune: 0.08
+  glowDirect: 8
+  glowStrong: 4
+  glowWeak: 2
+  glowImmune: 1
   glowLight: {fileID: 866739570194443113}
-  lightRange: 4
-  lightDirect: 3
-  lightStrong: 1.8
-  lightWeak: 0.8
-  lightImmune: 0.25
+  lightRange: 10
+  lightDirect: 8
+  lightStrong: 4
+  lightWeak: 2
+  lightImmune: 1
 --- !u!1 &6926127405323533031
 GameObject:
   m_ObjectHideFlags: 0
