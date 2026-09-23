@@ -98,12 +98,13 @@ public class EnemyBehavior : MonoBehaviour, iDamage
     public void takeDamage(float amount, gameManager.ColorType dmgColor)
     {
         float damage = gameManager.damageCalc(amount, stats.Color, dmgColor);
-        Debug.Log("Enemy took damage: " + damage);
+        
         stats.currentHp -= damage;
-
+        gameManager.instance.inventory.ActivatePocket(Inventory.PocketType.OnHit, gameObject);
+        Debug.Log("Enemy took damage: " + damage);
         if (stats.currentHp < 0)
         {
-            // Drop the enemy's assigned currency before destroying it.
+            
             EnemyCurrencyDrop currencyDrop =
                 GetComponent<EnemyCurrencyDrop>();
 
@@ -128,6 +129,7 @@ public class EnemyBehavior : MonoBehaviour, iDamage
                     Data.tempShooterKillCount++;
                     break;
             }
+            gameManager.instance.inventory.ActivatePocket(Inventory.PocketType.OnKill, gameObject);
             Destroy(gameObject);
         }
     }
