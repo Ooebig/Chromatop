@@ -18443,6 +18443,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4802329760493124042, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
+      propertyPath: m_Name
+      value: Stats Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802329760493124042, guid: a182c5743aaee94448fef89d1037b91c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
