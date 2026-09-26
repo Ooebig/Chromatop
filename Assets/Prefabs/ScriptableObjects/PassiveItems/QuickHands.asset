@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63087e206bf19349b6633b8203c3bd2, type: 3}
   m_Name: QuickHands
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
-  itemName: 2011
+  itemName: Quick Hands
   itemID: 0
   description: Weapons cycle a little faster.
   icon: {fileID: 0}

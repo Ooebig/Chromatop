@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63087e206bf19349b6633b8203c3bd2, type: 3}
   m_Name: LongBarrel
   m_EditorClassIdentifier: Assembly-CSharp::PassiveItem
-  itemName: 2012
+  itemName: Long Barrel
   itemID: 0
   description: Attacks reach farther and hit a wider space.
   icon: {fileID: 0}
