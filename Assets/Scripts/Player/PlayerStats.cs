@@ -17,20 +17,20 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Offense")]
     [SerializeField] private float baseDamage = 75f;
-    [SerializeField] private float baseKnockback = 0f;
+   // [SerializeField] private float baseKnockback = 0f;
     [SerializeField] private float baseCriticalChance = 0.025f;
     [SerializeField] private float baseCriticalDamage = 1.5f;
-    [SerializeField] private float baseCooldown = 1f;
-    [SerializeField] private float baseAttackInterval = 1f;
-    [SerializeField] private float baseWeaponSize = 1f;
-    [SerializeField] private float baseWeaponSpeed = 1f;
-    [SerializeField] private float baseWeaponDuration = 1f;
-    [SerializeField] private float baseProjectileCount = 1f; //Most stats do nothing for now, and are set to default values. Will need to be implemented later.
+   // [SerializeField] private float baseCooldown = 1f;
+    //[SerializeField] private float baseAttackInterval = 1f;
+    //[SerializeField] private float baseWeaponSize = 1f;
+    //[SerializeField] private float baseWeaponSpeed = 1f;
+    //[SerializeField] private float baseWeaponDuration = 1f;
+    // [SerializeField] private float baseProjectileCount = 1f; //Most stats do nothing for now, and are set to default values. Will need to be implemented later.
 
     [Header("Progression")]
     [SerializeField] private float baseExperienceGain = 1f;
     [SerializeField] private float basePickupRange = 2f;
-    [SerializeField] private float baseLuck = 1f;
+   // [SerializeField] private float baseLuck = 1f;
 
     [Header("Calculated Stats - Runtime")]
     [SerializeField] private float displayedMaxHealth;

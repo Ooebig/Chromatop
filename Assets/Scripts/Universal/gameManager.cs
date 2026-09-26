@@ -324,7 +324,7 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") || Input.GetKeyDown(KeyCode.P))
         {
             if (menuActive == null)
             {
@@ -589,7 +589,7 @@ public class gameManager : MonoBehaviour
         GameObject menuRt = GameObject.Find("Menus");
         if (menuRt == null)
         {
-            Debug.LogWarning("Menus root not found.");
+            //Debug.LogWarning("Menus root not found.");
             return;
         }
 
@@ -611,7 +611,7 @@ public class gameManager : MonoBehaviour
 
         if (menuPause == null)
         {
-            Debug.LogWarning("Pause Menu not found.");
+           // Debug.LogWarning("Pause Menu not found.");
         }
     }
 
@@ -729,7 +729,7 @@ public class gameManager : MonoBehaviour
 
         if (destinyButtons == null || destinyButtonTexts == null) 
         {
-            Debug.LogError("One or more destiny button components are not assigned.");
+           // Debug.LogError("One or more destiny button components are not assigned.");
             return;
         }
 
@@ -802,7 +802,7 @@ public class gameManager : MonoBehaviour
     {
         if (destinyList == null || index < 0 || index >= destinyList.Count)
         {
-            Debug.LogWarning("Invalid destiny index: " + index);
+          //  Debug.LogWarning("Invalid destiny index: " + index);
             return;
         }
 
@@ -811,7 +811,7 @@ public class gameManager : MonoBehaviour
 
     public void ApplyDestiny(PossibleDestinies chosendestiny)
     {
-        Debug.Log("Destiny Chosen: " + chosendestiny);
+       // Debug.Log("Destiny Chosen: " + chosendestiny);
         audioManager.instance.PlayConfirmSound();
 
         if (chosendestiny == PossibleDestinies.Shop)
