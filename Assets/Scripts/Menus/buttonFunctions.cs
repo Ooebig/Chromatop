@@ -123,7 +123,7 @@ public class buttonFunctions : MonoBehaviour
     public void continuing()
     {
         audioManager.instance.PlayConfirmSound();
-        gameManager.instance.updateinbetweenUI();
+        gameManager.instance.updateinbetweenUI(true);
         gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
     }
 
@@ -137,7 +137,7 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.OnLevelCompleteRewardClick(val);
         audioManager.instance.PlayConfirmSound();
-        gameManager.instance.updateinbetweenUI();
+        gameManager.instance.updateinbetweenUI(true);
         gameManager.instance.ShowMenu(gameManager.instance.menuInBetween);
     }
 

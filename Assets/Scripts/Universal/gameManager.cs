@@ -94,8 +94,8 @@ public class gameManager : MonoBehaviour
     public GameObject playerStartPos;
     public ColorType activeColor;
     public Material activeMaterial;
-    
 
+    public int destiniesSetThisRound = -1;
     public int currentRound = 1;
 
     public List<PossibleDestinies> destinyList = new List<PossibleDestinies>();
@@ -644,6 +644,11 @@ public class gameManager : MonoBehaviour
     int shopCooldown = 99; // Cooldown counter for shop destiny
     public void GenerateOptions()
     {
+        if (destiniesSetThisRound == currentRound && destinyList.Count > 0)
+        {
+            return;
+        }
+
         destinyList.Clear();
 
         int nextRm = currentRound + 1; //initializing nextRm to the next round number
@@ -700,60 +705,17 @@ public class gameManager : MonoBehaviour
             destinyList[i] = destinyList[j];
             destinyList[j] = temp;
         }
+
+        destiniesSetThisRound = currentRound;
+
     }
-
-    /*destinyList.Add(PossibleDestinies.Easy);
-    destinyList.Add(PossibleDestinies.Medium);
-    destinyList.Add(PossibleDestinies.Hard);
-
-    if (currentRound % 10 == 0) //boss round
-     {
-         destinyList.Add(PossibleDestinies.Boss);
-         return;
-
-     }
-
-     List<PossibleDestinies> difficulties = new List<PossibleDestinies>() //at least one of each difficulty
-     {
-         PossibleDestinies.Easy,
-         PossibleDestinies.Medium,
-         PossibleDestinies.Hard
-     };
-
-     int forcediff = Random.Range(0, difficulties.Count);
-     PossibleDestinies forced = difficulties[forcediff];
-     destinyList.Add(forced); //force at least one difficulty into the list
-
-     List<PossibleDestinies> others = new List<PossibleDestinies>();
-
-     for (int i = 0; i < difficulties.Count; i++)
-     {
-         if (difficulties[i] != forced)
-         {
-             others.Add(difficulties[i]);
-         }
-     }
-
-     //other possible destinies
-
-     others.Add(PossibleDestinies.Mystery);
-     others.Add(PossibleDestinies.Shop);
-     others.Add(PossibleDestinies.Curse);
-     others.Add(PossibleDestinies.Gambling);
-
-     while (destinyList.Count < 3 && others.Count > 0) // while we have less than 3 destinies
-                                                       //and there are still other destinies to choose from, randomly select one,
-                                                       //and add it to the destinyList
-     {
-         int rand = Random.Range(0, others.Count);
-         destinyList.Add(others[rand]);
-         others.RemoveAt(rand);
-     }*/
-
-
-    public void updateinbetweenUI() // update the in-between menu UI with the current destiny options
+    
+    public void updateinbetweenUI(bool generateNewOptions = false) // update the in-between menu UI with the current destiny options
     {
-        GenerateOptions();
+        if (generateNewOptions)
+        {
+            GenerateOptions();
+        }
 
         if (inBetweenScreenDataText != null && inventory != null) // update the in-between screen data text with the player's current currency, level, experience, and room number
         {
@@ -952,92 +914,6 @@ public class gameManager : MonoBehaviour
         if (playerCurrencyText != null && inventory != null)
             playerCurrencyText.text = inventory.currentCurrency.ToString();
     }
-
-    /* Debug.Log("Destiny button clicked! Index = " + index);
-
-     if (index < 0 || index >= destinyList.Count)
-     {
-         Debug.LogWarning("Invalid destiny index: " + index);
-
-         PossibleDestinies chosendestiny = destinyList[index];
-
-        if (chosendestiny == PossibleDestinies.Mystery)
-         {
-
-             PossibleDestinies[] pool = new PossibleDestinies[]
-             {
-
-                 PossibleDestinies.Easy,
-                 PossibleDestinies.Medium,
-                 PossibleDestinies.Hard,
-                 PossibleDestinies.Shop,
-                 PossibleDestinies.Curse,
-                 PossibleDestinies.Gambling
-             };
-
-             chosendestiny = pool[Random.Range(0, pool.Length)];
-             Debug.Log("Mystery destiny chose: " + chosendestiny);
-
-         }
-
-         switch (chosendestiny)
-         {
-             case PossibleDestinies.Easy:
-                 Debug.Log("Easy destiny chosen");
-
-                 audioManager.instance.PlayConfirmSound();
-                 CloseCurrentMenu();
-                 waveManager.StartWave(EnemySpawner.Wave.Difficulty.easy, (20 + (currentRound * 5)));
-                 break;
-
-             case PossibleDestinies.Medium:
-                 Debug.Log("Medium destiny chosen");
-
-                 audioManager.instance.PlayConfirmSound();
-                 CloseCurrentMenu();
-                 waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, (20 + (currentRound * 5)));
-                 break;
-
-             case PossibleDestinies.Hard:
-                 Debug.Log("Hard destiny chosen");
-                 audioManager.instance.PlayConfirmSound();
-                 CloseCurrentMenu();
-                 waveManager.StartWave(EnemySpawner.Wave.Difficulty.hard, (20 + (currentRound * 5)));
-                 break;
-
-             case PossibleDestinies.Mystery:
-                 Debug.Log("Mystery destiny chosen");
-                 ShowMenu(menuMystery);
-                 break;
-
-             case PossibleDestinies.Shop:
-                 Debug.Log("Shop destiny chosen");
-                 ShowMenu(menuShop);
-                 break;
-
-             case PossibleDestinies.Curse:
-                 Debug.Log("Curse destiny chosen");
-                 ShowMenu(menuCurse);
-                 break;
-
-             case PossibleDestinies.Gambling:
-                 Debug.Log("Gambling destiny chosen");
-                 ShowMenu(menuGambling);
-                 break;
-
-             case PossibleDestinies.Boss:
-                 Debug.Log("Boss destiny chosen");
-                 // set difficulty to boss, spawn boss enemies, etc.
-                 CloseCurrentMenu();
-                 //start the next round with boss difficulty
-                 break;
-
-             default:
-                 Debug.LogWarning("Unknown destiny chosen: " + chosendestiny);
-                 break;
-         }
-     } */
-
 
     public void OpeningMenu(GameObject menu)
     {
