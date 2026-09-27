@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec9fdaef2883304592009ff610d2058, type: 3}
   m_Name: BasicProjectileWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
-  itemName: word
-  itemID: 0
+  itemName: Blaster
+  itemID: 1001
   description: 
   icon: {fileID: 0}
   shopPrice: 0

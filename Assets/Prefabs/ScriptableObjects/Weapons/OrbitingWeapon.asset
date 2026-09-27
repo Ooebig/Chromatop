@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec9fdaef2883304592009ff610d2058, type: 3}
   m_Name: OrbitingWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponItem
-  itemName: 
-  itemID: 0
+  itemName: Orbiting Smasher
+  itemID: 1002
   description: 
   icon: {fileID: 0}
+  shopPrice: 0
+  curseLine: 
   itemSet: 0
   weaponPrefab: {fileID: 5926135577726204308, guid: e9c7b3062246b6446857cd7d0253c5c6, type: 3}

@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void StartWave(Wave.Difficulty difficulty, float waveDuration)
     {
-
+        gameManager.instance.player.GetComponent<PlayerMovement>().resetPlayerPos();
         currentWaveIndex++;
 
         Wave dynamic = new Wave();

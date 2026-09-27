@@ -271,6 +271,7 @@ public class buttonFunctions : MonoBehaviour
         audioManager.instance.PlayGameMusic();
         gameManager.instance.CloseCurrentMenu();
         gameManager.instance.waveManager.StartWave(EnemySpawner.Wave.Difficulty.normal, 20);
+        gameManager.instance.updatePlayerHP(gameManager.instance.player.GetComponent<PlayerHealth>().CurrentHealth, gameManager.instance.player.GetComponent<PlayerHealth>().MaxHealth);
     }
 
     public void returntoMainMenu()

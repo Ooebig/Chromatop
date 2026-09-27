@@ -119,6 +119,7 @@ public class gameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
 
         player = GameObject.FindWithTag("Player");
+        playerStartPos = GameObject.FindWithTag("Player Start Pos");
         playerEXP = player.GetComponent<PlayerExperience>();
 
         if (player != null)
@@ -223,6 +224,9 @@ public class gameManager : MonoBehaviour
     {
         Time.timeScale = timeScaleOrig;
     }
+
+
+    
 
     void UpdateColorUI()
     {
@@ -958,6 +962,7 @@ public class gameManager : MonoBehaviour
         updatePlayerEXP(player.GetComponent<PlayerExperience>().CurrentXP, player.GetComponent<PlayerExperience>().XPToNextLevel);
         updatePlayerHP(player.GetComponent<PlayerHealth>().CurrentHealth, player.GetComponent<PlayerHealth>().MaxHealth);
         UpdateCurrencyUI();
+        
 
     }
 

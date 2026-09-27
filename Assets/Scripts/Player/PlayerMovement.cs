@@ -38,6 +38,23 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovementInput();
     }
 
+    public void resetPlayerPos()
+    {
+
+        
+
+        CharacterController controller = GetComponent<CharacterController>();
+
+        if (controller != null)
+            controller.enabled = false;
+
+        transform.position = gameManager.instance.playerStartPos.transform.position;
+
+        if (controller != null)
+            controller.enabled = true;
+
+    }
+
     private void PlayerMovementInput()
     {
         float horizontalInput =
